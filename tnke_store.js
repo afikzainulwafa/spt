@@ -469,6 +469,200 @@
     };
   }
 
+  // Mockup tracking date alignment: 12 additional visits required to match
+  // tnke_tracking.geojson, while keeping existing F-59 data and combined coverage unchanged.
+  // Generated from the tracking file; intentionally stored separately from original visits.
+  var TRACKING_SUPPLEMENTAL_VISITS = [
+  {
+    "visitId": "TRK-SUP-tnke-line-029",
+    "blockKey": "TNKE|DIVISI 2|E-55",
+    "blok": "E-55",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "ipd_panen",
+    "activityName": "IPD Panen",
+    "date": "01 Sep 2026",
+    "trackId": "tnke-line-029"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-030",
+    "blockKey": "TNKE|DIVISI 2|E-55",
+    "blok": "E-55",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "pengancakan",
+    "activityName": "Pengancakan",
+    "date": "01 Sep 2026",
+    "trackId": "tnke-line-030"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-083",
+    "blockKey": "TNKE|DIVISI 2|F-58",
+    "blok": "F-58",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "ipd_panen",
+    "activityName": "IPD Panen",
+    "date": "01 Sep 2026",
+    "trackId": "tnke-line-083"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-138",
+    "blockKey": "TNKE|DIVISI 2|E-59",
+    "blok": "E-59",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "ipd_panen",
+    "activityName": "IPD Panen",
+    "date": "02 Sep 2026",
+    "trackId": "tnke-line-138"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-200",
+    "blockKey": "TNKE|DIVISI 2|F-56",
+    "blok": "F-56",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "ipd_panen",
+    "activityName": "IPD Panen",
+    "date": "03 Sep 2026",
+    "trackId": "tnke-line-200"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-298",
+    "blockKey": "TNKE|DIVISI 2|F-53",
+    "blok": "F-53",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "ipd_panen",
+    "activityName": "IPD Panen",
+    "date": "04 Sep 2026",
+    "trackId": "tnke-line-298"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-299",
+    "blockKey": "TNKE|DIVISI 2|F-53",
+    "blok": "F-53",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "pengancakan",
+    "activityName": "Pengancakan",
+    "date": "04 Sep 2026",
+    "trackId": "tnke-line-299"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-359",
+    "blockKey": "TNKE|DIVISI 2|E-56",
+    "blok": "E-56",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "ipd_panen",
+    "activityName": "IPD Panen",
+    "date": "05 Sep 2026",
+    "trackId": "tnke-line-359"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-439",
+    "blockKey": "TNKE|DIVISI 2|E-51",
+    "blok": "E-51",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "ipd_panen",
+    "activityName": "IPD Panen",
+    "date": "07 Sep 2026",
+    "trackId": "tnke-line-439"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-576",
+    "blockKey": "TNKE|DIVISI 2|E-57",
+    "blok": "E-57",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "ipd_panen",
+    "activityName": "IPD Panen",
+    "date": "08 Sep 2026",
+    "trackId": "tnke-line-576"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-590",
+    "blockKey": "TNKE|DIVISI 2|D-51",
+    "blok": "D-51",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "ipd_panen",
+    "activityName": "IPD Panen",
+    "date": "09 Sep 2026",
+    "trackId": "tnke-line-590"
+  },
+  {
+    "visitId": "TRK-SUP-tnke-line-630",
+    "blockKey": "TNKE|DIVISI 2|E-54",
+    "blok": "E-54",
+    "estate": "TNKE",
+    "divisi": "DIVISI 2",
+    "activityId": "ipd_panen",
+    "activityName": "IPD Panen",
+    "date": "10 Sep 2026",
+    "trackId": "tnke-line-630"
+  }
+];
+
+  function reconcileTrackingSupplementalVisits(state) {
+    if (!state || !state.visits || !state.monthlyAssessment) return false;
+    var changed = false;
+    var already = {};
+    state.visits.forEach(function(v) { already[v.visitId] = true; });
+    var colorByAct = {
+      'ipd_panen': '#AD3CDB', 'pengancakan': '#268BF2',
+      'inspeksi_pupuk': '#FF6900', 'inspeksi_upkeep': '#20A3A7', 'blok_checklist': '#795548'
+    };
+    TRACKING_SUPPLEMENTAL_VISITS.forEach(function(s) {
+      if (s.blok === 'F-59' || already[s.visitId]) return;
+      var bAss = state.monthlyAssessment[s.blockKey];
+      if (!bAss) return;
+      var cumHa = bAss.combinedUniqueHa || 0;
+      var totalHa = bAss.totalAreaHa || 0;
+      var pct = totalHa > 0 ? Math.round(cumHa / totalHa * 1000) / 10 : 0;
+      var simulatedVisit = {
+        visitId: s.visitId, blockKey: s.blockKey,
+        estate: s.estate, divisi: s.divisi, blok: s.blok,
+        periode: '2026-09', date: s.date,
+        officer: s.divisi === 'DIVISI 2' ? 'Hendra Budiono (Asisten Divisi 2)' : 'Asisten TNKE',
+        staffName: s.divisi === 'DIVISI 2' ? 'Hendra Budiono (Asisten Divisi 2)' : 'Asisten TNKE',
+        activityId: s.activityId, activityName: s.activityName,
+        activityColor: colorByAct[s.activityId] || '#268BF2',
+        walkedAreaHa: 0, visitAreaHa: 0, vHa: 0,
+        addedUniqueHa: 0, addHa: 0, addedUniqueHaActivity: 0,
+        cumUniqueHa: cumHa, cumHa: cumHa, progressPct: pct, cumPct: pct,
+        trackId: s.trackId, isSimulation: true,
+        trackingSupplemental: true,
+        notes: 'Kunjungan simulasi tambahan untuk menyamakan tanggal dan aktivitas line tracking; coverage gabungan tidak berubah.'
+      };
+      state.visits.push(simulatedVisit);
+      if (!bAss.activityBreakdown) bAss.activityBreakdown = {};
+      var minimalHa = s.activityId === 'pengancakan' ? 2.7 : 1.3;
+      var old = bAss.activityBreakdown[s.activityId];
+      // Only fill missing per-activity representation. Never change combined
+      // area/pct, any other existing activity, or F-59.
+      if (!old || !old.uniqueHa) {
+        var roundedArea = Math.min(totalHa, minimalHa);
+        var blockAct = {
+          activityId: s.activityId, activityName: s.activityName,
+          color: colorByAct[s.activityId], uniqueHa: roundedArea,
+          observedHa: roundedArea,
+          pct: totalHa ? Math.round(1000 * roundedArea / totalHa) / 10 : 0,
+          coveragePct: totalHa ? Math.round(1000 * roundedArea / totalHa) / 10 : 0,
+          visitCount: 1, count: 1
+        };
+        bAss.activityBreakdown[s.activityId] = blockAct;
+        if (s.activityId === 'ipd_panen') bAss.activityBreakdown.ipdPanen = blockAct;
+      }
+      already[s.visitId] = true;
+      changed = true;
+    });
+    return changed;
+  }
+
   function TNKEStore() {
     this.masterData = null;
     this.state = null;
@@ -496,6 +690,7 @@
       this.state = generateSeedData(this.masterData);
       this.saveState();
     }
+    if (reconcileTrackingSupplementalVisits(this.state)) this.saveState();
   };
 
   TNKEStore.prototype.ensureInitialized = function (geojson) {
@@ -518,6 +713,7 @@
         this.saveState();
       }
     }
+    if (reconcileTrackingSupplementalVisits(this.state)) this.saveState();
     return this.state;
   };
 
@@ -534,6 +730,7 @@
   TNKEStore.prototype.resetDemo = function () {
     if (this.masterData) {
       this.state = generateSeedData(this.masterData);
+      reconcileTrackingSupplementalVisits(this.state);
       this.saveState();
     }
   };
