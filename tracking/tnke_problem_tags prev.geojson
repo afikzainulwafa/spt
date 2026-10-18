@@ -1,0 +1,586 @@
+{
+  "type": "FeatureCollection",
+  "name": "tnke_problem_tags",
+  "metadata": {
+    "source": "problem shapefile",
+    "date_note": "2026 assumed from demo; source year absent.",
+    "id_note": "Source id is 1 in all records; not treated as activity_id or unique event ID.",
+    "normalization_note": "Original problem retained; case normalized and uderpruning mapped to underpruning in problem_normalized.",
+    "quantity_note": "Units of ringan/sedang/berat not specified in source.",
+    "link_note": "No user ID, activity ID, observation ID or workflow status in source."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "tnke-problem-001",
+      "properties": {
+        "id": 1,
+        "problem": "pasar pikul semak",
+        "ringan": 20,
+        "sedang": 10,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 7,
+        "bulan": 9,
+        "tag_id": "tnke-problem-001",
+        "problem_normalized": "pasar pikul semak",
+        "date": "2026-09-07",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85075391732403,
+          0.5351333941528084
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-002",
+      "properties": {
+        "id": 1,
+        "problem": "underpruning",
+        "ringan": 15,
+        "sedang": 5,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 7,
+        "bulan": 9,
+        "tag_id": "tnke-problem-002",
+        "problem_normalized": "underpruning",
+        "date": "2026-09-07",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85159343596098,
+          0.5352637991254847
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-003",
+      "properties": {
+        "id": 1,
+        "problem": "gawangan semak",
+        "ringan": 0,
+        "sedang": 0,
+        "berat": 30,
+        "blok": "F-59",
+        "tanggal": 7,
+        "bulan": 9,
+        "tag_id": "tnke-problem-003",
+        "problem_normalized": "gawangan semak",
+        "date": "2026-09-07",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85289346724832,
+          0.5352678742808362
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-004",
+      "properties": {
+        "id": 1,
+        "problem": "pokok abnormal",
+        "ringan": 0,
+        "sedang": 0,
+        "berat": 4,
+        "blok": "F-59",
+        "tanggal": 7,
+        "bulan": 9,
+        "tag_id": "tnke-problem-004",
+        "problem_normalized": "pokok abnormal",
+        "date": "2026-09-07",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85227401660356,
+          0.53565093887178
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-005",
+      "properties": {
+        "id": 1,
+        "problem": "defisiensi hara",
+        "ringan": 0,
+        "sedang": 0,
+        "berat": 15,
+        "blok": "F-59",
+        "tanggal": 7,
+        "bulan": 9,
+        "tag_id": "tnke-problem-005",
+        "problem_normalized": "defisiensi hara",
+        "date": "2026-09-07",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85120627930803,
+          0.5356753898023039
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-006",
+      "properties": {
+        "id": 1,
+        "problem": "piringan semak",
+        "ringan": 0,
+        "sedang": 17,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 30,
+        "bulan": 9,
+        "tag_id": "tnke-problem-006",
+        "problem_normalized": "piringan semak",
+        "date": "2026-09-30",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.8530890832414,
+          0.5362581369509141
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-007",
+      "properties": {
+        "id": 1,
+        "problem": "areal banjir",
+        "ringan": 0,
+        "sedang": 0,
+        "berat": 1,
+        "blok": "F-59",
+        "tanggal": 30,
+        "bulan": 9,
+        "tag_id": "tnke-problem-007",
+        "problem_normalized": "areal banjir",
+        "date": "2026-09-30",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.8513611419692,
+          0.5363477903534704
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-008",
+      "properties": {
+        "id": 1,
+        "problem": "uderpruning",
+        "ringan": 0,
+        "sedang": 0,
+        "berat": 20,
+        "blok": "F-59",
+        "tanggal": 8,
+        "bulan": 9,
+        "tag_id": "tnke-problem-008",
+        "problem_normalized": "underpruning",
+        "date": "2026-09-08",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85325209656897,
+          0.5350478158879829
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-009",
+      "properties": {
+        "id": 1,
+        "problem": "underpruning",
+        "ringan": 15,
+        "sedang": 10,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 8,
+        "bulan": 9,
+        "tag_id": "tnke-problem-009",
+        "problem_normalized": "underpruning",
+        "date": "2026-09-08",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85196836661437,
+          0.5340005008361032
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-010",
+      "properties": {
+        "id": 1,
+        "problem": "Piringan semak",
+        "ringan": 0,
+        "sedang": 0,
+        "berat": 10,
+        "blok": "F-59",
+        "tanggal": 8,
+        "bulan": 9,
+        "tag_id": "tnke-problem-010",
+        "problem_normalized": "piringan semak",
+        "date": "2026-09-08",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85124295730672,
+          0.5345302711181315
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-011",
+      "properties": {
+        "id": 1,
+        "problem": "TPH Bermasalah",
+        "ringan": 0,
+        "sedang": 0,
+        "berat": 1,
+        "blok": "F-59",
+        "tanggal": 8,
+        "bulan": 9,
+        "tag_id": "tnke-problem-011",
+        "problem_normalized": "tph bermasalah",
+        "date": "2026-09-08",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85327247323491,
+          0.5344120915976376
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-012",
+      "properties": {
+        "id": 1,
+        "problem": "TPH Bermasalah",
+        "ringan": 1,
+        "sedang": 0,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 8,
+        "bulan": 9,
+        "tag_id": "tnke-problem-012",
+        "problem_normalized": "tph bermasalah",
+        "date": "2026-09-08",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85329284990087,
+          0.5336459622372426
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-013",
+      "properties": {
+        "id": 1,
+        "problem": "Defisiensi Hara",
+        "ringan": 9,
+        "sedang": 0,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 8,
+        "bulan": 9,
+        "tag_id": "tnke-problem-013",
+        "problem_normalized": "defisiensi hara",
+        "date": "2026-09-08",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85209470194326,
+          0.5331773192303831
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-014",
+      "properties": {
+        "id": 1,
+        "problem": "TPH Bermasalah",
+        "ringan": 0,
+        "sedang": 1,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 18,
+        "bulan": 9,
+        "tag_id": "tnke-problem-014",
+        "problem_normalized": "tph bermasalah",
+        "date": "2026-09-18",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85062758199516,
+          0.5325823463181131
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-015",
+      "properties": {
+        "id": 1,
+        "problem": "HPT",
+        "ringan": 10,
+        "sedang": 1,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 18,
+        "bulan": 9,
+        "tag_id": "tnke-problem-015",
+        "problem_normalized": "hpt",
+        "date": "2026-09-18",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85233107126822,
+          0.5325619705324287
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-016",
+      "properties": {
+        "id": 1,
+        "problem": "Titik kosong",
+        "ringan": 2,
+        "sedang": 0,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 18,
+        "bulan": 9,
+        "tag_id": "tnke-problem-016",
+        "problem_normalized": "titik kosong",
+        "date": "2026-09-18",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85144672396616,
+          0.5319303211428223
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-017",
+      "properties": {
+        "id": 1,
+        "problem": "underpruning",
+        "ringan": 10,
+        "sedang": 15,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 19,
+        "bulan": 9,
+        "tag_id": "tnke-problem-017",
+        "problem_normalized": "underpruning",
+        "date": "2026-09-19",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85227809193678,
+          0.531355723899991
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-018",
+      "properties": {
+        "id": 1,
+        "problem": "Defisiensi hara",
+        "ringan": 0,
+        "sedang": 15,
+        "berat": 3,
+        "blok": "F-59",
+        "tanggal": 28,
+        "bulan": 9,
+        "tag_id": "tnke-problem-018",
+        "problem_normalized": "defisiensi hara",
+        "date": "2026-09-28",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85224548927127,
+          0.5305366170997469
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-019",
+      "properties": {
+        "id": 1,
+        "problem": "Gawangan semak",
+        "ringan": 9,
+        "sedang": 10,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 19,
+        "bulan": 9,
+        "tag_id": "tnke-problem-019",
+        "problem_normalized": "gawangan semak",
+        "date": "2026-09-19",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85268562525569,
+          0.5302187547301406
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-020",
+      "properties": {
+        "id": 1,
+        "problem": "Pokok abnormal",
+        "ringan": 8,
+        "sedang": 0,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 28,
+        "bulan": 9,
+        "tag_id": "tnke-problem-020",
+        "problem_normalized": "pokok abnormal",
+        "date": "2026-09-28",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85220066060617,
+          0.5294200235755363
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-021",
+      "properties": {
+        "id": 1,
+        "problem": "Titik kosong",
+        "ringan": 0,
+        "sedang": 2,
+        "berat": 0,
+        "blok": "F-59",
+        "tanggal": 28,
+        "bulan": 9,
+        "tag_id": "tnke-problem-021",
+        "problem_normalized": "titik kosong",
+        "date": "2026-09-28",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.85105141664684,
+          0.5293874223017333
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "tnke-problem-022",
+      "properties": {
+        "id": 1,
+        "problem": "Underpruning",
+        "ringan": 0,
+        "sedang": 0,
+        "berat": 12,
+        "blok": "F-59",
+        "tanggal": 19,
+        "bulan": 9,
+        "tag_id": "tnke-problem-022",
+        "problem_normalized": "underpruning",
+        "date": "2026-09-19",
+        "year_assumed": true,
+        "is_simulation": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.8520702499441,
+          0.5286090668388134
+        ]
+      }
+    }
+  ]
+}

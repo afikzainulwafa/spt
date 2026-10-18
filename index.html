@@ -1,0 +1,3303 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Problem Tagging — Operasional Perkebunan Kelapa Sawit</title>
+  <meta name="description"
+    content="Static Interactive Mockup Smart Problem Tagging untuk monitoring BCCR, permasalahan lapangan, action plan, dan produksi perkebunan kelapa sawit.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="leaflet.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- STATIC LOGIN OVERLAY -->
+  <section id="loginScreen" class="login-screen active" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="brand-badge">SPT</div>
+        <div class="brand-text">
+          <strong>SMART PROBLEM TAGGING</strong>
+          <span>OPERASIONAL KELAPA SAWIT</span>
+        </div>
+      </div>
+      <div class="mockup-banner">
+        <span class="mock-label">STATIC MOCKUP ACCESS</span>
+        <p>Akses validasi konsep &amp; presentasi internal (Non-Production)</p>
+      </div>
+      <h2 id="loginTitle">Masuk ke Dashboard</h2>
+      <form id="loginForm" autocomplete="off">
+        <div class="form-group">
+          <label for="usernameInput">Username</label>
+          <input type="text" id="usernameInput" name="username" value="admin_spt" required placeholder="admin_spt">
+        </div>
+        <div class="form-group">
+          <label for="passwordInput">Password</label>
+          <input type="password" id="passwordInput" name="password" value="SPT2026!" required placeholder="••••••••">
+        </div>
+        <p id="loginError" class="login-error" role="alert" style="display:none;"></p>
+        <button type="submit" class="btn-login" id="btnLogin">Masuk ke Mockup →</button>
+        <div class="login-hint">
+          <span>Akun Demo Terdaftar:</span>
+          <code>admin_spt</code> / <code>SPT2026!</code>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- APP SHELL -->
+  <div class="app-layout" id="appLayout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-brand">
+        <img src="sinarmas_logo.png" alt="Sinarmas Logo" class="brand-logo-img">
+        <div class="brand-info">
+          <strong>SMART PROBLEM TAGGING</strong>
+          <small>PT SMART Tbk</small>
+        </div>
+      </div>
+
+      <div class="sidebar-mock-tag">
+        <span>DATA CONTOH · MOCKUP</span>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navigasi Utama">
+        <button class="nav-item active" data-view="dashboard" id="navDashboard">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </span>
+          <span class="nav-label">Dashboard</span>
+        </button>
+
+        <button class="nav-item" data-view="mapCoverage" id="navMap">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+              <line x1="8" y1="2" x2="8" y2="18"></line>
+              <line x1="16" y1="6" x2="16" y2="22"></line>
+            </svg>
+          </span>
+          <span class="nav-label">Map</span>
+        </button>
+
+        <button class="nav-item" data-view="tagging" id="navTagging">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+          </span>
+          <span class="nav-label">Problem Tagging</span>
+        </button>
+
+        <button class="nav-item" data-view="action" id="navAction">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11l3 3L22 4"></path>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+          </span>
+          <span class="nav-label">Action Plan</span>
+        </button>
+
+        <button class="nav-item" data-view="reports" id="navReports">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </span>
+          <span class="nav-label">Reports &amp; Analytics</span>
+        </button>
+
+        <button class="nav-item" data-view="production" id="navProduction">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+          </span>
+          <span class="nav-label">Production &amp; BCCR</span>
+        </button>
+
+        <button class="nav-item" data-view="admin" id="navAdmin">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+              </path>
+            </svg>
+          </span>
+          <span class="nav-label">Administration</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="mockLogout" type="button" title="Keluar dari session mockup">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Keluar</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-wrapper">
+
+      <!-- TOP HEADER WITH CASCADING FILTERS -->
+      <header class="app-header" id="appHeader">
+        <div class="header-left">
+          <div class="header-breadcrumb" id="headerCrumb">TNKE ESTATE · RINGKASAN OPERASIONAL</div>
+          <h1 class="header-title" id="pageTitle">Dashboard</h1>
+        </div>
+
+        <div class="header-filters" role="search" aria-label="Filter Global Operasional">
+          <div class="filter-item" title="Estate">
+            <select id="estateFilter" class="filter-select" aria-label="Estate">
+              <option value="TNKE" selected>TNKE</option>
+            </select>
+          </div>
+
+          <div class="filter-item" title="Divisi">
+            <select id="divisionFilter" class="filter-select" aria-label="Divisi">
+              <option value="all">All</option>
+              <option value="DIVISI 1">DIVISI 1</option>
+              <option value="DIVISI 2" selected>DIVISI 2</option>
+              <option value="DIVISI 3">DIVISI 3</option>
+              <option value="DIVISI 5">DIVISI 5</option>
+              <option value="DIVISI 6">DIVISI 6</option>
+              <option value="Non DIVISI">Non DIVISI</option>
+            </select>
+          </div>
+
+          <div class="filter-item" title="Blok">
+            <select id="blockFilter" class="filter-select" aria-label="Blok">
+              <option value="all" selected>All</option>
+            </select>
+          </div>
+
+          <div class="filter-item" title="Periode">
+            <select id="periodFilter" class="filter-select" aria-label="Periode">
+              <option value="September 2026" selected>September 2026</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="auth-status">
+            <span class="status-indicator"></span>
+            <span class="status-text">MOCKUP</span>
+          </div>
+          <div class="user-profile">
+            <div class="avatar">EM</div>
+            <div class="user-meta">
+              <strong>Mursal Samsul</strong>
+              <small>EM TNKE</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW 1: EXECUTIVE SUMMARY DASHBOARD -->
+      <section id="viewDashboard" class="view-panel active-view">
+        <div class="dash-macro-container">
+
+          <!-- 1. SIKLUS OBSERVASI SUBHEADER STRIP (COMPACT HORIZONTAL 46-50PX) -->
+          <div class="dash-cycle-bar">
+            <div class="cycle-left-info">
+              <div class="cycle-info-item">
+                <svg class="cycle-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563EB"
+                  stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>Mulai: <strong>1 September 2026</strong></span>
+              </div>
+              <span class="cycle-divider">·</span>
+              <div class="cycle-info-item">
+                <span>Target selesai: <strong>20 Oktober 2026</strong></span>
+              </div>
+              <span class="cycle-divider">·</span>
+              <div class="cycle-info-item">
+                <span>Durasi: <strong>7 minggu</strong></span>
+              </div>
+              <span class="cycle-divider">·</span>
+              <div class="cycle-info-item">
+                <span>Status: <span class="badge-cycle-status">Berjalan</span></span>
+              </div>
+            </div>
+            <button type="button" class="btn-setup-cycle" id="btnOpenCycleModal"
+              onclick="window.SPT_APP.openCycleModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>Atur siklus</span>
+            </button>
+          </div>
+
+          <!-- 2. FOUR SUMMARY CARDS IN ONE ROW (EQUAL HEIGHT 150-165PX) -->
+          <div class="dash-kpi-row-4">
+            <!-- CARD 1: PROGRESS OBSERVASI (ACTIVE) -->
+            <div class="dash-summary-kpi-card active-card card-kpi-obs" id="cardSummaryObs"
+              onclick="window.SPT_APP.switchDashCard('observasi');">
+              <div class="kpi-top-row">
+                <div class="kpi-title-box">
+                  <span class="kpi-icon-pill obs-pill">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </span>
+                  <span class="kpi-card-title">Progress Observasi</span>
+                </div>
+                <span class="kpi-arrow-nav">›</span>
+              </div>
+              <div class="kpi-body-val-row">
+                <strong class="kpi-val-big text-teal" id="kpiObsPct">58,0%</strong>
+                <span class="kpi-val-fraction" id="kpiObsFraction">1.914,8 / 3.303,3 ha</span>
+              </div>
+              <!-- Single Overall Actual vs Target Progress Bar -->
+              <div class="kpi-progress-wrapper">
+                <div class="kpi-progress-track">
+                  <div class="kpi-progress-fill bg-teal" id="kpiObsProgressFill" style="width: 58.0%;"></div>
+                  <div class="kpi-target-indicator" style="left: 60.0%;" title="Target sampai 30 September 2026: 60,0%">
+                  </div>
+                </div>
+                <div class="kpi-target-caption">
+                  <span class="kpi-target-label" style="left: 60.0%;">Target sampai 30 Sep: 60,0%</span>
+                </div>
+              </div>
+              <div class="kpi-status-badge-row">
+                <span class="badge-status-warning" id="kpiObsStatusBadge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                    </path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                  <span id="kpiObsStatusText">Tertinggal 2,0% (67,2 ha)</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- CARD 2: PROBLEM -->
+            <div class="dash-summary-kpi-card card-kpi-prob" id="cardSummaryProb"
+              onclick="window.SPT_APP.switchDashCard('problem');">
+              <div class="kpi-top-row">
+                <div class="kpi-title-box">
+                  <span class="kpi-icon-pill prob-pill">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path
+                        d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                      </path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                  </span>
+                  <span class="kpi-card-title">Problem</span>
+                </div>
+                <span class="kpi-arrow-nav">›</span>
+              </div>
+              <div class="kpi-body-val-row">
+                <strong class="kpi-val-big text-red" id="kpiProbCount">7</strong>
+                <span class="kpi-val-label">masalah terbuka</span>
+              </div>
+              <div class="kpi-subtext-row">
+                <span id="kpiProbSubtext">2 belum ada action plan · 11 total temuan</span>
+              </div>
+            </div>
+
+            <!-- CARD 3: ACTION PLAN -->
+            <div class="dash-summary-kpi-card card-kpi-act" id="cardSummaryAct"
+              onclick="window.SPT_APP.switchView('action');">
+              <div class="kpi-top-row">
+                <div class="kpi-title-box">
+                  <span class="kpi-icon-pill act-pill">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M9 11l3 3L22 4"></path>
+                      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                  </span>
+                  <span class="kpi-card-title">Action Plan</span>
+                </div>
+                <span class="kpi-arrow-nav">›</span>
+              </div>
+              <div class="kpi-body-val-row">
+                <strong class="kpi-val-big text-blue" id="kpiActPct">44,4%</strong>
+                <span class="kpi-val-label" id="kpiActLabel">4 dari 9 selesai</span>
+              </div>
+              <div class="kpi-badge-row">
+                <span class="badge-overdue" id="kpiActOverdueBadge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span><strong id="kpiActOverdueCount">1</strong> overdue</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- CARD 4: PRODUKSI -->
+            <div class="dash-summary-kpi-card card-kpi-prod" id="cardSummaryProd"
+              onclick="window.SPT_APP.switchView('production');">
+              <div class="kpi-top-row">
+                <div class="kpi-title-box">
+                  <span class="kpi-icon-pill prod-pill">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                      <polyline points="17 6 23 6 23 12"></polyline>
+                    </svg>
+                  </span>
+                  <span class="kpi-card-title">Produksi</span>
+                </div>
+                <span class="kpi-arrow-nav">›</span>
+              </div>
+              <div class="kpi-body-val-row">
+                <strong class="kpi-val-big text-green" id="kpiProdBccr">85,0%</strong>
+                <span class="kpi-val-label">BCCR aktual</span>
+              </div>
+              <div class="kpi-subtext-row">
+                <span id="kpiProdSubtext">Proyeksi 95,0% · Potensi 100%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. MAIN OBSERVASI CONTAINER -->
+          <div class="obs-main-container" id="obsMainContainer">
+            <!-- UNIFIED SINGLE-ROW HORIZONTAL HEADER (LEFT: TITLE & METADATA, RIGHT: TABS) -->
+            <div class="obs-main-header">
+              <div class="obs-header-left">
+                <div class="obs-header-icon-box">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </div>
+                <h2 class="obs-main-title">Observasi</h2>
+                <span class="badge-data-simulasi">Data simulasi</span>
+                <span class="obs-header-date-note">Data sampai 30 September 2026</span>
+              </div>
+              <div class="obs-tabs-list">
+                <button type="button" class="obs-tab-btn active" id="tabBtnKegiatanDivisi"
+                  onclick="window.SPT_APP.switchObsTab('kegiatanDivisi')">
+                  Kegiatan &amp; Divisi
+                </button>
+                <button type="button" class="obs-tab-btn" id="tabBtnTargetRealisasi"
+                  onclick="window.SPT_APP.switchObsTab('targetRealisasi')">
+                  Target &amp; Realisasi
+                </button>
+                <button type="button" class="obs-tab-btn" id="tabBtnAktivitasHarian"
+                  onclick="window.SPT_APP.switchObsTab('aktivitasHarian')">
+                  Aktivitas Harian
+                </button>
+              </div>
+            </div>
+
+            <!-- TAB 1 CONTENT: KEGIATAN & DIVISI -->
+            <div class="obs-tab-content active" id="obsTabKegiatanDivisi">
+              <!-- COMPACT SUMMARY STATUS (UNIFIED 3-IN-1 HORIZONTAL STRIP 76-86PX) -->
+              <div class="compact-obs-summary-strip">
+                <!-- PART 1: TARGET SAAT INI -->
+                <div class="strip-kpi-part part-target" id="btnOpsTarget"
+                  onclick="window.SPT_APP.switchObsTab('targetRealisasi')">
+                  <div class="strip-kpi-icon-box bg-blue-subtle">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <circle cx="12" cy="12" r="6"></circle>
+                      <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
+                  </div>
+                  <div class="strip-kpi-content">
+                    <span class="strip-kpi-label">Target Saat Ini</span>
+                    <div class="strip-kpi-val-row">
+                      <strong class="strip-kpi-val-main text-blue">60,0%</strong>
+                      <span class="strip-kpi-val-sec">1.982,0 ha</span>
+                    </div>
+                    <span class="strip-kpi-sub">Target sampai 30 September 2026</span>
+                  </div>
+                </div>
+
+                <div class="strip-v-sep"></div>
+
+                <!-- PART 2: AKTUAL SAAT INI -->
+                <div class="strip-kpi-part part-actual" id="btnOpsAktual"
+                  onclick="window.SPT_APP.switchView('mapCoverage')">
+                  <div class="strip-kpi-icon-box bg-teal-subtle">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                  </div>
+                  <div class="strip-kpi-content">
+                    <span class="strip-kpi-label">Aktual Saat Ini</span>
+                    <div class="strip-kpi-val-row">
+                      <strong class="strip-kpi-val-main text-teal">58,0%</strong>
+                      <span class="strip-kpi-val-sec">1.914,8 ha</span>
+                    </div>
+                    <span class="strip-kpi-sub text-danger font-semibold">Tertinggal 67,2 ha</span>
+                  </div>
+                </div>
+
+                <div class="strip-v-sep"></div>
+
+                <!-- PART 3: KEBUTUHAN MENGEJAR TARGET -->
+                <div class="strip-kpi-part part-kebutuhan" id="btnOpsKebutuhan"
+                  onclick="window.SPT_APP.switchObsTab('targetRealisasi')">
+                  <div class="strip-kpi-icon-box bg-orange-subtle">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                  </div>
+                  <div class="strip-kpi-content">
+                    <span class="strip-kpi-label">Kebutuhan Mengejar Target</span>
+                    <div class="strip-kpi-val-row">
+                      <strong class="strip-kpi-val-main text-primary-dark">69,4 ha/hari</strong>
+                      <span class="strip-kpi-val-sec">Sisa 1.388,5 ha</span>
+                    </div>
+                    <span class="strip-kpi-sub">20 hari menuju target selesai</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SIDE-BY-SIDE: CAKUPAN PER KEGIATAN (42%) & PERBANDINGAN DIVISI (58%) -->
+              <div class="obs-panels-grid">
+                <!-- LEFT: CAKUPAN PER KEGIATAN (42% WIDTH) -->
+                <div class="obs-panel-card obs-panel-donut">
+                  <div class="obs-panel-hdr">
+                    <h3 class="obs-panel-title">Cakupan per kegiatan</h3>
+                    <span class="obs-proportion-label">Proporsi berdasarkan: <strong>Luas cakupan</strong></span>
+                  </div>
+                  <div class="obs-donut-and-legend-wrap">
+                    <div class="donut-chart-box">
+                      <svg viewBox="0 0 160 160" class="activity-donut-svg" id="activityDonutSvg">
+                        <!-- Rendered dynamically by JS -->
+                      </svg>
+                      <div class="donut-center-metric">
+                        <strong class="donut-center-ha" id="donutCenterHa">2.738,0 ha</strong>
+                        <span class="donut-center-lbl" id="donutCenterLbl">Total cakupan kegiatan</span>
+                      </div>
+                      <div class="donut-tooltip" id="donutTooltip" style="display:none;"></div>
+                    </div>
+
+                    <div class="donut-legend-box">
+                      <table class="donut-legend-table">
+                        <thead>
+                          <tr>
+                            <th style="text-align:left;">Kegiatan</th>
+                            <th style="text-align:right;">Coverage</th>
+                            <th style="text-align:right;">Proporsi</th>
+                          </tr>
+                        </thead>
+                        <tbody id="donutLegendTableBody">
+                          <!-- 5 rows rendered by JS -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="obs-panel-note">
+                    Proporsi dihitung dari estimasi luas buffer tracking per kegiatan. Area antar kegiatan dapat
+                    beririsan. Coverage unik estate tetap 1.914,8 ha.
+                  </div>
+                </div>
+
+                <!-- RIGHT: PERBANDINGAN DIVISI (58% WIDTH) -->
+                <div class="obs-panel-card obs-panel-div-comp">
+                  <div class="obs-panel-hdr">
+                    <h3 class="obs-panel-title">Perbandingan divisi</h3>
+                    <div class="div-comp-ctrls">
+                      <div class="div-ctrl-group">
+                        <select id="divCompDivisionSelect" class="div-comp-select"
+                          onchange="window.SPT_APP.onDivCompDivisionSelect(this.value)">
+                          <option value="all" selected>Semua Divisi</option>
+                          <option value="DIVISI 1">DIVISI 1</option>
+                          <option value="DIVISI 2">DIVISI 2</option>
+                          <option value="DIVISI 3">DIVISI 3</option>
+                          <option value="DIVISI 5">DIVISI 5</option>
+                          <option value="DIVISI 6">DIVISI 6</option>
+                        </select>
+                      </div>
+                      <div class="div-ctrl-group">
+                        <select id="divCompActivityFilter" class="div-comp-select"
+                          onchange="window.SPT_APP.onDivCompActivityChange(this.value)">
+                          <option value="all">Semua kegiatan</option>
+                          <option value="ipd_panen">IPD Panen</option>
+                          <option value="pengancakan">Pengancakan</option>
+                          <option value="blok_checklist">Blok Checklist</option>
+                          <option value="inspeksi_upkeep">Inspeksi Upkeep</option>
+                          <option value="inspeksi_pupuk">Inspeksi Pemupukan</option>
+                        </select>
+                      </div>
+                      <div class="div-toggle-unit">
+                        <button type="button" class="btn-unit-toggle active" id="btnUnitPct"
+                          onclick="window.SPT_APP.setDivTableUnit('pct')">%</button>
+                        <button type="button" class="btn-unit-toggle" id="btnUnitHa"
+                          onclick="window.SPT_APP.setDivTableUnit('ha')">ha</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="div-table-wrapper">
+                    <table class="div-comp-table">
+                      <thead>
+                        <tr>
+                          <th style="text-align:left;">Divisi</th>
+                          <th style="text-align:right;">Total Luas</th>
+                          <th style="text-align:right;">Diobservasi</th>
+                          <th style="text-align:left;width:140px;">Coverage</th>
+                          <th style="text-align:center;width:95px;">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="divCompTableBody">
+                        <!-- Rendered by JS: Divisi 1, 2, 3, 5, 6, and Total footer -->
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="div-table-footer">
+                    <div class="div-footer-left">
+                      <span id="divFooterUnitDesc">% dari luas masing-masing divisi</span>
+                      <span class="div-footer-sep" id="divFooterTargetSep">|</span>
+                      <span class="div-footer-target" id="divFooterTargetText">Target saat ini 60,0%</span>
+                    </div>
+                    <button type="button" class="btn-link-detail-div"
+                      onclick="window.SPT_APP.switchView('mapCoverage')">
+                      Lihat detail per divisi &rsaquo;
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2 CONTENT: TARGET & REALISASI -->
+            <div class="obs-tab-content" id="obsTabTargetRealisasi" style="display:none;">
+              <div class="schedule-summary-grid">
+                <div class="sched-box">
+                  <span class="sched-lbl">Target Evaluasi (30 Sep 2026)</span>
+                  <strong class="sched-val text-blue">1.982,0 ha (60,0%)</strong>
+                  <span class="sched-sub">Realisasi: 1.914,8 ha (58,0%)</span>
+                </div>
+                <div class="sched-box">
+                  <span class="sched-lbl">Deviasi Evaluasi Saat Ini</span>
+                  <strong class="sched-val text-red">-67,2 ha</strong>
+                  <span class="sched-sub"><span class="badge-div-tertinggal">Tertinggal</span> vs target 60%</span>
+                </div>
+                <div class="sched-box">
+                  <span class="sched-lbl">Kebutuhan Laju Penyelesaian</span>
+                  <strong class="sched-val text-teal">69,4 ha/hari</strong>
+                  <span class="sched-sub">1.388,5 ha tersisa dalam 20 hari (s/d 20 Okt)</span>
+                </div>
+              </div>
+
+              <!-- JADWAL MINGGUAN SIKLUS -->
+              <div class="obs-panel-card" style="margin-bottom:16px;">
+                <h4 style="font-size:13px;font-weight:700;color:#0F172A;margin:0 0 10px 0;">📅 Jadwal Kumulatif Siklus
+                  Observasi (1 Sep – 20 Okt 2026)</h4>
+                <div class="div-table-wrapper">
+                  <table class="schedule-table">
+                    <thead>
+                      <tr>
+                        <th>Minggu</th>
+                        <th>Periode</th>
+                        <th style="text-align:right;">Target Mingguan</th>
+                        <th style="text-align:right;">Target Kumulatif</th>
+                        <th style="text-align:right;">Realisasi Aktual</th>
+                        <th style="text-align:right;">Deviasi</th>
+                        <th style="text-align:center;">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Minggu 1</strong></td>
+                        <td>01 Sep – 07 Sep 2026</td>
+                        <td style="text-align:right;">350,0 ha</td>
+                        <td style="text-align:right;">350,0 ha (10,6%)</td>
+                        <td style="text-align:right;">375,4 ha (11,4%)</td>
+                        <td style="text-align:right;color:#059669;font-weight:700;">+25,4 ha</td>
+                        <td style="text-align:center;"><span class="badge-div-sesuai">Sesuai target</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Minggu 2</strong></td>
+                        <td>08 Sep – 14 Sep 2026</td>
+                        <td style="text-align:right;">400,0 ha</td>
+                        <td style="text-align:right;">750,0 ha (22,7%)</td>
+                        <td style="text-align:right;">782,1 ha (23,7%)</td>
+                        <td style="text-align:right;color:#059669;font-weight:700;">+32,1 ha</td>
+                        <td style="text-align:center;"><span class="badge-div-sesuai">Sesuai target</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>Minggu 3</strong></td>
+                        <td>15 Sep – 21 Sep 2026</td>
+                        <td style="text-align:right;">500,0 ha</td>
+                        <td style="text-align:right;">1.250,0 ha (37,8%)</td>
+                        <td style="text-align:right;">1.220,5 ha (36,9%)</td>
+                        <td style="text-align:right;color:#DC2626;font-weight:700;">-29,5 ha</td>
+                        <td style="text-align:center;"><span class="badge-div-tertinggal">Tertinggal</span></td>
+                      </tr>
+                      <tr style="background:#FFFBEB;">
+                        <td><strong>Minggu 4 (Evaluasi)</strong></td>
+                        <td>22 Sep – 30 Sep 2026</td>
+                        <td style="text-align:right;">732,0 ha</td>
+                        <td style="text-align:right;font-weight:700;">1.982,0 ha (60,0%)</td>
+                        <td style="text-align:right;font-weight:700;color:#0D9488;">1.914,8 ha (58,0%)</td>
+                        <td style="text-align:right;color:#DC2626;font-weight:700;">-67,2 ha</td>
+                        <td style="text-align:center;"><span class="badge-div-tertinggal">Tertinggal</span></td>
+                      </tr>
+                      <tr style="opacity:0.85;">
+                        <td><strong>Minggu 5 (Proyeksi)</strong></td>
+                        <td>01 Okt – 07 Okt 2026</td>
+                        <td style="text-align:right;">485,8 ha</td>
+                        <td style="text-align:right;">2.400,6 ha (72,7%)</td>
+                        <td style="text-align:right;">Est. 485,8 ha</td>
+                        <td style="text-align:right;">Laju 69,4 ha/hari</td>
+                        <td style="text-align:center;"><span class="badge-data-simulasi">Proyeksi</span></td>
+                      </tr>
+                      <tr style="opacity:0.85;">
+                        <td><strong>Minggu 6 (Proyeksi)</strong></td>
+                        <td>08 Okt – 14 Okt 2026</td>
+                        <td style="text-align:right;">485,8 ha</td>
+                        <td style="text-align:right;">2.886,4 ha (87,4%)</td>
+                        <td style="text-align:right;">Est. 485,8 ha</td>
+                        <td style="text-align:right;">Laju 69,4 ha/hari</td>
+                        <td style="text-align:center;"><span class="badge-data-simulasi">Proyeksi</span></td>
+                      </tr>
+                      <tr style="opacity:0.85;background:#F0FDF4;">
+                        <td><strong>Minggu 7 (Akhir)</strong></td>
+                        <td>15 Okt – 20 Okt 2026</td>
+                        <td style="text-align:right;">416,9 ha</td>
+                        <td style="text-align:right;font-weight:800;color:#059669;">3.303,3 ha (100,0%)</td>
+                        <td style="text-align:right;font-weight:800;color:#059669;">Target 100% Selesai</td>
+                        <td style="text-align:right;">Selesai Siklus</td>
+                        <td style="text-align:center;"><span class="badge-div-sesuai">Target Akhir</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- REKAP PER DIVISI TERHADAP TARGET 60% -->
+              <div class="obs-panel-card">
+                <h4 style="font-size:13px;font-weight:700;color:#0F172A;margin:0 0 10px 0;">🏢 Rekap Target vs Realisasi
+                  per Divisi (Evaluasi Cut-Off 30 Sep 2026)</h4>
+                <div class="div-table-wrapper">
+                  <table class="schedule-table">
+                    <thead>
+                      <tr>
+                        <th>Divisi</th>
+                        <th style="text-align:right;">Luas Total</th>
+                        <th style="text-align:right;">Target 60%</th>
+                        <th style="text-align:right;">Realisasi Aktual</th>
+                        <th style="text-align:right;">Coverage %</th>
+                        <th style="text-align:right;">Selisih vs Target</th>
+                        <th style="text-align:center;">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>DIVISI 1</strong></td>
+                        <td style="text-align:right;">799,5 ha</td>
+                        <td style="text-align:right;">479,7 ha</td>
+                        <td style="text-align:right;">495,7 ha</td>
+                        <td style="text-align:right;font-weight:700;color:#059669;">62,0%</td>
+                        <td style="text-align:right;color:#059669;font-weight:700;">+16,0 ha</td>
+                        <td style="text-align:center;"><span class="badge-div-sesuai">Sesuai target</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>DIVISI 2</strong></td>
+                        <td style="text-align:right;">854,0 ha</td>
+                        <td style="text-align:right;">512,4 ha</td>
+                        <td style="text-align:right;">449,7 ha</td>
+                        <td style="text-align:right;font-weight:700;color:#D97706;">52,7%</td>
+                        <td style="text-align:right;color:#DC2626;font-weight:700;">-62,7 ha</td>
+                        <td style="text-align:center;"><span class="badge-div-tertinggal">Tertinggal</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>DIVISI 3</strong></td>
+                        <td style="text-align:right;">797,9 ha</td>
+                        <td style="text-align:right;">478,7 ha</td>
+                        <td style="text-align:right;">462,8 ha</td>
+                        <td style="text-align:right;font-weight:700;color:#D97706;">58,0%</td>
+                        <td style="text-align:right;color:#DC2626;font-weight:700;">-15,9 ha</td>
+                        <td style="text-align:center;"><span class="badge-div-tertinggal">Tertinggal</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>DIVISI 5</strong></td>
+                        <td style="text-align:right;">478,3 ha</td>
+                        <td style="text-align:right;">287,0 ha</td>
+                        <td style="text-align:right;">334,8 ha</td>
+                        <td style="text-align:right;font-weight:700;color:#059669;">70,0%</td>
+                        <td style="text-align:right;color:#059669;font-weight:700;">+47,8 ha</td>
+                        <td style="text-align:center;"><span class="badge-div-sesuai">Sesuai target</span></td>
+                      </tr>
+                      <tr>
+                        <td><strong>DIVISI 6</strong></td>
+                        <td style="text-align:right;">373,6 ha</td>
+                        <td style="text-align:right;">224,2 ha</td>
+                        <td style="text-align:right;">171,8 ha</td>
+                        <td style="text-align:right;font-weight:700;color:#D97706;">46,0%</td>
+                        <td style="text-align:right;color:#DC2626;font-weight:700;">-52,4 ha</td>
+                        <td style="text-align:center;"><span class="badge-div-tertinggal">Tertinggal</span></td>
+                      </tr>
+                      <tr style="background:#F8FAFC;font-weight:800;border-top:1.5px solid #CBD5E1;">
+                        <td><strong>TNKE ESTATE</strong></td>
+                        <td style="text-align:right;">3.303,3 ha</td>
+                        <td style="text-align:right;">1.982,0 ha</td>
+                        <td style="text-align:right;color:#0D9488;">1.914,8 ha</td>
+                        <td style="text-align:right;color:#0D9488;">58,0%</td>
+                        <td style="text-align:right;color:#DC2626;">-67,2 ha</td>
+                        <td style="text-align:center;"><span class="badge-div-tertinggal">Tertinggal</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 4 CONTENT: AKTIVITAS HARIAN -->
+            <div class="obs-tab-content" id="obsTabAktivitasHarian" style="display:none;">
+              <div class="daily-summary-card">
+                <div class="daily-summary-header">
+                  <div class="daily-summary-title">
+                    <span>📅 Aktivitas Harian Petugas Lapangan</span>
+                  </div>
+                  <div style="display:flex; gap:10px; align-items:center;">
+                    <div class="filter-item" style="margin:0;">
+                      <label for="dailyOfficerSelect" style="font-size:10px;">Petugas</label>
+                      <select id="dailyOfficerSelect" class="filter-select" style="font-size:11.5px; padding:3px 8px;"
+                        onchange="window.SPT_APP.renderDailyActivityView()">
+                        <option value="Hendra Budiono (Asisten Divisi 2)" selected>Hendra Budiono (Asisten Divisi 2)
+                        </option>
+                        <option value="Ahmad Yani (Asisten Divisi 1)">Ahmad Yani (Asisten Divisi 1)</option>
+                        <option value="Budi Santoso (Asisten Divisi 3)">Budi Santoso (Asisten Divisi 3)</option>
+                        <option value="Rahmat Hidayat (Asisten Divisi 5)">Rahmat Hidayat (Asisten Divisi 5)</option>
+                        <option value="Bambang S (Asisten Divisi 6)">Bambang S (Asisten Divisi 6)</option>
+                      </select>
+                    </div>
+                    <div class="filter-item" style="margin:0;">
+                      <label for="dailyDateSelect" style="font-size:10px;">Tanggal</label>
+                      <select id="dailyDateSelect" class="filter-select" style="font-size:11.5px; padding:3px 8px;"
+                        onchange="window.SPT_APP.renderDailyActivityView()">
+                        <option value="12 Sep 2026" selected>12 Sep 2026</option>
+                        <option value="19 Sep 2026">19 Sep 2026</option>
+                        <option value="24 Sep 2026">24 Sep 2026</option>
+                        <option value="30 Sep 2026">30 Sep 2026</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- DAILY KPIS (UPDATED SPT METRIC: TRACKING DISTANCE BASED) -->
+                <div class="daily-summary-grid">
+                  <div class="daily-summary-box">
+                    <span class="lbl">Target Jarak Harian</span>
+                    <span class="val" id="dailyTargetDistanceKm">5,00 km/hari</span>
+                  </div>
+                  <div class="daily-summary-box daily-distance-box">
+                    <span class="lbl">Jarak Tracking Aktual</span>
+                    <span class="val text-primary" id="dailyDistanceKm">5,28 km (105,6%)</span>
+                  </div>
+                  <div class="daily-summary-box">
+                    <span class="lbl">Coverage Buffer Nominal (48m)</span>
+                    <span class="val" id="dailyTotalHa">25,344 ha</span>
+                  </div>
+                  <div class="daily-summary-box">
+                    <span class="lbl">Coverage Unik Efektif Net</span>
+                    <span class="val text-success" id="dailyAddedUniqueHa">+6,5 ha</span>
+                  </div>
+                </div>
+
+                <div style="margin-top:10px; font-size:11px; color:#64748B; font-style:italic;" id="dailyTooltipNote">
+                  💡 Jarak Asisten diukur langsung dari panjang tracking polyline (5,28 km, 105,6% target 5,0 km). Luas
+                  nominal berasal dari panjang lintasan × buffer 48 meter (24 m kiri &amp; kanan) = 25,344 ha. Coverage
+                  efektif unik (+6,5 ha) memperhitungkan reduksi overlap lintasan dan pemotongan batas polygon blok.
+                </div>
+
+                <!-- DAILY VISITS BREAKDOWN TABLE -->
+                <div style="margin-top:16px;">
+                  <h4 style="font-size:12.5px; font-weight:700; color:#0F172A; margin-bottom:8px;">📌 Pembagian Sesi
+                    Kunjungan Lapangan per Blok (Klik blok untuk lihat riwayat pada peta)</h4>
+                  <div id="dailyVisitsTableWrap">
+                    <!-- Rendered by JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3B. MAIN PROBLEM DETAIL CONTAINER (SWITCHABLE FROM OBSERVASI) -->
+          <div class="prob-main-container" id="probMainContainer" style="display:none;">
+            <!-- HEADER DETAIL PROBLEM -->
+            <div class="prob-main-header">
+              <div class="prob-header-left">
+                <div class="prob-header-icon-box">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                    </path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                  </svg>
+                </div>
+                <h2 class="prob-main-title">Problem</h2>
+                <span class="badge-data-simulasi">Data simulasi</span>
+                <span class="prob-header-date-note">Data sampai 30 September 2026</span>
+              </div>
+              <div class="prob-header-right">
+                <div class="prob-tabs-list">
+                  <button type="button" class="prob-tab-btn active" id="tabProbKategoriDivisi"
+                    onclick="window.SPT_APP.switchProbTab('kategoriDivisi')">
+                    Kategori &amp; Divisi
+                  </button>
+                  <button type="button" class="prob-tab-btn" id="tabProbTrenTemuan"
+                    onclick="window.SPT_APP.switchProbTab('trenTemuan')">
+                    Tren Temuan
+                  </button>
+                  <button type="button" class="prob-tab-btn" id="tabProbPrioritas"
+                    onclick="window.SPT_APP.switchProbTab('prioritas')">
+                    Prioritas
+                  </button>
+                </div>
+                <button type="button" class="btn-prob-view-all"
+                  onclick="window.SPT_APP.goToProblemTaggingWithFilters()">
+                  <span>Lihat Semua Problem</span>
+                  <span class="btn-prob-arrow">&rarr;</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- SUBTAB 1: KATEGORI & DIVISI (DEFAULT ACTIVE) -->
+            <div class="prob-tab-content" id="probTabKategoriDivisi" style="display:block;">
+              <!-- 4 COMPACT SUMMARY CARDS (HORIZONTAL STRIP) -->
+              <div class="prob-summary-strip">
+                <div class="prob-summary-box">
+                  <div class="prob-sum-icon-box bg-blue-subtle">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                      <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                    </svg>
+                  </div>
+                  <div class="prob-sum-body">
+                    <span class="prob-sum-lbl">TOTAL TEMUAN</span>
+                    <strong class="prob-sum-val text-blue">11</strong>
+                  </div>
+                </div>
+
+                <div class="prob-summary-box">
+                  <div class="prob-sum-icon-box bg-red-subtle">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path
+                        d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                      </path>
+                      <line x1="12" y1="9" x2="12" y2="13"></line>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                  </div>
+                  <div class="prob-sum-body">
+                    <span class="prob-sum-lbl">MASALAH TERBUKA</span>
+                    <strong class="prob-sum-val text-red">7</strong>
+                  </div>
+                </div>
+
+                <div class="prob-summary-box">
+                  <div class="prob-sum-icon-box bg-orange-subtle">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                    </svg>
+                  </div>
+                  <div class="prob-sum-body">
+                    <span class="prob-sum-lbl">TANPA ACTION PLAN</span>
+                    <strong class="prob-sum-val text-orange">2</strong>
+                  </div>
+                </div>
+
+                <div class="prob-summary-box">
+                  <div class="prob-sum-icon-box bg-red-subtle">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                  </div>
+                  <div class="prob-sum-body">
+                    <span class="prob-sum-lbl">OVERDUE</span>
+                    <strong class="prob-sum-val text-red">2</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BASIS PENGUKURAN SELECTOR STRIP -->
+              <div class="prob-selector-row">
+                <div class="prob-selector-left">
+                  <span class="prob-selector-label">Basis pengukuran:</span>
+                  <div class="prob-segmented-group">
+                    <button type="button" class="btn-prob-basis active" id="btnBasisLuas"
+                      onclick="window.SPT_APP.setProblemMeasurementBasis('luas')">
+                      Luas · ha
+                    </button>
+                    <button type="button" class="btn-prob-basis" id="btnBasisPanjang"
+                      onclick="window.SPT_APP.setProblemMeasurementBasis('panjang')">
+                      Panjang · m/km
+                    </button>
+                    <button type="button" class="btn-prob-basis" id="btnBasisPokok"
+                      onclick="window.SPT_APP.setProblemMeasurementBasis('pokok')">
+                      Pokok
+                    </button>
+                    <button type="button" class="btn-prob-basis" id="btnBasisInfrastruktur"
+                      onclick="window.SPT_APP.setProblemMeasurementBasis('infrastruktur')">
+                      Infrastruktur · unit
+                    </button>
+                  </div>
+                </div>
+                <div class="prob-selector-right">
+                  <span class="prob-selector-hint">Warna heatmap = exposure rate terhadap denominator relevan</span>
+                </div>
+              </div>
+
+              <!-- TWO SIDE-BY-SIDE PANELS (RANKING LEFT 42%, HEATMAP RIGHT 58%) -->
+              <div class="prob-panels-grid">
+                <!-- LEFT PANEL: RANKING -->
+                <div class="prob-panel-card prob-panel-ranking">
+                  <div class="prob-panel-hdr">
+                    <h3 class="prob-panel-title" id="probRankingTitle">Exposure kategori berbasis luas</h3>
+                    <span class="prob-panel-scale-note" id="probScaleNote">Skala 0-5%</span>
+                  </div>
+                  <div class="prob-bars-container" id="probBarsContainer">
+                    <!-- Populated dynamically by JS -->
+                  </div>
+                  <div class="prob-panel-note" id="probRankingNote">
+                    Volume unik menggunakan union polygon; tagging overlap tidak dihitung dua kali.
+                  </div>
+                </div>
+
+                <!-- RIGHT PANEL: HEATMAP PER DIVISI -->
+                <div class="prob-panel-card prob-panel-heatmap">
+                  <div class="prob-panel-hdr">
+                    <h3 class="prob-panel-title">Perbandingan exposure per divisi</h3>
+                    <span class="prob-panel-scale-note" id="probHeatmapUnitNote">Luas unik · ha dan % area</span>
+                  </div>
+                  <div class="prob-heatmap-wrap">
+                    <table class="prob-heatmap-table" id="probHeatmapTable">
+                      <thead>
+                        <tr>
+                          <th style="text-align:left;width:130px;">Kategori</th>
+                          <th style="text-align:center;">Div 1</th>
+                          <th style="text-align:center;">Div 2</th>
+                          <th style="text-align:center;">Div 3</th>
+                          <th style="text-align:center;">Div 5</th>
+                          <th style="text-align:center;">Div 6</th>
+                        </tr>
+                      </thead>
+                      <tbody id="probHeatmapTableBody">
+                        <!-- Populated dynamically by JS -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BOTTOM PRIORITY ROW (MASALAH YANG MEMERLUKAN PERHATIAN) -->
+              <div class="prob-priority-section">
+                <h4 class="prob-priority-title">Masalah yang memerlukan perhatian</h4>
+                <div class="prob-priority-cards-grid" id="probPriorityCardsGrid">
+                  <!-- Card 1 -->
+                  <div class="prob-priority-card"
+                    onclick="window.SPT_APP.goToProblemTaggingWithFilters({ category: 'jembatan', priority: 'P1' })">
+                    <div class="prob-p-badge p1-badge">P1</div>
+                    <div class="prob-p-info">
+                      <strong class="prob-p-name">Jembatan / Box Culvert</strong>
+                      <span class="prob-p-desc">1 unit · akses panen terputus</span>
+                    </div>
+                    <span class="prob-p-arrow">&rsaquo;</span>
+                  </div>
+
+                  <!-- Card 2 -->
+                  <div class="prob-priority-card"
+                    onclick="window.SPT_APP.goToProblemTaggingWithFilters({ category: 'areal banjir', priority: 'P1' })">
+                    <div class="prob-p-badge p1-badge">P1</div>
+                    <div class="prob-p-info">
+                      <strong class="prob-p-name">Areal Banjir / Tergenang</strong>
+                      <span class="prob-p-desc">25,0 ha · belum ada action plan</span>
+                    </div>
+                    <span class="prob-p-arrow">&rsaquo;</span>
+                  </div>
+
+                  <!-- Card 3 -->
+                  <div class="prob-priority-card"
+                    onclick="window.SPT_APP.goToProblemTaggingWithFilters({ category: 'pasar pikul semak', priority: 'P2' })">
+                    <div class="prob-p-badge p2-badge">P2</div>
+                    <div class="prob-p-info">
+                      <strong class="prob-p-name">Pasar Pikul Semak</strong>
+                      <span class="prob-p-desc">1,2 km · overdue</span>
+                    </div>
+                    <span class="prob-p-arrow">&rsaquo;</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2: TREN TEMUAN -->
+            <div class="prob-tab-content" id="probTabTrenTemuan" style="display:none;">
+              <div class="prob-trend-view-card">
+                <div class="prob-trend-hdr">
+                  <div>
+                    <h3 class="prob-panel-title">Tren Temuan Masalah Siklus Observasi</h3>
+                    <p style="font-size:11px;color:#64748B;margin:2px 0 0 0;">Distribusi temuan baru vs diselesaikan per
+                      minggu (September 2026)</p>
+                  </div>
+                  <div class="prob-trend-legend">
+                    <span class="trend-leg-item"><span class="dot-open"></span> Terbuka</span>
+                    <span class="trend-leg-item"><span class="dot-prog"></span> In Progress</span>
+                    <span class="trend-leg-item"><span class="dot-done"></span> Selesai</span>
+                  </div>
+                </div>
+                <div class="prob-trend-chart-box" id="probTrendChartBox">
+                  <!-- Rendered dynamically by JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3: PRIORITAS OPERASIONAL LENGKAP -->
+            <div class="prob-tab-content" id="probTabPrioritas" style="display:none;">
+              <div class="prob-priority-full-card">
+                <div class="prob-panel-hdr" style="margin-bottom:8px;">
+                  <h3 class="prob-panel-title">Matriks Prioritas Penanganan Masalah Lapangan (Rule-Based)</h3>
+                  <span class="badge-data-simulasi">Kaidah Operasional Agronomi</span>
+                </div>
+                <div class="table-scroll-wrapper" style="max-height:280px;overflow-y:auto;">
+                  <table class="dense-table" style="font-size:11.5px;">
+                    <thead>
+                      <tr>
+                        <th style="width:65px;">Tier</th>
+                        <th style="width:180px;">Kategori Masalah</th>
+                        <th>Kriteria Penentuan</th>
+                        <th style="width:90px;">SLA Maksimal</th>
+                        <th style="width:120px;">Volume Terdampak</th>
+                        <th>Rekomendasi Action Plan</th>
+                        <th style="text-align:center;width:90px;">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody id="probPriorityFullTableBody">
+                      <!-- Rendered dynamically by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           VIEW 2: MAP & COVERAGE (DEDICATED STANDALONE PAGE)
+           ==================================================================== -->
+      <section id="viewMapCoverage" class="view-panel">
+        <div class="assessment-info-bar">
+          <div class="info-left">
+            <span class="info-period-tag">📅 Periode Observasi: <strong>September 2026</strong></span>
+            <span class="info-note">Warna menunjukkan coverage observasi, bukan status penyelesaian masalah.</span>
+          </div>
+          <div class="info-right" id="legendFilterStatus" style="display:none;">
+            <span class="legend-filter-active-tag">Filter Legenda: <strong id="legendFilterText">0%</strong></span>
+            <button type="button" class="btn-reset-legend-filter" id="btnResetLegendFilter">Reset Filter Peta</button>
+          </div>
+        </div>
+
+        <div class="assessment-map-wrapper">
+          <article class="panel-card panel-map-assessment" id="panelMapAssessment">
+            <div class="panel-header">
+              <div class="panel-header-left">
+                <h2 class="panel-title" id="mapTitleText">Peta Coverage Observasi Blok</h2>
+                <p class="panel-subtitle" id="mapSubtitleText">Visualisasi cakupan observasi per blok</p>
+              </div>
+              <div class="panel-actions-group">
+                <!-- CAPSULE MODE TOGGLE (Inspired by modern capsule pill toggle) -->
+                <div class="capsule-mode-toggle" id="mapModeToggleGroup" role="tablist" aria-label="Mode Tampilan Peta">
+                  <div class="capsule-toggle-thumb" id="capsuleToggleThumb"></div>
+                  <button type="button" class="capsule-toggle-opt active" id="btnMapModeCoverage" data-mode="coverage" role="tab" aria-selected="true" onclick="window.SPT_APP.switchMapMode('coverage')">
+                    <span class="capsule-opt-icon">📊</span>
+                    <span class="capsule-opt-text">Coverage</span>
+                  </button>
+                  <button type="button" class="capsule-toggle-opt" id="btnMapModeProblem" data-mode="problem" role="tab" aria-selected="false" onclick="window.SPT_APP.switchMapMode('problem')">
+                    <span class="capsule-opt-icon">⚠️</span>
+                    <span class="capsule-opt-text">Problem</span>
+                  </button>
+                </div>
+                <!-- PROBLEM CATEGORY DROPDOWN (ONLY SHOWN IN PROBLEM MODE) -->
+                <div class="problem-category-control" id="problemCategoryMapWrap" style="display:none;">
+                  <select id="selProblemCategoryMap" class="filter-select-map" aria-label="Filter Kategori Masalah" onchange="window.SPT_APP.changeProblemCategory(this.value)">
+                    <option value="all">Semua Permasalahan</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="map-container-wrap" id="wrapMapAssessment">
+              <div id="mapAssessment" class="leaflet-map-frame"></div>
+              <div class="map-loading-overlay" id="mapAssessmentLoading">
+                <span class="spinner"></span>
+                <span>Memuat GeoJSON Polygon TNKE...</span>
+              </div>
+
+              <!-- FLOATING MAP CONTROLS OVER MAP (TOP RIGHT): FIT WILAYAH & BASEMAP SWITCHER -->
+              <div class="map-floating-controls-topright" id="mapFloatingControlsTopRight">
+                <!-- Fit Wilayah with Icon -->
+                <button type="button" class="btn-floating-map-ctrl" id="btnFitMapBounds" title="Fit Peta ke Wilayah Terpilih">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                  </svg>
+                  <span>Fit Wilayah</span>
+                </button>
+
+                <!-- Basemap Switcher Floating Group -->
+                <div class="floating-basemap-group" id="basemapToggleGroup" role="group" aria-label="Layer Peta Dasar">
+                  <button type="button" class="btn-floating-basemap" id="btnBasemapOsm" data-basemap="osm" title="Peta Jalan Vektor (OpenStreetMap)" onclick="window.SPT_APP.setBasemapLayer('osm')">
+                    <span class="bm-icon">🗺️</span>
+                    <span class="bm-text">Jalan</span>
+                  </button>
+                  <button type="button" class="btn-floating-basemap active" id="btnBasemapArcgis" data-basemap="arcgis" title="Citra Satelit Aktual (ArcGIS World Imagery)" onclick="window.SPT_APP.setBasemapLayer('arcgis')">
+                    <span class="bm-icon">🛰️</span>
+                    <span class="bm-text">Satelit</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- FLOATING MAP LEGEND (SEMI-TRANSPARENT OVER MAP) -->
+              <div class="assessment-legend-bar floating-map-legend" id="assessmentLegend">
+                <div class="legend-header-row">
+                  <div class="legend-tabs-wrap" id="legendTabsWrap">
+                    <button type="button" class="legend-tab-btn active" id="btnLegendTabCoverage"
+                      onclick="window.SPT_APP.switchMapLegendTab('coverage')">📊 Range</button>
+                    <button type="button" class="legend-tab-btn" id="btnLegendTabTracking"
+                      onclick="window.SPT_APP.switchMapLegendTab('tracking')">🛣️ Tracking</button>
+                    <button type="button" class="legend-tab-btn" id="btnLegendTabTagging"
+                      onclick="window.SPT_APP.switchMapLegendTab('tagging')">📍 Tagging</button>
+                  </div>
+                  <div id="problemLegendHeaderTitle" style="display:none;" class="problem-legend-head">
+                    <span>Status Action Plan (Prioritas: Merah &gt; Kuning &gt; Hijau)</span>
+                  </div>
+                  <button type="button" id="btnToggleLegendVisibility" onclick="window.SPT_APP.toggleLegendVisibility()" class="btn-toggle-legend-vis">
+                    👁️ Sembunyikan
+                  </button>
+                </div>
+                <!-- COVERAGE MODE LEGEND BODY -->
+                <div id="legendContentBody" class="legend-items-wrap">
+                  <span class="legend-item" data-range="0"><i style="background:#9E9E9E"></i>0%</span>
+                  <span class="legend-item" data-range=">0-25"><i style="background:#EF5350"></i>&gt;0–25%</span>
+                  <span class="legend-item" data-range=">25-50"><i style="background:#FFA726"></i>&gt;25–50%</span>
+                  <span class="legend-item" data-range=">50-75"><i style="background:#FFEE58;color:#1E293B"></i>&gt;50–75%</span>
+                  <span class="legend-item" data-range=">75-<100"><i style="background:#9CCC65;color:#1E293B"></i>&gt;75–&lt;100%</span>
+                  <span class="legend-item" data-range="100"><i style="background:#2E7D32"></i>100%</span>
+                </div>
+                <!-- PROBLEM MODE LEGEND BODY -->
+                <div id="problemLegendBody" class="legend-items-wrap" style="display:none;">
+                  <span class="legend-item"><i style="background:#A3A3A3"></i>Tidak Ada Temuan</span>
+                  <span class="legend-item"><i style="background:#EF4444"></i>Belum Ada Action Plan</span>
+                  <span class="legend-item"><i style="background:#F2C94C"></i>On Progress</span>
+                  <span class="legend-item"><i style="background:#39A66B"></i>Closed</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- RIGHT DRAWER FOR BLOCK DETAIL -->
+          <aside class="block-detail-drawer" id="blockDetailDrawer" aria-label="Detail Blok">
+            <div class="drawer-header">
+              <div class="drawer-title-group">
+                <span class="drawer-subtitle" id="drawerEstateDiv">TNKE · DIVISI 3</span>
+                <h3 class="drawer-title" id="drawerBlockCode">Blok H-49</h3>
+              </div>
+              <button type="button" class="btn-close-drawer" id="btnCloseDrawer" aria-label="Tutup Drawer">✕</button>
+            </div>
+
+            <div class="drawer-body">
+              <!-- SECTION A: IDENTITAS BLOK -->
+              <section class="drawer-section">
+                <h4 class="section-heading">📌 Identitas Blok</h4>
+                <div class="meta-grid">
+                  <div class="meta-item">
+                    <span class="meta-label">Kode Blok</span>
+                    <strong class="meta-val" id="dBlokCode">H-49</strong>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">Estate / Divisi</span>
+                    <strong class="meta-val" id="dEstateDiv">TNKE / DIVISI 3</strong>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">Luas Operasional Blok</span>
+                    <strong class="meta-val" id="dTotalArea">15,82 ha</strong>
+                  </div>
+                  <div class="meta-item">
+                    <span class="meta-label">Periode Observasi</span>
+                    <strong class="meta-val" id="dPeriod">September 2026</strong>
+                  </div>
+                </div>
+              </section>
+
+              <!-- SECTION B: COVERAGE OBSERVASI -->
+              <section class="drawer-section highlighted-section">
+                <h4 class="section-heading">📊 Coverage Observasi</h4>
+                <div class="progress-main-card">
+                  <div class="progress-val-row">
+                    <span class="progress-big-number" id="dProgressPct">12,6%</span>
+                    <span class="status-badge in-progress" id="dStatusBadge">Dalam Observasi</span>
+                  </div>
+                  <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" id="dProgressBarFill" style="width:12.6%;"></div>
+                  </div>
+                  <div class="progress-detail-grid">
+                    <div class="detail-box">
+                      <span class="lbl">Sudah Diobservasi</span>
+                      <strong class="val text-success" id="dAssessedHa">2,0 ha</strong>
+                    </div>
+                    <div class="detail-box">
+                      <span class="lbl">Sisa Area Belum Diobservasi</span>
+                      <strong class="val text-muted" id="dUnassessedHa">13,82 ha</strong>
+                    </div>
+                    <div class="detail-box">
+                      <span class="lbl">Observasi Terakhir</span>
+                      <strong class="val" id="dLastDate">12 Sep 2026</strong>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- SECTION C: BREAKDOWN 5 KEGIATAN -->
+              <section class="drawer-section">
+                <h4 class="section-heading">🛠️ Rincian Coverage per Jenis Kegiatan</h4>
+                <div id="drawerActivityBreakdownWrap">
+                  <!-- 5 activities rendered by JS -->
+                </div>
+              </section>
+
+              <!-- SECTION D: RIWAYAT OBSERVASI PER TANGGAL -->
+              <section class="drawer-section">
+                <h4 class="section-heading">📜 Riwayat Observasi per Tanggal</h4>
+                <div id="drawerHistoryWrap">
+                  <!-- History table rendered dynamically by JS -->
+                </div>
+              </section>
+
+              <!-- SECTION D2: PERENCANAAN OBSERVASI LANJUTAN -->
+              <section class="drawer-section">
+                <h4 class="section-heading">📅 Perencanaan Observasi Lanjutan</h4>
+                <div id="drawerScheduleWrap">
+                  <!-- Target scheduler form rendered by JS -->
+                </div>
+              </section>
+
+              <!-- SECTION E: RINGKASAN TEMUAN OPERASIONAL -->
+              <section class="drawer-section">
+                <h4 class="section-heading">⚠️ Ringkasan Temuan Operasional</h4>
+                <div id="drawerTaggingWrap">
+                  <!-- Category summaries and list rendered by JS -->
+                </div>
+              </section>
+
+              <!-- SECTION F: LAPORAN VISITOR MENUNGGU REVIEW -->
+              <section class="drawer-section">
+                <h4 class="section-heading">👁️ Laporan Visitor (Menunggu Review)</h4>
+                <div id="drawerVisitorReportsWrap">
+                  <!-- Rendered by JS -->
+                </div>
+              </section>
+
+              <!-- SECTION G: BCCR PRODUCTION & PROYEKSI -->
+              <section class="drawer-section">
+                <h4 class="section-heading">📈 Produksi, Proyeksi &amp; BCCR</h4>
+                <div class="bccr-prod-card">
+                  <div class="prod-period-tag" id="dBccrPeriod">Periode: YTD September 2026</div>
+                  <div class="prod-grid">
+                    <div class="p-box">
+                      <span class="lbl">Aktual Produksi</span>
+                      <strong class="val" id="dBccrActual">240 ton</strong>
+                    </div>
+                    <div class="p-box">
+                      <span class="lbl">Potensi Produksi</span>
+                      <strong class="val" id="dBccrPotency">300 ton</strong>
+                    </div>
+                    <div class="p-box">
+                      <span class="lbl">Pencapaian BCCR</span>
+                      <strong class="val text-primary" id="dBccrPct">80,0%</strong>
+                    </div>
+                    <div class="p-box full-width">
+                      <span class="lbl">Gap vs Potensi</span>
+                      <strong class="val" id="dBccrGap">60 ton di bawah potensi</strong>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- MODAL: ATUR SIKLUS OBSERVASI -->
+      <div class="cycle-modal-overlay" id="modalCycleSetup" style="display:none;" role="dialog" aria-modal="true"
+        aria-labelledby="modalCycleTitle">
+        <div class="cycle-modal-card">
+          <div class="cycle-modal-header">
+            <h3 class="cycle-modal-title" id="modalCycleTitle">⚙️ Pengaturan Siklus Observasi</h3>
+            <button type="button" class="cycle-modal-close-btn" id="btnCloseCycleModal"
+              onclick="window.SPT_APP.closeCycleModal()" aria-label="Tutup">✕</button>
+          </div>
+          <form id="formCycleSetup" onsubmit="window.SPT_APP.saveCycleSetup(event);">
+            <div class="cycle-modal-body">
+              <div class="cycle-field-group">
+                <label for="cycleInputName">Nama Siklus</label>
+                <input type="text" id="cycleInputName" class="cycle-input" value="Siklus Observasi Rutin 2 - 2026"
+                  required>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="cycle-field-group">
+                  <label for="cycleInputStart">Tanggal Mulai</label>
+                  <input type="date" id="cycleInputStart" class="cycle-input" value="2026-09-01" required>
+                </div>
+                <div class="cycle-field-group">
+                  <label for="cycleInputEnd">Target Selesai</label>
+                  <input type="date" id="cycleInputEnd" class="cycle-input" value="2026-10-20" required>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="cycle-field-group">
+                  <label for="cycleInputEstate">Estate</label>
+                  <select id="cycleInputEstate" class="cycle-select">
+                    <option value="TNKE" selected>TNKE (3.303,3 ha)</option>
+                  </select>
+                </div>
+                <div class="cycle-field-group">
+                  <label for="cycleInputTargetArea">Target Luas Akhir (ha)</label>
+                  <input type="number" step="0.1" id="cycleInputTargetArea" class="cycle-input" value="3303.3" required>
+                </div>
+              </div>
+              <div class="cycle-field-group">
+                <label>Divisi dalam Scope</label>
+                <div class="cycle-checkbox-grid">
+                  <label class="cycle-checkbox-label"><input type="checkbox" name="cycleDiv" value="DIVISI 1" checked>
+                    DIVISI 1</label>
+                  <label class="cycle-checkbox-label"><input type="checkbox" name="cycleDiv" value="DIVISI 2" checked>
+                    DIVISI 2</label>
+                  <label class="cycle-checkbox-label"><input type="checkbox" name="cycleDiv" value="DIVISI 3" checked>
+                    DIVISI 3</label>
+                  <label class="cycle-checkbox-label"><input type="checkbox" name="cycleDiv" value="DIVISI 5" checked>
+                    DIVISI 5</label>
+                  <label class="cycle-checkbox-label"><input type="checkbox" name="cycleDiv" value="DIVISI 6" checked>
+                    DIVISI 6</label>
+                </div>
+              </div>
+              <div style="background:#F1F5F9;border-radius:6px;padding:8px 12px;font-size:11px;color:#475569;">
+                <span>Target kumulatif sampai evaluasi (30 Sep 2026): <strong>1.982,0 ha (60,0%)</strong> · Sisa 20 hari
+                  hingga target selesai.</span>
+              </div>
+            </div>
+            <div class="cycle-modal-footer">
+              <button type="button" class="btn-secondary" id="btnCancelCycleModal"
+                onclick="window.SPT_APP.closeCycleModal()">Batal</button>
+              <button type="submit" class="btn-primary">Simpan Siklus →</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           VIEW 2: MAP & COVERAGE
+           Subtabs: Problem Map | Blok Coverage / Pasar Pikul | BCCR Spatial
+           ==================================================================== -->
+      <section id="viewMap" class="view-panel detail-view">
+        <div class="detail-header-card">
+          <div>
+            <h2 class="detail-title">Peta Masalah Interaktif &amp; Tracking Observasi</h2>
+            <p class="detail-desc">Visualisasi spasial titik masalah lapangan, cakupan Pasar Pikul, dan overlay kinerja
+              BCCR per blok.</p>
+          </div>
+        </div>
+
+        <!-- Subtabs Bar -->
+        <div class="view-subtabs-bar">
+          <button class="subtab-btn active" data-subtab="subtabMapProblem">
+            🗺️ Peta Sebaran Masalah
+          </button>
+          <button class="subtab-btn" data-subtab="subtabMapCoverage">
+            🛤️ Cakupan Observasi (Pasar Pikul)
+          </button>
+          <button class="subtab-btn" data-subtab="subtabMapBccr">
+            📊 Peta BCCR Spasial
+          </button>
+        </div>
+
+        <!-- SUBTAB A: Problem Map (formerly embedded in Dashboard Panel 4) -->
+        <div class="subtab-content" id="subtabMapProblem" style="display:block;">
+          <!-- Map is rendered inside #panelMapProblem which is in the Dashboard.
+               This subtab acts as a full-page dedicated map view. -->
+          <div class="detail-header-card" style="margin-bottom:12px;">
+            <div>
+              <h3 class="detail-title" style="font-size:15px;">Peta Sebaran Temuan Masalah</h3>
+              <p class="detail-desc">Filter per estate, divisi, blok, kategori, dan status. Klik blok untuk zoom detail
+                pin masalah.</p>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button type="button" class="btn-secondary" id="btnMapFilterFitBounds2">🎯 Fit Wilayah</button>
+              <button type="button" class="btn-primary" id="btnOpenMapFullscreen2">⛶ Buka Fullscreen</button>
+            </div>
+          </div>
+
+          <!-- Map HUD Filters (always visible in this dedicated tab) -->
+          <div class="map-filter-card"
+            style="background:var(--surface-card);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:10px 14px;margin-bottom:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
+            <div class="tool-field" style="min-width:110px;">
+              <label for="mapViewFilterDivision">Divisi</label>
+              <select id="mapViewFilterDivision" class="tool-select">
+                <option value="all">Semua Divisi</option>
+                <option value="DIVISI 1">DIVISI 1</option>
+                <option value="DIVISI 2">DIVISI 2</option>
+                <option value="DIVISI 3">DIVISI 3</option>
+                <option value="DIVISI 4">DIVISI 4</option>
+                <option value="DIVISI 5">DIVISI 5</option>
+              </select>
+            </div>
+            <div class="tool-field" style="min-width:130px;">
+              <label for="mapViewFilterCategory">Permasalahan</label>
+              <select id="mapViewFilterCategory" class="tool-select">
+                <option value="all">Semua (16)</option>
+              </select>
+            </div>
+            <div class="tool-field" style="min-width:120px;">
+              <label for="mapViewFilterStatus">Status</label>
+              <select id="mapViewFilterStatus" class="tool-select">
+                <option value="all">Semua Status</option>
+                <option value="Belum Ditangani">Belum Ditangani</option>
+                <option value="Dalam Pengerjaan">Dalam Pengerjaan</option>
+                <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                <option value="Selesai">Selesai</option>
+              </select>
+            </div>
+            <div class="tool-field" style="min-width:110px;">
+              <label for="mapViewFilterSens">Sensitivitas</label>
+              <select id="mapViewFilterSens" class="tool-select">
+                <option value="all">Semua</option>
+                <option value="Major">Major</option>
+                <option value="Minor">Minor</option>
+              </select>
+            </div>
+            <span style="font-size:11px;color:var(--text-muted);align-self:flex-end;padding-bottom:4px;"
+              id="mapViewPinCount">Memuat...</span>
+          </div>
+
+          <!-- Dedicated full-height map container -->
+          <div
+            style="height:520px;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border-light);">
+            <div id="mapViewProblemClone"
+              style="width:100%;height:100%;background:#1E293B;display:flex;align-items:center;justify-content:center;">
+              <div style="text-align:center;color:#64748B;">
+                <div style="font-size:32px;margin-bottom:8px;">🗺️</div>
+                <p style="font-size:13px;font-weight:600;color:#94A3B8;">Peta interaktif tersedia di panel Dashboard.
+                </p>
+                <p style="font-size:11px;color:#64748B;margin-top:4px;">Gunakan tombol <strong>Fullscreen</strong> atau
+                  akses langsung via Dashboard → Panel Peta.</p>
+                <button type="button" class="btn-primary" data-view="dashboard" style="margin-top:14px;">← Kembali ke
+                  Dashboard</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB B: Cakupan Observasi (Pasar Pikul) -->
+        <div class="subtab-content" id="subtabMapCoverage" style="display:none;">
+          <div class="coverage-banner-card">
+            <div class="coverage-banner-left">
+              <div class="coverage-icon-box">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </div>
+              <div>
+                <div class="coverage-banner-title">Tracking Cakupan Observasi Pasar Pikul</div>
+                <p class="coverage-banner-desc">Monitoring jalur observasi asisten per blok (≥20% PP/Blok). Simulasi
+                  detail tersedia di halaman Asesmen Blok.</p>
+              </div>
+            </div>
+            <a href="tagging_blok.html" class="btn-open-sim">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="16" />
+                <line x1="8" y1="12" x2="16" y2="12" />
+              </svg>
+              Buka Simulator Blok
+            </a>
+          </div>
+
+          <!-- KPI Summary -->
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px;">
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;">
+                <span class="kpi-label">Cakupan Pasar Pikul</span>
+                <div class="kpi-value-row"><span class="kpi-number">75.7%</span></div>
+                <span class="kpi-subtext">4,928 / 6,513 PP</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;">
+                <span class="kpi-label">Blok Selesai Diases</span>
+                <div class="kpi-value-row"><span class="kpi-number">74</span><span class="kpi-unit">/ 109</span></div>
+                <span class="kpi-subtext">67.9% dari total blok SKDE</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;">
+                <span class="kpi-label">Blok Outstanding</span>
+                <div class="kpi-value-row"><span class="kpi-number">35</span><span class="kpi-unit">blok</span></div>
+                <span class="kpi-subtext">19 In Progress · 16 Belum Mulai</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;">
+                <span class="kpi-label">Standar SOP Uji Petik</span>
+                <div class="kpi-value-row"><span class="kpi-number">≥20%</span></div>
+                <span class="kpi-subtext">~2.2 PP/Ha per blok</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-container-card">
+            <div
+              style="padding:12px 14px;border-bottom:1px solid var(--border-subtle);display:flex;justify-content:space-between;align-items:center;">
+              <h3 style="font-family:var(--font-heading);font-size:13px;font-weight:700;">Rekap Cakupan Observasi per
+                Divisi</h3>
+              <button class="btn-secondary" data-subtab-goto="subtabTaggingAsesmen" data-view-goto="tagging">Detail
+                Asesmen Blok →</button>
+            </div>
+            <div class="table-scroll-wrapper">
+              <table class="dense-table">
+                <thead>
+                  <tr>
+                    <th>Divisi</th>
+                    <th style="text-align:right;">Total Blok</th>
+                    <th style="text-align:right;">Selesai Diases</th>
+                    <th style="text-align:right;">Total PP</th>
+                    <th style="text-align:right;">PP Ter-cover</th>
+                    <th style="text-align:right;">Coverage %</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>DIVISI 1</strong></td>
+                    <td style="text-align:right;">24</td>
+                    <td style="text-align:right;">18</td>
+                    <td style="text-align:right;">1,490</td>
+                    <td style="text-align:right;">1,168</td>
+                    <td style="text-align:right;"><strong>78.4%</strong></td>
+                    <td><span class="badge-status" style="background:#ECFDF5;color:#047857;">On Track</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>DIVISI 2</strong></td>
+                    <td style="text-align:right;">20</td>
+                    <td style="text-align:right;">14</td>
+                    <td style="text-align:right;">1,204</td>
+                    <td style="text-align:right;">876</td>
+                    <td style="text-align:right;"><strong>72.8%</strong></td>
+                    <td><span class="badge-status" style="background:#FEF3C7;color:#B45309;">Monitor</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>DIVISI 3</strong></td>
+                    <td style="text-align:right;">22</td>
+                    <td style="text-align:right;">17</td>
+                    <td style="text-align:right;">1,375</td>
+                    <td style="text-align:right;">1,048</td>
+                    <td style="text-align:right;"><strong>76.2%</strong></td>
+                    <td><span class="badge-status" style="background:#ECFDF5;color:#047857;">On Track</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>DIVISI 4</strong></td>
+                    <td style="text-align:right;">23</td>
+                    <td style="text-align:right;">15</td>
+                    <td style="text-align:right;">1,201</td>
+                    <td style="text-align:right;">985</td>
+                    <td style="text-align:right;"><strong>82.0%</strong></td>
+                    <td><span class="badge-status" style="background:#ECFDF5;color:#047857;">On Track</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>DIVISI 5</strong></td>
+                    <td style="text-align:right;">20</td>
+                    <td style="text-align:right;">10</td>
+                    <td style="text-align:right;">1,243</td>
+                    <td style="text-align:right;">851</td>
+                    <td style="text-align:right;"><strong>68.5%</strong></td>
+                    <td><span class="badge-status" style="background:#FEF3C7;color:#B45309;">Monitor</span></td>
+                  </tr>
+                  <tr style="font-weight:700;background:var(--surface-alt);">
+                    <td>TOTAL SKDE</td>
+                    <td style="text-align:right;">109</td>
+                    <td style="text-align:right;">74</td>
+                    <td style="text-align:right;">6,513</td>
+                    <td style="text-align:right;">4,928</td>
+                    <td style="text-align:right;color:var(--primary-red);">75.7%</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB C: BCCR Spatial Map -->
+        <div class="subtab-content" id="subtabMapBccr" style="display:none;">
+          <div class="detail-header-card">
+            <div>
+              <h3 class="detail-title" style="font-size:15px;">Peta Spasial BCCR per Blok</h3>
+              <p class="detail-desc">Visualisasi kinerja BCCR per blok pada peta GeoJSON SKDE. Warna blok menunjukkan
+                range pencapaian BCCR saat ini.</p>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn-secondary" data-view="production">Detail Rekap BCCR Matrix →</button>
+            </div>
+          </div>
+          <div
+            style="height:480px;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--border-light);position:relative;">
+            <div id="mapBCCR" style="width:100%;height:100%;"></div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+            <span style="font-size:11px;color:var(--text-muted);">Legenda BCCR:</span>
+            <span class="badge-status" style="background:#ECFDF5;color:#047857;">≥90% Excellent</span>
+            <span class="badge-status" style="background:#FEF9C3;color:#854D0E;">80–90% Good</span>
+            <span class="badge-status" style="background:#FEF3C7;color:#B45309;">70–80% Monitor</span>
+            <span class="badge-status" style="background:#FEE2E2;color:#B91C1C;">&lt;70% Critical</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           VIEW 3: PROBLEM TAGGING
+           Subtabs: Antrian Verifikasi | Inventaris Masalah | Asesmen Blok
+           ==================================================================== -->
+      <section id="viewTagging" class="view-panel detail-view">
+        <div class="detail-header-card">
+          <div>
+            <h2 class="detail-title">Problem Tagging &amp; Antrean Verifikasi</h2>
+            <p class="detail-desc">Kelola inventaris temuan lapangan, antrian verifikasi Askep/Manager, dan status
+              asesmen blok per divisi.</p>
+          </div>
+        </div>
+
+        <!-- Subtabs Bar -->
+        <div class="view-subtabs-bar">
+          <button class="subtab-btn active" data-subtab="subtabTaggingQueue">
+            ✅ Antrian Verifikasi <span class="badge-pill">21</span>
+          </button>
+          <button class="subtab-btn" data-subtab="subtabTaggingAll">
+            📋 Inventaris Masalah
+          </button>
+          <button class="subtab-btn" data-subtab="subtabTaggingAsesmen">
+            🏘️ Asesmen Blok &amp; Pasar Pikul
+          </button>
+        </div>
+
+        <!-- SUBTAB A: Verification Queue -->
+        <div class="subtab-content" id="subtabTaggingQueue" style="display:block;">
+          <div
+            style="background:var(--surface-card);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:12px 14px;margin-bottom:12px;display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">
+            <div class="tool-field">
+              <label>Divisi</label>
+              <select class="tool-select" id="queueDivFilter">
+                <option value="all">Semua Divisi</option>
+                <option value="DIVISI 1">DIVISI 1</option>
+                <option value="DIVISI 2">DIVISI 2</option>
+                <option value="DIVISI 3">DIVISI 3</option>
+                <option value="DIVISI 4">DIVISI 4</option>
+                <option value="DIVISI 5">DIVISI 5</option>
+              </select>
+            </div>
+            <div class="tool-field">
+              <label>Status Verifikasi</label>
+              <select class="tool-select" id="queueStatusFilter">
+                <option value="all">Semua Status</option>
+                <option value="Menunggu">Menunggu Review</option>
+                <option value="Approved">Approved</option>
+                <option value="Revision">Perlu Revisi</option>
+              </select>
+            </div>
+            <span style="font-size:11px;color:var(--text-muted);padding-bottom:4px;">21 tagging menunggu verifikasi
+              Askep/Manager</span>
+          </div>
+          <div class="table-container-card">
+            <div class="table-scroll-wrapper">
+              <table class="dense-table" id="taggingQueueTable">
+                <thead>
+                  <tr>
+                    <th>ID Temuan</th>
+                    <th>Lokasi (Div/Blok)</th>
+                    <th>Kategori Masalah</th>
+                    <th>Sensitivitas</th>
+                    <th>Vol. Inv.</th>
+                    <th>Asisten (PIC)</th>
+                    <th>Tgl Asesmen</th>
+                    <th>Status Tagging</th>
+                    <th style="text-align:center;">Aksi Verifikasi</th>
+                  </tr>
+                </thead>
+                <tbody id="taggingQueueBody">
+                  <!-- Populated dynamically – pending verification items from allFindings -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB B: Full problem inventory (reuses action plan filters & table) -->
+        <div class="subtab-content" id="subtabTaggingAll" style="display:none;">
+          <!-- Filter Toolbar (mirrors viewAction filters) -->
+          <div class="action-tools-card">
+            <div class="tools-row">
+              <div class="tool-field">
+                <label for="filterProblem">Problem Master</label>
+                <select id="filterProblem" class="tool-select">
+                  <option value="all">Semua Problem (16)</option>
+                </select>
+              </div>
+              <div class="tool-field">
+                <label for="filterSensitivity">Sensitivitas</label>
+                <select id="filterSensitivity" class="tool-select">
+                  <option value="all">Semua Sensitivitas</option>
+                  <option value="Major">Major</option>
+                  <option value="Minor">Minor</option>
+                </select>
+              </div>
+              <div class="tool-field">
+                <label for="filterStatus">Status</label>
+                <select id="filterStatus" class="tool-select">
+                  <option value="all">Semua Status</option>
+                  <option value="Belum Ditangani">Belum Ditangani</option>
+                  <option value="Dalam Pengerjaan">Dalam Pengerjaan</option>
+                  <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                  <option value="Selesai">Selesai</option>
+                </select>
+              </div>
+              <div class="tool-field">
+                <label for="filterOverdue">Keterlambatan</label>
+                <select id="filterOverdue" class="tool-select">
+                  <option value="all">Semua</option>
+                  <option value="overdue">Hanya Overdue</option>
+                  <option value="on-schedule">Tepat Waktu</option>
+                </select>
+              </div>
+              <div class="tool-field search-field">
+                <label for="searchActionInput">Cari Temuan</label>
+                <input type="text" id="searchActionInput" placeholder="Cari ID, Blok, PIC..." class="tool-input">
+              </div>
+              <div class="tool-meta-count">
+                <span id="actionTableCountBadge">Menampilkan 52 temuan</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="table-container-card">
+            <div class="table-scroll-wrapper">
+              <table class="dense-table" id="actionPlanTable">
+                <thead>
+                  <tr>
+                    <th>ID Temuan</th>
+                    <th>Lokasi (Div/Blok)</th>
+                    <th>Permasalahan</th>
+                    <th>Action Plan</th>
+                    <th>Sensitivitas</th>
+                    <th>Timeframe</th>
+                    <th>Vol. Inv</th>
+                    <th>Realisasi</th>
+                    <th>Progress</th>
+                    <th>PIC Lapangan</th>
+                    <th>Tgl Identifikasi</th>
+                    <th>Target Selesai</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="actionPlanTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB C: Asesmen Blok (was VIEW 8) -->
+        <div class="subtab-content" id="subtabTaggingAsesmen" style="display:none;">
+          <div class="detail-header-card">
+            <div>
+              <h2 class="detail-title">Asesmen Blok &amp; Verifikasi Operasional</h2>
+              <p class="detail-desc">Monitoring status asesmen blok asisten, verifikasi sampling Askep / Manager, dan
+                cakupan Pasar Pikul.</p>
+            </div>
+            <div class="detail-actions">
+              <button type="button" class="btn-secondary" id="btnExportAsesmenCsv" title="Export CSV Data Asesmen">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Export CSV</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 5 KPI CARDS -->
+          <div class="asesmen-kpi-grid">
+            <!-- KPI 1: Blok Diases oleh Asisten -->
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;">
+                <span class="kpi-label">Status Asesmen Blok (Asisten)</span>
+                <div class="kpi-value-row">
+                  <span class="kpi-number" id="asesmenKpiTotalAssessed">74</span>
+                  <span class="kpi-unit">/ 109 Blok (<span id="asesmenKpiPctAssessed">67.9%</span>)</span>
+                </div>
+                <div class="asesmen-mini-bar" title="Hijau: Selesai Diases, Biru: In Progress, Abu: Outstanding">
+                  <div class="bar-fill bar-assessed" id="asesmenBarAssessed" style="width:67.9%;"></div>
+                  <div class="bar-fill bar-progress" id="asesmenBarProgress" style="width:17.4%;"></div>
+                  <div class="bar-fill bar-outstanding" id="asesmenBarOutstanding" style="width:14.7%;"></div>
+                </div>
+                <span class="kpi-subtext" id="asesmenKpiSubAssessed">19 In Progress · 16 Outstanding</span>
+              </div>
+            </div>
+
+            <!-- KPI 2: Verifikasi Askep / Manager -->
+            <div class="kpi-card" style="border-left: 4px solid var(--status-green);">
+              <div class="kpi-content" style="width:100%;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="kpi-label" style="font-size:9.5px;letter-spacing:0;">Verifikasi Askep / Mgr</span>
+                  <span style="font-size:9px;color:var(--text-muted);font-weight:600;">(74 diases)</span>
+                </div>
+                <div class="kpi-value-row">
+                  <span class="kpi-number text-success" id="asesmenKpiApproved">53</span>
+                  <span class="kpi-unit">Disetujui (<span id="asesmenKpiApprovedPct">71.6%</span>)</span>
+                </div>
+                <div class="verif-mini-pills">
+                  <span class="pill-badge pill-approved" id="pillApprovedCount">✓ 53 Approved</span>
+                  <span class="pill-badge pill-pending" id="pillPendingCount">⏳ 14 Menunggu</span>
+                  <span class="pill-badge pill-revision" id="pillRevisionCount">⚠️ 7 Revisi</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- KPI 3: Cakupan Pasar Pikul (PP) -->
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;">
+                <span class="kpi-label">Cakupan Pasar Pikul (PP)</span>
+                <div class="kpi-value-row">
+                  <span class="kpi-number" id="asesmenKpiPP">4,928</span>
+                  <span class="kpi-unit">/ <span id="asesmenKpiTotalPP">6,513</span> PP (<span
+                      id="asesmenKpiPPPct">75.7%</span>)</span>
+                </div>
+                <div class="asesmen-mini-bar" title="Cakupan Pasar Pikul">
+                  <div class="bar-fill bar-pp" id="asesmenBarPP" style="width:75.7%;"></div>
+                </div>
+                <span class="kpi-subtext" id="asesmenKpiPPSub">Sisa 1,585 PP Outstanding · Rasio ~2,2 PP/Ha</span>
+              </div>
+            </div>
+
+            <!-- KPI 4: Temuan Masalah & Tindak Lanjut -->
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;">
+                <span class="kpi-label">Temuan Masalah Lapangan</span>
+                <div class="kpi-value-row">
+                  <span class="kpi-number" id="asesmenKpiIssues">457</span>
+                  <span class="kpi-unit">Titik Masalah</span>
+                </div>
+                <span class="kpi-subtext" style="margin-top:6px;">258 Major · 199 Minor · 76.4% Terverifikasi</span>
+              </div>
+            </div>
+
+            <!-- KPI 5: Luas Areal Ter-ases -->
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;">
+                <span class="kpi-label">Luas Areal Selesai Diases</span>
+                <div class="kpi-value-row">
+                  <span class="kpi-number" id="asesmenKpiLuas">2,034.2</span>
+                  <span class="kpi-unit">/ <span id="asesmenKpiLuasTotal">2,959.3</span> Ha</span>
+                </div>
+                <span class="kpi-subtext" id="asesmenKpiLuasSub" style="margin-top:6px;">68.7% dari total luas areal
+                  konsesi SKDE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- DIVISIONS SUMMARY CARDS -->
+          <div class="asesmen-section-header">
+            <h3 class="card-section-title">Ringkasan Progres &amp; Verifikasi per Divisi</h3>
+            <span style="font-size:11px;color:var(--text-muted);">Estate SKDE · 5 Divisi Agronomi</span>
+          </div>
+          <div class="asesmen-division-grid" id="asesmenDivisionGrid">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- FILTER TOOLBAR & TABLE -->
+          <div class="asesmen-filter-toolbar">
+            <div class="toolbar-left-group">
+              <div class="filter-item">
+                <label for="asesmenDivFilter">Divisi</label>
+                <select id="asesmenDivFilter" class="filter-select">
+                  <option value="all" selected>Semua Divisi (5)</option>
+                  <option value="DIVISI 1">DIVISI 1</option>
+                  <option value="DIVISI 2">DIVISI 2</option>
+                  <option value="DIVISI 3">DIVISI 3</option>
+                  <option value="DIVISI 4">DIVISI 4</option>
+                  <option value="DIVISI 5">DIVISI 5</option>
+                </select>
+              </div>
+              <div class="filter-item">
+                <label for="asesmenStatusFilter">Status Asisten</label>
+                <select id="asesmenStatusFilter" class="filter-select">
+                  <option value="all" selected>Semua Status Asisten</option>
+                  <option value="Sudah Diases">Sudah Diases (74)</option>
+                  <option value="Dalam Pengerjaan">Dalam Pengerjaan (19)</option>
+                  <option value="Outstanding">Outstanding (16)</option>
+                </select>
+              </div>
+              <div class="filter-item">
+                <label for="asesmenVerifFilter">Verifikasi Askep / Manager</label>
+                <select id="asesmenVerifFilter" class="filter-select">
+                  <option value="all" selected>Semua Status Verifikasi</option>
+                  <option value="Approved">Disetujui Askep/Manager (53)</option>
+                  <option value="Pending">Menunggu Verifikasi (14)</option>
+                  <option value="Revision">Perlu Revisi (7)</option>
+                  <option value="None">Belum Diases / Draft (35)</option>
+                </select>
+              </div>
+            </div>
+            <div class="toolbar-right-group">
+              <div class="asesmen-search-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="asesmenSearchInput" class="asesmen-search-input"
+                  placeholder="Cari blok, PIC, catatan verifikasi...">
+                <button type="button" id="btnResetAsesmenFilter" class="btn-clear-search" title="Reset filter"
+                  style="display:none;">✕</button>
+              </div>
+              <span class="asesmen-count-badge" id="asesmenResultCount">Menampilkan 109 Blok</span>
+            </div>
+          </div>
+
+          <!-- 109 BLOCKS RESPONSIVE DENSE TABLE -->
+          <div class="table-container-card" style="margin-bottom:16px;">
+            <div class="table-scroll-wrapper" style="max-height:480px;overflow-y:auto;">
+              <table class="dense-table" id="asesmenTable">
+                <thead>
+                  <tr>
+                    <th style="width:80px;">Divisi</th>
+                    <th style="width:75px;">Blok</th>
+                    <th style="width:75px;text-align:right;">Luas (Ha)</th>
+                    <th style="width:125px;">Status Asisten</th>
+                    <th style="width:160px;">Verifikasi Askep / Mgr</th>
+                    <th style="width:170px;">PIC Asisten &amp; Tgl Asesmen</th>
+                    <th style="width:170px;">Cakupan Pasar Pikul (PP)</th>
+                    <th style="width:115px;text-align:center;">Temuan Masalah</th>
+                    <th>Catatan Verifikasi Askep / Manager</th>
+                    <th style="width:145px;text-align:center;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="asesmenTableBody">
+                  <!-- Populated dynamically by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SOP VERIFIKASI ASKEP / MANAGER BANNER -->
+          <div class="asesmen-sop-banner" style="margin-top:8px;margin-bottom:16px;">
+            <div class="sop-banner-left">
+              <div class="sop-icon-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <polyline points="9 12 11 14 15 10"></polyline>
+                </svg>
+              </div>
+              <div class="sop-text-content">
+                <div class="sop-title-row">
+                  <strong>SOP Verifikasi Askep / Manager:</strong>
+                  <span class="sop-tag-pill">Sampling Uji Petik Min. 20% Pasar Pikul (Proporsional ~2,2 PP/Ha)</span>
+                  <span class="sop-tag-pill tag-cascade">Cascade Auto-Approval</span>
+                </div>
+                <p class="sop-desc">
+                  Verifikasi Askep/Manager dilakukan di <strong>level blok</strong> dengan sampling fisik ≥20% Pasar
+                  Pikul (~2,2 PP/Ha). Pengesahan blok secara otomatis <strong>menyetujui (Cascade Approved)</strong>
+                  seluruh temuan Asisten di blok tersebut. Opsi <strong>Revisi</strong> atau <strong>Tolak</strong>
+                  hanya diberikan spesifik pada tagging yang tidak sesuai (<em>Management by Exception</em>).
+                </p>
+              </div>
+            </div>
+            <div class="sop-banner-right">
+              <div class="sop-metric-box">
+                <span class="sop-metric-label">Standar Uji Petik</span>
+                <strong class="sop-metric-val">≥ 20% PP</strong>
+                <small class="sop-metric-sub">Rasio ~2,2 PP/Ha</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           VIEW 4: ACTION PLAN
+           Subtabs: Daftar Action Plan | Dokumentasi Lapangan | Audit Trail
+           ==================================================================== -->
+      <section id="viewAction" class="view-panel detail-view">
+        <div class="detail-header-card">
+          <div>
+            <h2 class="detail-title">Perencanaan, Realisasi &amp; Verifikasi Action Plan</h2>
+            <p class="detail-desc">Kelola seluruh siklus action plan: perencanaan, realisasi lapangan, dokumentasi
+              sebelum-sesudah, dan audit trail perubahan.</p>
+          </div>
+        </div>
+
+        <!-- Subtabs Bar -->
+        <div class="view-subtabs-bar">
+          <button class="subtab-btn active" data-subtab="subtabActionList">
+            📋 Monitoring Realisasi
+          </button>
+          <button class="subtab-btn" data-subtab="subtabActionDocs">
+            📷 Dokumentasi Sebelum–Sesudah
+          </button>
+          <button class="subtab-btn" data-subtab="subtabActionHistory">
+            📜 Audit Trail
+          </button>
+        </div>
+
+        <!-- SUBTAB A: Action Plan Monitoring Table (was VIEW 3) -->
+        <div class="subtab-content" id="subtabActionList" style="display:block;">
+          <div class="detail-header-card" style="margin-bottom:12px;">
+            <div>
+              <h3 class="detail-title" style="font-size:15px;">Monitoring Realisasi Action Plan</h3>
+              <p class="detail-desc">Inventarisasi temuan lapangan, target volume terstandarisasi per unit, realisasi
+                terverifikasi, PIC, dan status penanganan.</p>
+            </div>
+          </div>
+          <!-- Reuses the same filter+table IDs – JS will populate actionPlanTableBody found above -->
+          <div class="action-tools-card">
+            <div class="tools-row">
+              <div class="tool-field">
+                <label for="filterProblemAction">Problem Master</label>
+                <select id="filterProblemAction" class="tool-select">
+                  <option value="all">Semua Problem (16)</option>
+                </select>
+              </div>
+              <div class="tool-field">
+                <label for="filterSensitivityAction">Sensitivitas</label>
+                <select id="filterSensitivityAction" class="tool-select">
+                  <option value="all">Semua</option>
+                  <option value="Major">Major</option>
+                  <option value="Minor">Minor</option>
+                </select>
+              </div>
+              <div class="tool-field">
+                <label for="filterStatusAction">Status</label>
+                <select id="filterStatusAction" class="tool-select">
+                  <option value="all">Semua Status</option>
+                  <option value="Belum Ditangani">Belum Ditangani</option>
+                  <option value="Dalam Pengerjaan">Dalam Pengerjaan</option>
+                  <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                  <option value="Selesai">Selesai</option>
+                </select>
+              </div>
+              <div class="tool-field">
+                <label for="filterOverdueAction">Keterlambatan</label>
+                <select id="filterOverdueAction" class="tool-select">
+                  <option value="all">Semua</option>
+                  <option value="overdue">Hanya Overdue</option>
+                  <option value="on-schedule">Tepat Waktu</option>
+                </select>
+              </div>
+              <div class="tool-field search-field">
+                <label for="searchActionInputAlt">Cari Temuan</label>
+                <input type="text" id="searchActionInputAlt" placeholder="Cari ID, Blok, PIC..." class="tool-input">
+              </div>
+              <div class="tool-meta-count">
+                <span id="actionTableCountBadge2">Menampilkan 52 temuan</span>
+              </div>
+            </div>
+          </div>
+          <div class="table-container-card">
+            <div class="table-scroll-wrapper">
+              <table class="dense-table" id="actionPlanTable2">
+                <thead>
+                  <tr>
+                    <th>ID Temuan</th>
+                    <th>Lokasi (Div/Blok)</th>
+                    <th>Permasalahan</th>
+                    <th>Action Plan</th>
+                    <th>Sensitivitas</th>
+                    <th>Timeframe</th>
+                    <th>Vol. Inv</th>
+                    <th>Realisasi</th>
+                    <th>Progress</th>
+                    <th>PIC Lapangan</th>
+                    <th>Tgl Identifikasi</th>
+                    <th>Target Selesai</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="actionPlanTableBody2">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB B: Documentation Before/After (was VIEW 7) -->
+        <div class="subtab-content" id="subtabActionDocs" style="display:none;">
+          <div class="detail-header-card" style="margin-bottom:12px;">
+            <div>
+              <h2 class="detail-title">Dokumentasi Lapangan: Sebelum vs Sesudah</h2>
+              <p class="detail-desc">Bukti fisik tindak lanjut perbaikan agronomi dan hasil verifikasi lapangan
+                verifikator wilayah.</p>
+            </div>
+            <div class="doc-nav-controls">
+              <button type="button" class="btn-secondary" id="btnPrevDoc">← Kasus Sebelumnya</button>
+              <span class="doc-counter" id="docCounterText">Kasus 1 dari 4</span>
+              <button type="button" class="btn-secondary" id="btnNextDoc">Kasus Berikutnya →</button>
+            </div>
+          </div>
+
+          <div class="doc-comparison-card">
+            <div class="doc-photos-row">
+              <div class="photo-container">
+                <div class="photo-badge badge-before">SEBELUM PERBAIKAN</div>
+                <div class="photo-display" id="docPhotoBefore"><!-- SVG field comparison --></div>
+                <div class="photo-timestamp" id="docDateBefore">01 Okt 2024 · 08:12 WITA</div>
+              </div>
+              <div class="photo-container">
+                <div class="photo-badge badge-after">SESUDAH TINDAK LANJUT</div>
+                <div class="photo-display" id="docPhotoAfter"><!-- SVG field comparison --></div>
+                <div class="photo-timestamp" id="docDateAfter">12 Nov 2024 · 10:35 WITA</div>
+              </div>
+            </div>
+            <div class="doc-metadata-grid">
+              <div class="meta-cell">
+                <span class="meta-cell-label">ID &amp; Lokasi Blok</span>
+                <strong class="meta-cell-value" id="docLocationText">SKDE · DIVISI 3 · Blok T-32</strong>
+              </div>
+              <div class="meta-cell">
+                <span class="meta-cell-label">Temuan Masalah</span>
+                <strong class="meta-cell-value" id="docProblemText">Semak di Gawangan (Pisang)</strong>
+              </div>
+              <div class="meta-cell">
+                <span class="meta-cell-label">Tindakan Dilakukan</span>
+                <strong class="meta-cell-value" id="docActionText">Pengendalian Chemist</strong>
+              </div>
+              <div class="meta-cell">
+                <span class="meta-cell-label">Status Verifikasi</span>
+                <span class="badge-status-lg" id="docStatusBadge">Perlu ulangan</span>
+              </div>
+              <div class="meta-cell full-width">
+                <span class="meta-cell-label">Catatan Tim Verifikator Lapangan</span>
+                <p class="meta-cell-note" id="docVerifierNote">Kondisi terakhir masih menunjukkan vegetasi tersisa pada
+                  area tindak lanjut baris 14–18. Dijadwalkan ulangan penyemprotan tanggal 20 Nov 2024.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB C: Audit Trail -->
+        <div class="subtab-content" id="subtabActionHistory" style="display:none;">
+          <div class="detail-header-card" style="margin-bottom:12px;">
+            <div>
+              <h3 class="detail-title" style="font-size:15px;">Audit Trail Perubahan Action Plan</h3>
+              <p class="detail-desc">Log kronologis seluruh perubahan status, approval, dan catatan verifikasi. Tidak
+                dapat dimodifikasi.</p>
+            </div>
+          </div>
+          <div class="table-container-card">
+            <div class="table-scroll-wrapper">
+              <table class="dense-table">
+                <thead>
+                  <tr>
+                    <th>Waktu</th>
+                    <th>ID Temuan</th>
+                    <th>Aksi</th>
+                    <th>Dari Status</th>
+                    <th>Ke Status</th>
+                    <th>Oleh (User)</th>
+                    <th>Catatan</th>
+                  </tr>
+                </thead>
+                <tbody id="auditTrailBody">
+                  <tr>
+                    <td>25 Sep 2026 · 09:12</td>
+                    <td>SPT-SKDE-2026-014</td>
+                    <td><span class="badge-status" style="background:#ECFDF5;color:#047857;">Approved</span></td>
+                    <td>Menunggu Verifikasi</td>
+                    <td>Selesai</td>
+                    <td>Bambang S. (Askep Div. 3)</td>
+                    <td>Uji petik fisik: OK, semak cleared 100%</td>
+                  </tr>
+                  <tr>
+                    <td>24 Sep 2026 · 14:05</td>
+                    <td>SPT-SKDE-2026-007</td>
+                    <td><span class="badge-status" style="background:#FEF3C7;color:#B45309;">Revision</span></td>
+                    <td>Menunggu Verifikasi</td>
+                    <td>Dalam Pengerjaan</td>
+                    <td>Rahmat H. (Manager)</td>
+                    <td>Volume realisasi tidak sesuai, perlu ulangan 3 baris</td>
+                  </tr>
+                  <tr>
+                    <td>23 Sep 2026 · 11:30</td>
+                    <td>SPT-SKDE-2026-022</td>
+                    <td><span class="badge-status" style="background:#ECFDF5;color:#047857;">Approved</span></td>
+                    <td>Dalam Pengerjaan</td>
+                    <td>Menunggu Verifikasi</td>
+                    <td>Wahyu P. (Asisten Agronomi)</td>
+                    <td>Realisasi upkeep selesai, disubmit untuk verifikasi</td>
+                  </tr>
+                  <tr>
+                    <td>22 Sep 2026 · 08:45</td>
+                    <td>SPT-SKDE-2026-031</td>
+                    <td>Update</td>
+                    <td>Belum Ditangani</td>
+                    <td>Dalam Pengerjaan</td>
+                    <td>Eko Siswanto (Mandor 1)</td>
+                    <td>Dimulai pengerjaan rotasi 2, target selesai 27 Sep</td>
+                  </tr>
+                  <tr>
+                    <td colspan="7" style="text-align:center;color:var(--text-muted);font-style:italic;padding:12px;">—
+                      Data audit trail akan ter-populate dari log sistem real produksi —</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           VIEW 5: REPORTS & ANALYTICS
+           Subtabs: Rekap Summary | Per Divisi | Tren Berulang | Coverage
+           ==================================================================== -->
+      <section id="viewReports" class="view-panel detail-view">
+        <div class="detail-header-card">
+          <div>
+            <h2 class="detail-title">Laporan Komprehensif &amp; Analisis Tren Masalah</h2>
+            <p class="detail-desc">Rekap problem inventory, analisis tren masalah berulang, komparasi divisi, dan
+              kepatuhan observasi.</p>
+          </div>
+        </div>
+
+        <!-- Subtabs Bar -->
+        <div class="view-subtabs-bar">
+          <button class="subtab-btn active" data-subtab="subtabReportsSummary">
+            📊 Rekap Summary
+          </button>
+          <button class="subtab-btn" data-subtab="subtabReportsDivision">
+            🏢 Analisa per Divisi
+          </button>
+          <button class="subtab-btn" data-subtab="subtabReportsTrends">
+            🔁 Tren &amp; Masalah Berulang
+          </button>
+          <button class="subtab-btn" data-subtab="subtabReportsCoverage">
+            📍 Kepatuhan Observasi
+          </button>
+        </div>
+
+        <!-- SUBTAB A: Summary Report -->
+        <div class="subtab-content" id="subtabReportsSummary" style="display:block;">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px;">
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;"><span class="kpi-label">Total Temuan Aktif</span>
+                <div class="kpi-value-row"><span class="kpi-number" id="rptKpiTotalActive">457</span></div><span
+                  class="kpi-subtext">258 Major · 199 Minor</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;"><span class="kpi-label">Terselesaikan YTD</span>
+                <div class="kpi-value-row"><span class="kpi-number text-success" id="rptKpiResolved">312</span></div>
+                <span class="kpi-subtext">76.4% dari total diidentifikasi</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;"><span class="kpi-label">Overdue Action Plan</span>
+                <div class="kpi-value-row"><span class="kpi-number" style="color:var(--primary-red);"
+                    id="rptKpiOverdue">38</span></div><span class="kpi-subtext">Melewati target selesai</span>
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-content" style="width:100%;"><span class="kpi-label">Masalah Major Baru</span>
+                <div class="kpi-value-row"><span class="kpi-number" id="rptKpiNewMajor">14</span></div><span
+                  class="kpi-subtext">Bulan ini (Sep 2026)</span>
+              </div>
+            </div>
+          </div>
+          <div class="table-container-card">
+            <div style="padding:12px 14px;border-bottom:1px solid var(--border-subtle);">
+              <h3 style="font-family:var(--font-heading);font-size:13px;font-weight:700;">Rekap per Kategori Problem (16
+                Master)</h3>
+            </div>
+            <div class="table-scroll-wrapper">
+              <table class="dense-table" id="reportSummaryTable">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Kategori Problem</th>
+                    <th>Sensitvitas</th>
+                    <th style="text-align:right;">Vol. Temuan</th>
+                    <th style="text-align:right;">Belum Ditangani</th>
+                    <th style="text-align:right;">Dalam Pengerjaan</th>
+                    <th style="text-align:right;">Selesai</th>
+                    <th style="text-align:right;">Overdue</th>
+                    <th>Top Divisi</th>
+                  </tr>
+                </thead>
+                <tbody id="reportSummaryBody">
+                  <!-- Populated by JS from SPT_DATA.masterProblems -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB B: Per-Division Analysis (was VIEW 6) -->
+        <div class="subtab-content" id="subtabReportsDivision" style="display:none;">
+          <div class="detail-header-card" style="margin-bottom:12px;">
+            <div>
+              <h2 class="detail-title">Rekap Analisa Pekerjaan per Divisi</h2>
+              <p class="detail-desc">Perbandingan budget vs aktual produksi, penyelesaian action plan terverifikasi, dan
+                rekap permasalahan tertunda per divisi.</p>
+            </div>
+          </div>
+          <div class="division-grid-layout">
+            <div class="division-chart-card">
+              <h3 class="card-section-title">Produksi: Budget YTD vs Aktual YTD (Ton/Ha)</h3>
+              <div class="chart-body" id="divisionGroupedBarChart">
+                <!-- SVG Grouped Bars rendered by JS -->
+              </div>
+            </div>
+            <div class="division-priority-card">
+              <h3 class="card-section-title">Ringkasan Prioritas &amp; Action Plan Divisi</h3>
+              <div class="priority-list" id="divisionPriorityList">
+                <!-- Cards rendered by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB C: Recurring Issues / Trends -->
+        <div class="subtab-content" id="subtabReportsTrends" style="display:none;">
+          <div class="detail-header-card" style="margin-bottom:12px;">
+            <div>
+              <h3 class="detail-title" style="font-size:15px;">Analisis Tren &amp; Masalah Berulang</h3>
+              <p class="detail-desc">Identifikasi problem yang berulang (&gt;2x) di blok yang sama, pola musiman, dan
+                gap perbaikan permanen.</p>
+            </div>
+          </div>
+          <div class="table-container-card">
+            <div class="table-scroll-wrapper">
+              <table class="dense-table">
+                <thead>
+                  <tr>
+                    <th>Blok</th>
+                    <th>Divisi</th>
+                    <th>Kategori Masalah</th>
+                    <th style="text-align:center;">Frekuensi (YTD)</th>
+                    <th>Tgl Pertama</th>
+                    <th>Tgl Terakhir</th>
+                    <th>PIC</th>
+                    <th>Rekomendasi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>S-28</strong></td>
+                    <td>DIVISI 3</td>
+                    <td>Semak di Gawangan</td>
+                    <td style="text-align:center;color:var(--primary-red);font-weight:700;">4×</td>
+                    <td>Jan 2026</td>
+                    <td>Sep 2026</td>
+                    <td>Wahyu P.</td>
+                    <td>Pengendalian sistemik – herbisida residu</td>
+                  </tr>
+                  <tr>
+                    <td><strong>T-14</strong></td>
+                    <td>DIVISI 1</td>
+                    <td>Lalang di Piringan</td>
+                    <td style="text-align:center;color:#B45309;font-weight:700;">3×</td>
+                    <td>Feb 2026</td>
+                    <td>Agu 2026</td>
+                    <td>Eko S.</td>
+                    <td>Audit metode manual vs kimia</td>
+                  </tr>
+                  <tr>
+                    <td><strong>U-07</strong></td>
+                    <td>DIVISI 4</td>
+                    <td>Pemupukan Tidak Tepat Dosis</td>
+                    <td style="text-align:center;color:#B45309;font-weight:700;">3×</td>
+                    <td>Mar 2026</td>
+                    <td>Sep 2026</td>
+                    <td>Ahmad F.</td>
+                    <td>Rekalibrasi takaran per blok</td>
+                  </tr>
+                  <tr>
+                    <td colspan="8" style="text-align:center;color:var(--text-muted);font-style:italic;padding:12px;">—
+                      Data tren akan ter-populate dari log temuan historis sistem produksi —</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB D: Observation Route Compliance -->
+        <div class="subtab-content" id="subtabReportsCoverage" style="display:none;">
+          <div class="detail-header-card" style="margin-bottom:12px;">
+            <div>
+              <h3 class="detail-title" style="font-size:15px;">Kepatuhan Rute Observasi Pasar Pikul</h3>
+              <p class="detail-desc">Monitoring kepatuhan asisten dalam melaksanakan rute Pasar Pikul sesuai SOP (min.
+                20% PP/Blok).</p>
+            </div>
+          </div>
+          <div class="table-container-card">
+            <div class="table-scroll-wrapper">
+              <table class="dense-table">
+                <thead>
+                  <tr>
+                    <th>Divisi</th>
+                    <th>Asisten PIC</th>
+                    <th style="text-align:right;">Blok Tanggung Jawab</th>
+                    <th style="text-align:right;">Blok Selesai PP</th>
+                    <th style="text-align:right;">Blok ≥20% PP</th>
+                    <th style="text-align:right;">Compliance %</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>DIVISI 1</td>
+                    <td>Rahmat H.</td>
+                    <td style="text-align:right;">8</td>
+                    <td style="text-align:right;">7</td>
+                    <td style="text-align:right;">6</td>
+                    <td style="text-align:right;font-weight:700;">75.0%</td>
+                    <td><span class="badge-status" style="background:#FEF3C7;color:#B45309;">Monitor</span></td>
+                  </tr>
+                  <tr>
+                    <td>DIVISI 2</td>
+                    <td>Bambang S.</td>
+                    <td style="text-align:right;">7</td>
+                    <td style="text-align:right;">5</td>
+                    <td style="text-align:right;">5</td>
+                    <td style="text-align:right;font-weight:700;">71.4%</td>
+                    <td><span class="badge-status" style="background:#FEF3C7;color:#B45309;">Monitor</span></td>
+                  </tr>
+                  <tr>
+                    <td>DIVISI 3</td>
+                    <td>Wahyu P.</td>
+                    <td style="text-align:right;">7</td>
+                    <td style="text-align:right;">7</td>
+                    <td style="text-align:right;">7</td>
+                    <td style="text-align:right;font-weight:700;color:#047857;">100%</td>
+                    <td><span class="badge-status" style="background:#ECFDF5;color:#047857;">Compliant</span></td>
+                  </tr>
+                  <tr>
+                    <td>DIVISI 4</td>
+                    <td>Ahmad F.</td>
+                    <td style="text-align:right;">7</td>
+                    <td style="text-align:right;">6</td>
+                    <td style="text-align:right;">5</td>
+                    <td style="text-align:right;font-weight:700;">71.4%</td>
+                    <td><span class="badge-status" style="background:#FEF3C7;color:#B45309;">Monitor</span></td>
+                  </tr>
+                  <tr>
+                    <td>DIVISI 5</td>
+                    <td>Eko S.</td>
+                    <td style="text-align:right;">6</td>
+                    <td style="text-align:right;">4</td>
+                    <td style="text-align:right;">3</td>
+                    <td style="text-align:right;font-weight:700;color:var(--primary-red);">50.0%</td>
+                    <td><span class="badge-status" style="background:#FEE2E2;color:#B91C1C;">Alert</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           VIEW 6: PRODUCTION & BCCR LINKAGE
+           Subtabs: Yield Timeline | Rekap BCCR Matrix | Detail Analisa BCCR
+           ==================================================================== -->
+      <section id="viewProduction" class="view-panel detail-view">
+        <div class="detail-header-card">
+          <div>
+            <h2 class="detail-title">Kinerja Produksi, BCCR &amp; Proyeksi Pemulihan</h2>
+            <p class="detail-desc">Trend yield moving 24 bulan, distribusi BCCR YTD per divisi/blok, dan analisa
+              granular rotasi panen.</p>
+          </div>
+          <div class="detail-actions" style="display:flex;gap:8px;align-items:center;">
+            <button type="button" class="btn-secondary" id="btnExportTrendCsv" title="Export tabel 24 bulan ke CSV">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Export CSV (24 Bulan)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Subtabs Bar -->
+        <div class="view-subtabs-bar">
+          <button class="subtab-btn active" data-subtab="subtabProdYield">
+            📈 Yield Moving 24 Bulan
+          </button>
+          <button class="subtab-btn" data-subtab="subtabProdBccr">
+            📊 Rekap BCCR Matrix
+          </button>
+          <button class="subtab-btn" data-subtab="subtabProdAnalysis">
+            🔍 Detail Analisa BCCR &amp; Rotasi
+          </button>
+        </div>
+
+        <!-- SUBTAB A: Yield Trend (was VIEW 4) -->
+        <div class="subtab-content" id="subtabProdYield" style="display:block;">
+          <div class="trend-chart-card">
+            <div class="trend-toolbar">
+              <div class="trend-scale-banner">
+                <div class="trend-toggle-group" id="trendMetricToggleGroup"
+                  style="display:inline-flex;background:#F1F5F9;border:1px solid #CBD5E1;border-radius:6px;padding:2px;gap:2px;">
+                  <button type="button" class="trend-metric-btn active" id="btnMetricMoving" data-metric="moving"
+                    style="border:none;background:#FFFFFF;color:#0F172A;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,0.06);">Yield
+                    Moving (Ton/Ha)</button>
+                  <button type="button" class="trend-metric-btn" id="btnMetricBccr" data-metric="bccr"
+                    style="border:none;background:transparent;color:#64748B;font-size:11px;font-weight:600;padding:4px 10px;border-radius:4px;cursor:pointer;">Rasio
+                    BCCR (%)</button>
+                </div>
+                <span class="scale-info" style="font-size:11px;color:var(--text-secondary);font-weight:500;">Trailing 12
+                  Bulan · Cut-off Jul 2026</span>
+              </div>
+              <div class="trend-legend">
+                <span class="legend-entry"><i class="leg-solid-red"></i>Actual Moving</span>
+                <span class="legend-entry"><i class="leg-dashed-gray" style="background:#64748B;"></i>Potency
+                  Moving</span>
+                <span class="legend-entry"><i class="leg-solid-orange"></i>Proyeksi Skenario (Easing)</span>
+                <span class="legend-entry"><i class="leg-line-cutoff"></i>Cut-off (Jul 2026)</span>
+                <span class="legend-entry" title="Aug–Dec 2025 merupakan estimasi historis"><i
+                    style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#F8FAFC;border:1.5px solid #64748B;"></i>Sintetis
+                  Historis</span>
+              </div>
+            </div>
+            <div class="chart-canvas-wrapper" id="trendChartSvgContainer">
+              <!-- Dynamic SVG Timeline rendered by JS -->
+            </div>
+            <div class="trend-disclaimer" style="margin-top:10px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span><strong>Catatan Agribisnis &amp; Provenance:</strong> S-28 menggunakan nilai moving sumber Jan–Jul
+                2026 dan 5 bulan sintetis historis Aug–Dec 2025. Proyeksi 12 bulan ke depan merupakan skenario pemulihan
+                menuju 100% potensi agronomis pada bulan target pemulihan, bukan model prediksi statistik
+                tervalidasi.</span>
+            </div>
+          </div>
+          <div class="trend-table-card">
+            <div class="trend-table-header-row">
+              <div>
+                <h3 class="trend-table-title" id="trendTableTitle">Tabel Data 24 Bulan Trailing Yield Moving (Ton/Ha)
+                </h3>
+                <p style="font-size:11px;color:var(--text-muted);margin:2px 0 0 0;">Asumsi: Trailing 12 Bulan · Cut-off
+                  Jul 2026 · Scroll ke bawah untuk melihat semua baris</p>
+              </div>
+              <button type="button" class="btn-secondary" id="btnExportTrendCsv2" title="Export CSV"
+                style="padding:4px 8px;font-size:11px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Export CSV</span>
+              </button>
+            </div>
+            <div class="trend-table-wrapper" id="trendTableContainer">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB B: BCCR Matrix (was VIEW 2) -->
+        <div class="subtab-content" id="subtabProdBccr" style="display:none;">
+          <div class="detail-header-card" style="margin-bottom:12px;">
+            <div>
+              <h2 class="detail-title">Rekap Distribusi BCCR YTD Divisi</h2>
+              <p class="detail-desc">Distribusi jumlah blok berdasarkan 6 range pencapaian BCCR per bulan (14 bulan
+                historis). Klik cell untuk melihat daftar blok.</p>
+            </div>
+            <div class="detail-actions">
+              <button type="button" class="btn-secondary" id="btnExportBccr">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Export Rekap</span>
+              </button>
+              <button type="button" class="btn-secondary" id="btnPrintBccr">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                  <rect x="6" y="14" width="12" height="8"></rect>
+                </svg>
+                <span>Cetak Laporan</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-container-card">
+            <div class="table-scroll-wrapper">
+              <table class="dense-table" id="bccrMatrixTable">
+                <!-- Populated by JS -->
+              </table>
+            </div>
+          </div>
+          <!-- Filtered block list drawer on cell click -->
+          <div class="block-drilldown-card" id="bccrCellDrilldown" style="display:none;">
+            <div class="drilldown-header">
+              <h3 id="drilldownTitle">Daftar Blok Terkait</h3>
+              <button class="btn-close-sm" id="btnCloseDrilldown">✕</button>
+            </div>
+            <div class="drilldown-content" id="drilldownContent"></div>
+          </div>
+        </div>
+
+        <!-- SUBTAB C: Granular Block Analysis (was VIEW 5) -->
+        <div class="subtab-content" id="subtabProdAnalysis" style="display:none;">
+          <div class="detail-header-card" style="margin-bottom:12px;">
+            <div>
+              <h2 class="detail-title">Detail Analisa BCCR &amp; Rotasi Panen</h2>
+              <p class="detail-desc">Analisa granular per blok: realisasi rotasi 1–4, JJG, sisa buah, month-to-date, dan
+                estimasi BCCR akhir bulan dengan conditional formatting standar.</p>
+            </div>
+          </div>
+          <div class="table-container-card">
+            <div class="table-scroll-wrapper">
+              <table class="dense-table multi-header-table" id="analysisTable">
+                <thead>
+                  <tr>
+                    <th colspan="4" class="group-header">Informasi Blok</th>
+                    <th colspan="3" class="group-header">Performa YTD</th>
+                    <th colspan="3" class="group-header">Rotasi 1</th>
+                    <th colspan="3" class="group-header">Rotasi 2</th>
+                    <th colspan="3" class="group-header">Rotasi 3</th>
+                    <th colspan="3" class="group-header">Rotasi 4</th>
+                    <th colspan="3" class="group-header">Month-To-Date (MTD)</th>
+                    <th colspan="4" class="group-header">Estimasi Akhir Bulan</th>
+                  </tr>
+                  <tr>
+                    <th class="sticky-col col-1">Divisi</th>
+                    <th class="sticky-col col-2">Blok</th>
+                    <th>Luas (Ha)</th>
+                    <th>Thn Tanam</th>
+                    <th>Potensi</th>
+                    <th>Aktual</th>
+                    <th>BCCR %</th>
+                    <th>JJG</th>
+                    <th>Ton</th>
+                    <th>Sisa</th>
+                    <th>JJG</th>
+                    <th>Ton</th>
+                    <th>Sisa</th>
+                    <th>JJG</th>
+                    <th>Ton</th>
+                    <th>Sisa</th>
+                    <th>JJG</th>
+                    <th>Ton</th>
+                    <th>Sisa</th>
+                    <th>Total JJG</th>
+                    <th>Total Ton</th>
+                    <th>Ton/Ha</th>
+                    <th>Est BCCR</th>
+                    <th>Est Ton/Ha</th>
+                    <th>Trend</th>
+                    <th>Gap</th>
+                  </tr>
+                </thead>
+                <tbody id="analysisTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           VIEW 7: ADMINISTRATION
+           Subtabs: Master Problem | Master Blok | Role &amp; Akses | Integrasi
+           ==================================================================== -->
+      <section id="viewAdmin" class="view-panel detail-view">
+        <div class="detail-header-card">
+          <div>
+            <h2 class="detail-title">Master Data Standar &amp; Integrasi Sistem</h2>
+            <p class="detail-desc">Kelola 16 master problem, 109 blok SKDE, role permission matrix, dan status integrasi
+              sistem eksternal.</p>
+          </div>
+        </div>
+
+        <!-- Subtabs Bar -->
+        <div class="view-subtabs-bar">
+          <button class="subtab-btn active" data-subtab="subtabAdminMasterProblem">
+            ⚙️ Master Problem <span class="badge-pill">16</span>
+          </button>
+          <button class="subtab-btn" data-subtab="subtabAdminMasterBlock">
+            🗂️ Master Blok <span class="badge-pill">109</span>
+          </button>
+          <button class="subtab-btn" data-subtab="subtabAdminRoles">
+            👥 Role &amp; Akses
+          </button>
+          <button class="subtab-btn" data-subtab="subtabAdminIntegration">
+            🔗 Integrasi Sistem
+          </button>
+        </div>
+
+        <!-- SUBTAB A: Master Problem Table -->
+        <div class="subtab-content" id="subtabAdminMasterProblem" style="display:block;">
+          <div class="table-container-card">
+            <div
+              style="padding:12px 14px;border-bottom:1px solid var(--border-subtle);display:flex;justify-content:space-between;align-items:center;">
+              <h3 style="font-family:var(--font-heading);font-size:13px;font-weight:700;">16 Master Problem Lapangan
+                (Standard SPT)</h3>
+              <button class="btn-secondary" style="font-size:11px;padding:4px 10px;">+ Tambah Problem</button>
+            </div>
+            <div class="table-scroll-wrapper">
+              <table class="dense-table" id="masterProblemAdminTable">
+                <thead>
+                  <tr>
+                    <th style="width:32px;">#</th>
+                    <th style="width:20px;"></th>
+                    <th>Nama Problem</th>
+                    <th>Kategori Upkeep</th>
+                    <th>Sensitivitas Default</th>
+                    <th>Satuan Volume</th>
+                    <th>Timeframe Default</th>
+                    <th style="text-align:center;">Aktif</th>
+                    <th style="text-align:center;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="masterProblemAdminBody">
+                  <!-- Populated by JS from SPT_DATA.masterProblems -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB B: Master Block Table -->
+        <div class="subtab-content" id="subtabAdminMasterBlock" style="display:none;">
+          <div class="table-container-card">
+            <div
+              style="padding:12px 14px;border-bottom:1px solid var(--border-subtle);display:flex;justify-content:space-between;align-items:center;">
+              <h3 style="font-family:var(--font-heading);font-size:13px;font-weight:700;">109 Blok SKDE — Data Referensi
+              </h3>
+              <div style="display:flex;gap:8px;">
+                <input type="text" id="adminBlockSearch" class="tool-input" placeholder="Cari blok..."
+                  style="font-size:11px;padding:4px 8px;width:160px;">
+                <button class="btn-secondary" style="font-size:11px;padding:4px 10px;">Export</button>
+              </div>
+            </div>
+            <div class="table-scroll-wrapper" style="max-height:500px;overflow-y:auto;">
+              <table class="dense-table" id="masterBlockAdminTable">
+                <thead>
+                  <tr>
+                    <th>Divisi</th>
+                    <th>Kode Blok</th>
+                    <th style="text-align:right;">Luas (Ha)</th>
+                    <th style="text-align:right;">Jml PP</th>
+                    <th>Tahun Tanam</th>
+                    <th style="text-align:right;">Potensi YPH</th>
+                    <th>Asisten PIC</th>
+                    <th style="text-align:center;">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="masterBlockAdminBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB C: Role & Permission Matrix -->
+        <div class="subtab-content" id="subtabAdminRoles" style="display:none;">
+          <div class="admin-grid-2col">
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <span class="admin-card-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                  Role Permission Matrix
+                </span>
+              </div>
+              <div class="table-scroll-wrapper">
+                <table class="dense-table">
+                  <thead>
+                    <tr>
+                      <th>Fitur / Modul</th>
+                      <th style="text-align:center;">Admin</th>
+                      <th style="text-align:center;">Manager</th>
+                      <th style="text-align:center;">Askep</th>
+                      <th style="text-align:center;">Asisten</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Dashboard &amp; KPI</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                    </tr>
+                    <tr>
+                      <td>Peta Interaktif</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                    </tr>
+                    <tr>
+                      <td>Tagging Temuan</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                    </tr>
+                    <tr>
+                      <td>Verifikasi Tagging</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">❌</td>
+                    </tr>
+                    <tr>
+                      <td>Action Plan Approval</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">❌</td>
+                    </tr>
+                    <tr>
+                      <td>Report &amp; Analytics</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">⚠️</td>
+                    </tr>
+                    <tr>
+                      <td>Data Produksi BCCR</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">⚠️</td>
+                    </tr>
+                    <tr>
+                      <td>Master Data (Admin)</td>
+                      <td style="text-align:center;">✅</td>
+                      <td style="text-align:center;">⚠️</td>
+                      <td style="text-align:center;">❌</td>
+                      <td style="text-align:center;">❌</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p style="font-size:10px;color:var(--text-muted);margin-top:8px;">✅ Akses Penuh · ⚠️ Baca Saja · ❌ Tidak
+                Ada Akses</p>
+            </div>
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <span class="admin-card-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path>
+                  </svg>
+                  Daftar Pengguna Aktif
+                </span>
+              </div>
+              <table class="dense-table">
+                <thead>
+                  <tr>
+                    <th>Nama</th>
+                    <th>Role</th>
+                    <th>Divisi</th>
+                    <th style="text-align:center;">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Afik Zainul Wafa</td>
+                    <td>Admin</td>
+                    <td>Semua</td>
+                    <td style="text-align:center;"><span class="sync-badge online"><span class="dot"></span>Aktif</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Rahmat Hidayat</td>
+                    <td>Manager</td>
+                    <td>Semua</td>
+                    <td style="text-align:center;"><span class="sync-badge online"><span class="dot"></span>Aktif</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Bambang S.</td>
+                    <td>Askep</td>
+                    <td>DIV 3</td>
+                    <td style="text-align:center;"><span class="sync-badge online"><span class="dot"></span>Aktif</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Wahyu Pratama</td>
+                    <td>Asisten</td>
+                    <td>DIV 3</td>
+                    <td style="text-align:center;"><span class="sync-badge syncing"><span
+                          class="dot"></span>Offline</span></td>
+                  </tr>
+                  <tr>
+                    <td>Eko Siswanto</td>
+                    <td>Asisten</td>
+                    <td>DIV 1</td>
+                    <td style="text-align:center;"><span class="sync-badge online"><span class="dot"></span>Aktif</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Ahmad Fauzi</td>
+                    <td>Asisten</td>
+                    <td>DIV 4</td>
+                    <td style="text-align:center;"><span class="sync-badge online"><span class="dot"></span>Aktif</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB D: Integration Status -->
+        <div class="subtab-content" id="subtabAdminIntegration" style="display:none;">
+          <div class="admin-grid-2col">
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <span class="admin-card-title">🔗 Status Integrasi Sistem Eksternal</span>
+              </div>
+              <table class="dense-table">
+                <thead>
+                  <tr>
+                    <th>Sistem</th>
+                    <th>Tipe</th>
+                    <th>Status</th>
+                    <th>Last Sync</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>SAP HR Module</strong></td>
+                    <td>API Pull</td>
+                    <td><span class="sync-badge online"><span class="dot"></span>Online</span></td>
+                    <td>25 Sep · 07:00</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Mill WMS</strong></td>
+                    <td>API Push</td>
+                    <td><span class="sync-badge online"><span class="dot"></span>Online</span></td>
+                    <td>25 Sep · 06:45</td>
+                  </tr>
+                  <tr>
+                    <td><strong>GIS Polygon SKDE</strong></td>
+                    <td>Static JSON</td>
+                    <td><span class="sync-badge online"><span class="dot"></span>Loaded</span></td>
+                    <td>Sep 2026 rev.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>BCCR Oracle DB</strong></td>
+                    <td>DB Sync</td>
+                    <td><span class="sync-badge syncing"><span class="dot"></span>Syncing</span></td>
+                    <td>25 Sep · 05:30</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Google Satellite</strong></td>
+                    <td>Tile CDN</td>
+                    <td><span class="sync-badge online"><span class="dot"></span>Online</span></td>
+                    <td>Real-time</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cuaca API (BMKG)</strong></td>
+                    <td>REST API</td>
+                    <td><span class="sync-badge syncing"><span class="dot"></span>Offline</span></td>
+                    <td>23 Sep · 18:00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <span class="admin-card-title">📋 Konfigurasi Sistem SPT</span>
+              </div>
+              <table class="dense-table">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Nilai</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Estate Aktif</td>
+                    <td><strong>SKDE (Sebayan Kelapa Dalam Estate)</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Total Blok</td>
+                    <td><strong>109 blok aktif produksi</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Cut-off Bulan</td>
+                    <td><strong>Juli 2026</strong></td>
+                  </tr>
+                  <tr>
+                    <td>SOP Uji Petik Min.</td>
+                    <td><strong>≥ 20% PP per Blok</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Rasio PP/Ha Standar</td>
+                    <td><strong>~2,2 PP/Ha</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Versi Mockup</td>
+                    <td><strong>1.0 — Desktop 1366×768</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- SLIDE-OUT SIDE DRAWER FOR ACTION PLAN DETAILS -->
+  <aside class="side-drawer" id="actionDrawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="drawer-header">
+      <div class="drawer-header-left">
+        <span class="drawer-badge" id="drawerIdBadge">SPT-SKDE-2026-001</span>
+        <h3 class="drawer-title" id="drawerTitle">Detail Temuan Masalah</h3>
+      </div>
+      <button class="drawer-close-btn" id="btnCloseActionDrawer" aria-label="Tutup Drawer">✕</button>
+    </div>
+
+    <div class="drawer-body" id="drawerBody">
+      <!-- Populated dynamically on row click -->
+    </div>
+  </aside>
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+  <!-- MODAL: TAMBAH TEMUAN BARU (SIMULASI LAPANGAN) -->
+  <div class="spt-modal-overlay" id="modalAddFinding" role="dialog" aria-modal="true"
+    aria-labelledby="modalAddFindingTitle">
+    <div class="spt-modal-card">
+      <div class="spt-modal-header">
+        <h3 class="spt-modal-title" id="modalAddFindingTitle">➕ Tambah Temuan Baru (Simulasi)</h3>
+        <button type="button" class="spt-modal-close-btn" id="btnCloseModalAddFinding" aria-label="Tutup">✕</button>
+      </div>
+      <div class="spt-modal-body">
+        <div class="spt-modal-alert">
+          <strong>Akses Simulasi Lokal:</strong> Data temuan ini disimpan secara lokal di <code>sessionStorage</code>
+          untuk presentasi &amp; simulasi, tidak mengubah data master production.
+        </div>
+        <form id="formAddFinding" autocomplete="off">
+          <input type="hidden" id="addFindingLat">
+          <input type="hidden" id="addFindingLng">
+          <input type="hidden" id="addFindingBlockKey">
+
+          <div class="spt-form-grid">
+            <div class="spt-field-group">
+              <label>Lokasi Wilayah</label>
+              <input type="text" id="addFindingLocation" class="spt-input" readonly value="SKDE · DIVISI 3 · Blok T-32"
+                style="background:#F1F5F9;font-weight:700;">
+            </div>
+            <div class="spt-field-group">
+              <label for="addFindingCategory">Kategori Temuan (16 Master)</label>
+              <select id="addFindingCategory" class="spt-select" required>
+                <!-- Populated dynamically by JS -->
+              </select>
+            </div>
+          </div>
+
+          <div class="spt-form-grid">
+            <div class="spt-field-group">
+              <label for="addFindingSensitivity">Sensitivitas Masalah</label>
+              <select id="addFindingSensitivity" class="spt-select">
+                <option value="Major">Major</option>
+                <option value="Minor">Minor</option>
+              </select>
+            </div>
+            <div class="spt-field-group">
+              <label for="addFindingVolume">Volume &amp; Satuan (<span id="addFindingUnitLabel">Meter</span>)</label>
+              <div style="display:flex;gap:4px;">
+                <input type="number" id="addFindingVolume" class="spt-input" min="0.1" step="any" required
+                  placeholder="Volume fisik" style="flex:1;">
+                <input type="text" id="addFindingUnit" class="spt-input" readonly
+                  style="width:60px;background:#F1F5F9;font-weight:600;text-align:center;">
+              </div>
+            </div>
+          </div>
+
+          <div class="spt-form-grid">
+            <div class="spt-field-group">
+              <label for="addFindingStatus">Status Penanganan</label>
+              <select id="addFindingStatus" class="spt-select">
+                <option value="Belum Ditangani" selected>Belum Ditangani (Open)</option>
+                <option value="Dalam Pengerjaan">Dalam Pengerjaan</option>
+                <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                <option value="Selesai">Selesai (Completed)</option>
+              </select>
+            </div>
+            <div class="spt-field-group">
+              <label for="addFindingTargetDate">Target Selesai</label>
+              <input type="text" id="addFindingTargetDate" class="spt-input" value="28 Agu 2026" required
+                placeholder="Contoh: 28 Agu 2026">
+            </div>
+          </div>
+
+          <div class="spt-form-grid single-col">
+            <div class="spt-field-group">
+              <label for="addFindingAction">Rekomendasi Action Plan</label>
+              <input type="text" id="addFindingAction" class="spt-input" required
+                placeholder="Rekomendasi tindakan teknis agronomi">
+            </div>
+          </div>
+
+          <div class="spt-form-grid">
+            <div class="spt-field-group">
+              <label for="addFindingPic">Penanggung Jawab (PIC)</label>
+              <select id="addFindingPic" class="spt-select">
+                <option value="Wahyu Pratama (Asisten Agronomi)">Wahyu Pratama (Asisten Agronomi)</option>
+                <option value="Eko Siswanto (Mandor 1)">Eko Siswanto (Mandor 1)</option>
+                <option value="Ahmad Fauzi (Mandor Trabas)">Ahmad Fauzi (Mandor Trabas)</option>
+                <option value="Bambang S. (Asisten Divisi)">Bambang S. (Asisten Divisi)</option>
+                <option value="Rahmat Hidayat (Mandor Perawatan)">Rahmat Hidayat (Mandor Perawatan)</option>
+              </select>
+            </div>
+            <div class="spt-field-group">
+              <label for="addFindingPhotoInput">Foto Lapangan (Opsional)</label>
+              <input type="file" id="addFindingPhotoInput" class="spt-input" accept="image/*">
+            </div>
+          </div>
+
+          <div id="addFindingPhotoPreviewWrap" class="spt-preview-box" style="display:none;">
+            <img id="addFindingPhotoPreview" class="spt-preview-img" alt="Preview Foto Temuan">
+            <p style="font-size:9.5px;color:var(--text-muted);margin:3px 0 0 0;">Preview foto tersimpan di memori lokal
+              peramban.</p>
+          </div>
+
+          <div class="spt-form-grid single-col" style="margin-top:8px;">
+            <div class="spt-field-group">
+              <label for="addFindingNotes">Catatan Lapangan &amp; Temuan Khusus</label>
+              <textarea id="addFindingNotes" class="spt-textarea"
+                placeholder="Detail kondisi lapangan, baris tanam, atau catatan khusus petugas..."></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="spt-modal-footer">
+        <button type="button" class="btn-secondary" id="btnCancelAddFinding">Batal</button>
+        <button type="button" class="btn-primary" id="btnSubmitAddFinding">Simpan Temuan →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DETAIL BCCR BLOK -->
+  <div class="spt-modal-overlay" id="modalBccrDetail" role="dialog" aria-modal="true"
+    aria-labelledby="modalBccrDetailTitle">
+    <div class="spt-modal-card" style="max-width:480px;">
+      <div class="spt-modal-header">
+        <h3 class="spt-modal-title" id="modalBccrDetailTitle">📊 Detail Capaian BCCR Blok</h3>
+        <button type="button" class="spt-modal-close-btn" id="btnCloseModalBccrDetail" aria-label="Tutup">✕</button>
+      </div>
+      <div class="spt-modal-body" id="modalBccrDetailBody">
+        <!-- Populated dynamically on block click -->
+      </div>
+      <div class="spt-modal-footer">
+        <button type="button" class="btn-secondary" id="btnCloseBccrDetail">Tutup</button>
+        <button type="button" class="btn-primary" id="btnGoToBccrAnalysis">Detail Analisa BCCR →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: KONFIRMASI RESET TEMUAN MANUAL -->
+  <div class="spt-modal-overlay" id="modalResetManualConfirm" role="dialog" aria-modal="true"
+    aria-labelledby="modalResetTitle">
+    <div class="spt-modal-card" style="max-width:400px;border-top-color:#F59E0B;">
+      <div class="spt-modal-header">
+        <h3 class="spt-modal-title" id="modalResetTitle">⚠️ Konfirmasi Reset Temuan Manual</h3>
+        <button type="button" class="spt-modal-close-btn" id="btnCloseModalReset" aria-label="Tutup">✕</button>
+      </div>
+      <div class="spt-modal-body">
+        <p style="font-size:12px;color:var(--text-primary);line-height:1.4;margin:0 0 8px 0;">
+          Apakah Anda yakin ingin menghapus seluruh temuan simulasi yang ditambahkan secara manual pada sesi ini?
+        </p>
+        <p style="font-size:11px;color:var(--text-muted);line-height:1.3;margin:0;">
+          Data bawaan GeoJSON dan data dummy deterministik tidak akan terpengaruh.
+        </p>
+      </div>
+      <div class="spt-modal-footer">
+        <button type="button" class="btn-secondary" id="btnCancelResetManual">Batal</button>
+        <button type="button" class="btn-primary" id="btnConfirmResetManual" style="background:#DC2626;">Hapus Temuan
+          Manual</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM HEATMAP TOOLTIP -->
+  <div id="probHeatmapTooltip" class="prob-heatmap-tooltip" style="display:none;"></div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- JAVASCRIPT DEPENDENCIES -->
+  <script src="leaflet.js"></script>
+  <script src="geo_utils.js"></script>
+  <script src="tnke_geojson.js"></script>
+  <script src="tnke_tracking_geojson.js"></script>
+  <script src="tnke_problem_tags_geojson.js"></script>
+  <script src="tnke_spt_problem_master_16.js"></script>
+  <script src="tnke_action_plan_mockup.js"></script>
+  <script src="tnke_master.js"></script>
+  <script src="tnke_store.js"></script>
+  <script src="tnke_assessment_store.js"></script>
+  <script src="skde_geojson.js"></script>
+  <script src="data.js"></script>
+  <script src="yield_service.js"></script>
+  <script src="app.js"></script>
+  <script src="login.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+# ==============================================================================
+# Smart Problem Tagging (SPT) - .gitignore
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Scratch & Temporary Automation Directories
+# ------------------------------------------------------------------------------
+# Profil browser headless, CDP session dumps, dan scratch scripts
+/scratch/
+edge_*/
+.tempmediaStorage/
+.system_generated/
+.playwright/
+
+# ------------------------------------------------------------------------------
+# 2. Test & Verification Screenshots
+# ------------------------------------------------------------------------------
+# Tangkapan layar otomatis dari hasil run script verifikasi browser
+*.png
+# Kecualikan aset logo resmi
+!sinarmas_logo.png
+!assets/**/*.png
+!assets/*.png
+
+# ------------------------------------------------------------------------------
+# 3. Patch & One-off Scratch Scripts (Root Level)
+# ------------------------------------------------------------------------------
+# Script patching/debugging sementara yang dibuat saat perbaikan
+/patch_*.py
+/clean_*.py
+/fix_*.py
+/check_*.py
+/update_store_v4.py
+/run_browser_verification.py
+
+# File backup dan salinan sementara
+* copy.*
+* copy*.*
+*.bak
+*.tmp
+*.temp
+*.old
+*~
+
+# ------------------------------------------------------------------------------
+# 4. Python Cache & Virtual Environments
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+ENV/
+
+# ------------------------------------------------------------------------------
+# 5. Node / NPM / Package Managers
+# ------------------------------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ------------------------------------------------------------------------------
+# 6. IDE & Text Editors
+# ------------------------------------------------------------------------------
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# ------------------------------------------------------------------------------
+# 7. Operating System Artifacts
+# ------------------------------------------------------------------------------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.directory
+
+# ------------------------------------------------------------------------------
+# 8. Archive & Compressed Files
+# ------------------------------------------------------------------------------
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# ------------------------------------------------------------------------------
+# 9. Logs & Runtime
+# ------------------------------------------------------------------------------
+*.log
+logs/

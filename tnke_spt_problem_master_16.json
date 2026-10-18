@@ -1,0 +1,107 @@
+{
+  "schema_version": "2.0-mockup",
+  "description": "SPT canonical 16 categories; units are mockup assumptions pending master validation",
+  "categories": [
+    {
+      "id": "SPT-01",
+      "name": "Pasar Pikul Semak",
+      "unit": "m",
+      "example_action": "Semprot pasar pikul"
+    },
+    {
+      "id": "SPT-02",
+      "name": "Underpruning",
+      "unit": "pokok",
+      "example_action": "Penambahan HK pruning / Borongan"
+    },
+    {
+      "id": "SPT-03",
+      "name": "Areal Banjir / Tergenang",
+      "unit": "ha",
+      "example_action": "Penanganan areal banjir / drainase"
+    },
+    {
+      "id": "SPT-04",
+      "name": "Titi Panen Kurang / Rusak",
+      "unit": "unit",
+      "example_action": "Penambahan Titi Panen"
+    },
+    {
+      "id": "SPT-05",
+      "name": "Piringan Semak",
+      "unit": "pokok",
+      "example_action": "Semprot Piringan"
+    },
+    {
+      "id": "SPT-06",
+      "name": "TPH Bermasalah",
+      "unit": "titik",
+      "example_action": "Semprot TPH"
+    },
+    {
+      "id": "SPT-07",
+      "name": "Gawangan Semak",
+      "unit": "ha",
+      "example_action": "Semprot Gawangan"
+    },
+    {
+      "id": "SPT-08",
+      "name": "Defisiensi Hara",
+      "unit": "pokok",
+      "example_action": "Semprot Defisiensi"
+    },
+    {
+      "id": "SPT-09",
+      "name": "Titik Kosong",
+      "unit": "titik",
+      "example_action": "Penyisipan"
+    },
+    {
+      "id": "SPT-10",
+      "name": "HPT",
+      "unit": "pokok",
+      "example_action": "Pengendalian HPT"
+    },
+    {
+      "id": "SPT-11",
+      "name": "Konektiviti Teras / Pasar Pikul",
+      "unit": "m",
+      "example_action": "Perbaikan akses teras / pasar pikul"
+    },
+    {
+      "id": "SPT-12",
+      "name": "Pokok Abnormal",
+      "unit": "pokok",
+      "example_action": "Tumbang Pokok Abnormal"
+    },
+    {
+      "id": "SPT-13",
+      "name": "Semak di Gawangan (Bambu)",
+      "unit": "ha",
+      "example_action": "Pengendalian Chemist"
+    },
+    {
+      "id": "SPT-14",
+      "name": "Semak di Gawangan (Pisang)",
+      "unit": "ha",
+      "example_action": "Pengendalian Chemist"
+    },
+    {
+      "id": "SPT-15",
+      "name": "Gorong-gorong",
+      "unit": "unit",
+      "example_action": "Pemasangan gorong-gorong"
+    },
+    {
+      "id": "SPT-16",
+      "name": "Jembatan / Box culvert",
+      "unit": "unit",
+      "example_action": "Perbaikan / penambahan jembatan / box culvert"
+    }
+  ],
+  "action_plan_statuses": {
+    "belum_ada_action_plan": "Belum Ada Action Plan",
+    "on_progress": "Action Plan On Progress",
+    "closed": "Closed / Selesai"
+  }
+}

@@ -1,0 +1,2552 @@
+{
+  "schema_version": "1.0",
+  "name": "TNKE SPT mockup action plan statuses",
+  "is_simulation": true,
+  "note": "This is a mockup-only companion keyed by tag_id; it does not modify or annotate the authoritative point GeoJSON. Never confuse simulated workflow with actual operational status.",
+  "statuses": [
+    {
+      "tag_id": "tnke-problem-001",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-problem-001",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-problem-002",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-problem-003",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-problem-004",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-problem-005",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-problem-006",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-problem-007",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-problem-008",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-problem-008",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-problem-009",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-problem-010",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-problem-010",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-problem-011",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-problem-012",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-problem-012",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-problem-013",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-problem-014",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-problem-014",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-problem-015",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-problem-015",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-problem-016",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-problem-017",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-problem-017",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-problem-018",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-problem-018",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-problem-019",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-problem-019",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-problem-020",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-problem-020",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-problem-021",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-problem-021",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-problem-022",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0001",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0001",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0002",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0002",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0003",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0003",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0004",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0004",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0005",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0005",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0006",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0006",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0007",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0007",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0008",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0008",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0009",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0009",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0010",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0010",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0011",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0011",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0012",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0012",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0013",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0013",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0014",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0014",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0015",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0015",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0016",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0016",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0017",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0017",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0018",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0018",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0019",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0019",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0020",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0021",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0022",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0022",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0023",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0024",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0025",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0025",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0026",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0027",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0027",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0028",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0028",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0029",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0030",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0031",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0032",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0033",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0034",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0035",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0035",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0036",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0036",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0037",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0037",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0038",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0039",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0040",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0040",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0041",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0041",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0042",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0043",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0044",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0044",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0045",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0045",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0046",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0046",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0047",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0047",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0048",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0048",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0049",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0049",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0050",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0050",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0051",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0051",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0052",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0052",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0053",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0053",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0054",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0054",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0055",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0055",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0056",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0056",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0057",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0057",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0058",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0058",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0059",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0059",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0060",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0060",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0061",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0062",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0062",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0063",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0063",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0064",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0064",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0065",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0065",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0066",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0067",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0068",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0069",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0069",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0070",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0070",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0071",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0072",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0072",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0073",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0074",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0074",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0075",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0076",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0077",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0077",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0078",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0079",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0080",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0081",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0081",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0082",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0082",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0083",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0083",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0084",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0084",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0085",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0085",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0086",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0086",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0087",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0087",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0088",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0088",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0089",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0089",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0090",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0090",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0091",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0091",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0092",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0092",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0093",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0093",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0094",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0094",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0095",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0095",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0096",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0096",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0097",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0097",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0098",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0098",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0099",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0099",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0100",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0100",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0101",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0101",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0102",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0102",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0103",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0103",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0104",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0104",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0105",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0105",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0106",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0106",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0107",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0107",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0108",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0108",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0109",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0109",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0110",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0110",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0111",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0111",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0112",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0112",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0113",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0114",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0115",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0116",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0116",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0117",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0117",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0118",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0118",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0119",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0119",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0120",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0120",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0121",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0121",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0122",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0122",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0123",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0123",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0124",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0124",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0125",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0125",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0126",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0126",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0127",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0127",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0128",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0129",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0130",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0131",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0131",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0132",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0133",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0133",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0134",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0134",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0135",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0135",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0136",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0136",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0137",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0137",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0138",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0138",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0139",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0139",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0140",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0141",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0142",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0142",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0143",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0144",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0144",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0145",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0145",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0146",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0147",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0147",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0148",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0148",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0149",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0149",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0150",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0150",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0151",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0151",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0152",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0152",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0153",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0153",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0154",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0154",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0155",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0155",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0156",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0156",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0157",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0158",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0158",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0159",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0159",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0160",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0160",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0161",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0161",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0162",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0162",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0163",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0163",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0164",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0164",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0165",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0165",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0166",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0166",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0167",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0167",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0168",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0169",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0169",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0170",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0170",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0171",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0172",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0173",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0173",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0174",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0174",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0175",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0175",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0176",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0176",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0177",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0177",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0178",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0178",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0179",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0179",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0180",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0180",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0181",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0181",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0182",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0182",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0184",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0184",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0185",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0185",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0186",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0186",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0187",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0187",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0188",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0188",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0189",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0189",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0190",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0190",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0191",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0192",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0193",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0193",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0194",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0194",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0195",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0196",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0197",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0198",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0199",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0199",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0200",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0201",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0201",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0202",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0202",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0203",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0204",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0204",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0205",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0205",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0206",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0206",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0207",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0207",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0208",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0209",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0209",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0210",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0210",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0211",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0211",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0212",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0212",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0213",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0213",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0214",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0214",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0215",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0215",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0216",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0217",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0217",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0218",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0219",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0220",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0220",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0221",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0222",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0222",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0223",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0223",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0224",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0225",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0226",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0226",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0227",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0227",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0228",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0228",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0229",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0229",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0230",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0231",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0232",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0233",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0233",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0234",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0234",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0235",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0235",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0236",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0236",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0237",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0237",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0238",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0238",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0239",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0243",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0243",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0244",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0244",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0245",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0245",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0246",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0246",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0247",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0247",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0248",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0248",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0249",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0249",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0250",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0250",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0251",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0251",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0252",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0252",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0253",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0253",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0254",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0254",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0255",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0255",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0256",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0256",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0257",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0257",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0258",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0258",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0259",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0259",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0260",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0260",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0261",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0261",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0262",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0262",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0263",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0263",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0264",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0264",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0265",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0265",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0266",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0266",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0267",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0267",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0268",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0268",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0269",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0270",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0270",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0271",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0271",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0273",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0273",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0274",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0274",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0275",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0275",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0276",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0276",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0277",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0277",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0278",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0278",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0279",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0279",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0280",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0280",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0281",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0281",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0282",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0282",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0283",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0283",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0284",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0284",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0285",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0285",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0286",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0286",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0287",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0287",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0288",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0288",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0289",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0289",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0290",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0290",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0291",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0291",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0292",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0292",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0293",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0293",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0294",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0294",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0295",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0295",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0296",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0296",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0297",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0297",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0298",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0298",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0299",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0299",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0300",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0300",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0301",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0301",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0302",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0302",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0303",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0303",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0304",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0304",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0305",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0305",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0306",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0306",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0307",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0307",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0308",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0308",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0309",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0309",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0310",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0310",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0311",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0311",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0313",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0313",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0314",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0314",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0315",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0315",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0316",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0316",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0317",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0317",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0324",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0324",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0326",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0326",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0327",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0327",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0328",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0328",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0329",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0329",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0330",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0330",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0332",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0332",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0333",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0333",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0334",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0334",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0335",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0335",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0336",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0336",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0337",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0337",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0338",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0338",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0339",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0339",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0340",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0341",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0342",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0343",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    },
+    {
+      "tag_id": "tnke-qgis-0344",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0344",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0345",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0345",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0346",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0346",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0347",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0347",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0348",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0348",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0349",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0349",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0350",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0350",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0351",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0351",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0352",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0352",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0353",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0353",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0354",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0354",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0355",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0355",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0356",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0356",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0357",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0357",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0358",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0358",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0359",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0359",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0360",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0360",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0361",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0361",
+      "action_plan_progress_pct": 75
+    },
+    {
+      "tag_id": "tnke-qgis-0363",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0363",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0364",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0364",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0365",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0365",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0366",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0366",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0368",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0368",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0369",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0369",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0370",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0370",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0371",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0371",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0372",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0372",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0374",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0374",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0375",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0375",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0376",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0376",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0377",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0377",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0378",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0378",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0379",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0379",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0380",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0380",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0381",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0381",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0382",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0382",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0383",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0383",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0384",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0384",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0385",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0385",
+      "action_plan_progress_pct": 15
+    },
+    {
+      "tag_id": "tnke-qgis-0386",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0386",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0387",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0387",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0388",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0388",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0389",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0389",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0390",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0390",
+      "action_plan_progress_pct": 55
+    },
+    {
+      "tag_id": "tnke-qgis-0391",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0391",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0392",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0392",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0393",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0393",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0394",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0394",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0395",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0395",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0396",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0396",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0397",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0397",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0398",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0398",
+      "action_plan_progress_pct": 65
+    },
+    {
+      "tag_id": "tnke-qgis-0399",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0399",
+      "action_plan_progress_pct": 85
+    },
+    {
+      "tag_id": "tnke-qgis-0400",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0400",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0401",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0401",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0402",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0402",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0403",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0403",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0404",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0404",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0405",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0405",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0406",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0406",
+      "action_plan_progress_pct": 25
+    },
+    {
+      "tag_id": "tnke-qgis-0407",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0407",
+      "action_plan_progress_pct": 40
+    },
+    {
+      "tag_id": "tnke-qgis-0408",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0408",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0409",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0409",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0410",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0410",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0411",
+      "action_plan_status": "on_progress",
+      "action_plan_id": "AP-tnke-qgis-0411",
+      "action_plan_progress_pct": 90
+    },
+    {
+      "tag_id": "tnke-qgis-0412",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0412",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0413",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0413",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0414",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0414",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0415",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0415",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0416",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0416",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0417",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0417",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0418",
+      "action_plan_status": "closed",
+      "action_plan_id": "AP-tnke-qgis-0418",
+      "action_plan_progress_pct": 100
+    },
+    {
+      "tag_id": "tnke-qgis-0419",
+      "action_plan_status": "belum_ada_action_plan",
+      "action_plan_id": null,
+      "action_plan_progress_pct": 0
+    }
+  ]
+}

@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Problem Tagging — Simulasi Pasar Pikul</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --bg: #0b1320;
+      --panel: #131e2c;
+      --panel-subtle: #0e1622;
+      --line-outstanding: #475569;
+      --line-outstanding-op: 0.55;
+      --panen: #22c55e;
+      --checklist: #38bdf8;
+      --pupuk: #eab308;
+      --asset: #fb923c;
+      --ink: #f1f5f9;
+      --ink-dim: #94a3b8;
+      --border: #223247;
+      --border-subtle: #1a2738;
+      --accent: #C90016;
+      --covered-op: 0.35;
+      --font-head: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sim-layout {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* Override styles.css .sidebar height in this layout */
+    .sim-layout .sidebar {
+      height: 100vh;
+      flex-shrink: 0;
+    }
+
+    .sim-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* Top Control Room Header Bar */
+    .sim-header {
+      height: var(--header-height, 56px);
+      background: #111a27;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+
+    .sim-header .header-crumb {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .sim-header .header-title {
+      font-family: var(--font-head);
+      font-size: 17px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+      margin: 0;
+    }
+
+    .sim-badges-flow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sim-badge-item {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: #1a2738;
+      border: 1px solid var(--border);
+      color: var(--ink-dim);
+    }
+
+    .sim-badge-item.highlight {
+      background: rgba(34, 197, 94, 0.12);
+      border-color: rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sim-badge-item.highlight::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 6px #22c55e;
+    }
+
+    /* Simulation Body: Controls on Left, 8x3 Grid on Right */
+    .sim-body {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+      padding: 12px 16px;
+      gap: 14px;
+      overflow: hidden;
+    }
+
+    .sim-control-panel {
+      flex: 0 0 248px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #2a3d56 transparent;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .sim-control-panel::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .sim-control-panel::-webkit-scrollbar-thumb {
+      background: #2a3d56;
+      border-radius: 2px;
+    }
+
+    header.top {
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    header.top h1 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 14.5px;
+      letter-spacing: 0.3px;
+      margin: 0 0 2px;
+      color: #ffffff;
+    }
+
+    header.top p.sub {
+      margin: 0;
+      font-size: 10.5px;
+      color: var(--ink-dim);
+    }
+
+    .legend {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      margin-bottom: 10px;
+      font-size: 10.5px;
+      color: var(--ink-dim);
+      padding: 6px 8px;
+      background: var(--panel-subtle);
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .legend .item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend .swatch {
+      width: 11px;
+      height: 11px;
+      border-radius: 2px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 3px;
+      flex-wrap: wrap;
+    }
+
+    button.ctrl {
+      background: #1a2738;
+      border: 1px solid var(--border);
+      color: var(--ink-dim);
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 4px 7px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    button.ctrl:hover {
+      border-color: var(--accent);
+      color: #ffffff;
+      background: #22334a;
+    }
+
+    button.ctrl.active {
+      border-color: var(--accent);
+      color: #ffffff;
+      background: var(--accent);
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(201, 0, 22, 0.35);
+    }
+
+    button.ctrl:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    button.play-btn {
+      background: var(--accent);
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 11.5px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      margin-top: 2px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(201, 0, 22, 0.3);
+      transition: filter 0.15s ease, transform 0.1s ease;
+    }
+
+    button.play-btn:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
+
+    button.play-btn:active {
+      transform: translateY(0);
+    }
+
+    .day-hint {
+      font-size: 10px;
+      color: var(--ink);
+      min-height: 32px;
+      line-height: 1.4;
+      padding: 5px 8px;
+      background: var(--panel-subtle);
+      border-radius: 4px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .sim-grid-container {
+      flex: 1;
+      display: flex;
+      min-width: 0;
+      height: 100%;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 6px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .block {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      transition: opacity 0.25s ease, border-color 0.15s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .block:hover {
+      border-color: #3b82f6;
+    }
+
+    .block.dim {
+      opacity: 0.25;
+    }
+
+    .pupuk-badge {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 7px;
+      height: 7px;
+      background: var(--pupuk);
+      border-radius: 50%;
+      border: 1px solid var(--panel);
+      display: none;
+      z-index: 2;
+      box-shadow: 0 0 6px var(--pupuk);
+    }
+
+    .pupuk-badge.active {
+      display: block;
+    }
+
+    .block-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+    }
+
+    .block-head .name {
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.3px;
+    }
+
+    .block-head .dim-text {
+      font-size: 7.5px;
+      color: var(--ink-dim);
+      font-family: var(--font-body);
+    }
+
+    .pp-container {
+      flex: 1;
+      position: relative;
+      display: grid;
+      grid-template-columns: 14px 1fr;
+      grid-template-rows: repeat(64, 1fr);
+      column-gap: 2px;
+      min-height: 0;
+    }
+
+    .pp-label {
+      font-size: 5.5px;
+      color: var(--ink-dim);
+      font-family: var(--font-body);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 1px;
+      line-height: 1;
+    }
+
+    .pp-line-cell {
+      display: flex;
+      align-items: center;
+      cursor: default;
+      height: 100%;
+    }
+
+    @keyframes drawLine {
+      0% {
+        transform: scaleX(0);
+      }
+
+      100% {
+        transform: scaleX(1);
+      }
+    }
+
+    .pp-line {
+      width: 100%;
+      height: 1px;
+      min-height: 1px;
+      background: var(--line-outstanding);
+      opacity: var(--line-outstanding-op);
+      transform-origin: left;
+    }
+
+    .pp-line.animated {
+      transform: scaleX(0);
+      animation: drawLine 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: calc(var(--row) * 4ms);
+    }
+
+    /* tooltip */
+    #tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      font-family: var(--font-body);
+      font-size: 11px;
+      padding: 7px 10px;
+      border-radius: 6px;
+      line-height: 1.45;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: none;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+
+    #tooltip .tt-title {
+      font-family: var(--font-head);
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 3px;
+      font-size: 11.5px;
+    }
+
+    footer.note {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      line-height: 1.4;
+      color: #64748b;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="sim-layout">
+    <!-- SIDEBAR (CORPORATE RED) -->
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-brand">
+        <div class="brand-badge">SPT</div>
+        <div class="brand-info">
+          <strong>SMART PROBLEM TAGGING</strong>
+          <small>_</small>
+        </div>
+      </div>
+
+      <div class="sidebar-mock-tag">
+        <span>DATA CONTOH · MOCKUP</span>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navigasi Utama">
+        <a href="index.html#dashboard" class="nav-item" id="navDashboard">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+
+        <a href="tagging_blok.html" class="nav-item active" id="navMap">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+              <line x1="8" y1="2" x2="8" y2="18"></line>
+              <line x1="16" y1="6" x2="16" y2="22"></line>
+            </svg>
+          </span>
+          <span class="nav-label">Map &amp; Coverage</span>
+        </a>
+
+        <a href="index.html#tagging" class="nav-item" id="navTagging">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+          </span>
+          <span class="nav-label">Problem Tagging</span>
+        </a>
+
+        <a href="index.html#action" class="nav-item" id="navAction">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11l3 3L22 4"></path>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+          </span>
+          <span class="nav-label">Action Plan</span>
+        </a>
+
+        <a href="index.html#reports" class="nav-item" id="navReports">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </span>
+          <span class="nav-label">Reports &amp; Analytics</span>
+        </a>
+
+        <a href="index.html#production" class="nav-item" id="navProduction">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+          </span>
+          <span class="nav-label">Production &amp; BCCR</span>
+        </a>
+
+        <a href="index.html#admin" class="nav-item" id="navAdmin">
+          <span class="nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </span>
+          <span class="nav-label">Administration</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="index.html" class="btn-logout" id="mockLogout" title="Kembali ke Dashboard">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="sim-main">
+      <header class="sim-header">
+        <div>
+          <div class="header-crumb">CONTROL ROOM · SIMULASI PASAR PIKUL</div>
+          <h1 class="header-title">Smart Problem Tagging</h1>
+        </div>
+        <div class="sim-badges-flow">
+          <span class="sim-badge-item">ESTATE SKDE · 24 BLOK (8x3) · 64 PP/BLOK</span>
+          <span class="sim-badge-item highlight">SIMULASI AKTIF</span>
+        </div>
+      </header>
+
+      <div class="sim-body">
+        <aside class="sim-control-panel">
+          <header class="top">
+            <h1>Smart Problem Tagging</h1>
+            <p class="sub">Simulasi PP 24 blok (8x3)</p>
+          </header>
+
+          <div class="legend">
+            <span class="item"><span class="swatch" style="background:var(--panen)"></span>Inspeksi Panen</span>
+            <span class="item"><span class="swatch" style="background:var(--checklist)"></span>Blok Checklist</span>
+            <span class="item"><span class="swatch" style="background:var(--pupuk)"></span>Inspeksi Pupuk</span>
+            <span class="item"><span class="swatch" style="background:var(--asset)"></span>Assessed</span>
+            <span class="item"><span class="swatch"
+                style="background:var(--line-outstanding); opacity:0.55"></span>Outstanding</span>
+            <span class="item"><span class="swatch" style="background:var(--pupuk); border-radius:50%"></span>Blok Sudah
+              Dipupuk</span>
+          </div>
+
+          <div class="controls">
+            <div class="btn-row" id="rotationRow"></div>
+            <div class="btn-row" id="dayRow"></div>
+            <button class="play-btn" id="playBtn">▶ Auto-Play</button>
+            <div class="day-hint" id="dayHint">Pilih hari untuk melihat progres.</div>
+          </div>
+
+          <footer class="note">
+            Keterangan:<br>
+            Hover garis PP untuk melihat detail aktivitas.<br>
+            Pupuk dijadwalkan hingga Rotasi 4 agar genap mencakup semua blok.
+          </footer>
+        </aside>
+
+        <main class="sim-grid-container">
+          <div class="grid" id="blockGrid"></div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div id="tooltip"></div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      // ---------- Setup ----------
+      const ROWS = ["A", "B", "C"];
+      const COLS = [11, 12, 13, 14, 15, 16, 17, 18];
+      const PP_COUNT = 64;
+
+      const BLOCKS = [];
+      ROWS.forEach(r => COLS.forEach(c => BLOCKS.push(r + "-" + c)));
+
+      const DAYS = [
+        { label: "Senin", blocks: ["A-11", "A-12", "A-13", "A-14"] },
+        { label: "Selasa", blocks: ["A-15", "A-16", "A-17", "A-18"] },
+        { label: "Rabu", blocks: ["B-11", "B-12", "B-13", "B-14"] },
+        { label: "Kamis", blocks: ["B-15", "B-16", "B-17", "B-18"] },
+        { label: "Jumat", blocks: ["C-11", "C-12", "C-13", "C-14"] },
+        { label: "Sabtu", blocks: ["C-15", "C-16", "C-17", "C-18"] },
+      ];
+
+      const PP_LABEL_STEPS = [1, 8, 16, 24, 32, 40, 48, 56, 64];
+
+      function blankBlockState() {
+        const state = [];
+        for (let i = 0; i < PP_COUNT; i++) {
+          state.push({ panen: null, checklist: null, pupuk: null, asset: false });
+        }
+        return state;
+      }
+
+      function cloneState(state) {
+        return state.map(pp => ({ ...pp }));
+      }
+
+      function findAvailableSpot(state, startIndex) {
+        // 1. Prioritaskan PP kosong
+        for (let i = 0; i < PP_COUNT; i++) {
+          const idx = (startIndex + i) % PP_COUNT;
+          if (!state[idx].panen && !state[idx].checklist && !state[idx].pupuk && !state[idx].asset) {
+            return idx;
+          }
+        }
+        // 2. Jika tidak ada yang kosong, timpa Asset
+        for (let i = 0; i < PP_COUNT; i++) {
+          const idx = (startIndex + i) % PP_COUNT;
+          if (state[idx].asset && !state[idx].panen && !state[idx].checklist && !state[idx].pupuk) {
+            return idx;
+          }
+        }
+        return startIndex % PP_COUNT;
+      }
+
+      function applyCoverage(state, inspectedIdx) {
+        if (inspectedIdx - 1 >= 0) {
+          if (!state[inspectedIdx - 1].panen && !state[inspectedIdx - 1].checklist && !state[inspectedIdx - 1].pupuk) {
+            state[inspectedIdx - 1].asset = true;
+          }
+        }
+        if (inspectedIdx + 1 < PP_COUNT) {
+          if (!state[inspectedIdx + 1].panen && !state[inspectedIdx + 1].checklist && !state[inspectedIdx + 1].pupuk) {
+            state[inspectedIdx + 1].asset = true;
+          }
+        }
+      }
+
+      function addPanenZone(blockData) {
+        for (let p = 0; p < 2; p++) {
+          const idx = findAvailableSpot(blockData.state, blockData.cursor);
+          if (blockData.state[idx].panen || blockData.state[idx].checklist || blockData.state[idx].pupuk) break;
+
+          blockData.state[idx].panen = "inspected";
+          blockData.state[idx].asset = false;
+          applyCoverage(blockData.state, idx);
+          blockData.cursor = (idx + 3) % PP_COUNT;
+        }
+      }
+
+      function addSingleChecklist(blockData) {
+        const idx = findAvailableSpot(blockData.state, blockData.cursor);
+        // Hentikan jika blok tidak memiliki spot abu-abu lagi
+        // (Jika yang tersisa hanya orange/asset atau sudah diinspeksi, pindah ke blok berikutnya)
+        if (blockData.state[idx].panen || blockData.state[idx].checklist || blockData.state[idx].pupuk || blockData.state[idx].asset) {
+          return false; // Blok dianggap penuh untuk Checklist
+        }
+        blockData.state[idx].checklist = "inspected";
+        blockData.state[idx].asset = false;
+        applyCoverage(blockData.state, idx);
+        blockData.cursor = (idx + 3) % PP_COUNT;
+        return true; // Berhasil menambahkan
+      }
+
+      function addPupukZone(blockData) {
+        for (let p = 0; p < 2; p++) {
+          const idx = findAvailableSpot(blockData.state, blockData.cursor);
+          if (blockData.state[idx].panen || blockData.state[idx].checklist || blockData.state[idx].pupuk) break;
+
+          blockData.state[idx].pupuk = "inspected";
+          blockData.state[idx].asset = false;
+          applyCoverage(blockData.state, idx);
+          blockData.cursor = (idx + 3) % PP_COUNT;
+        }
+      }
+
+      const PUPUK_BLOCK_SCHEDULE = {
+        1: { "Senin": "C-18", "Selasa": "C-17", "Rabu": "C-16", "Kamis": "C-15", "Jumat": "B-18", "Sabtu": "B-17" },
+        2: { "Senin": "C-14", "Selasa": "C-13", "Rabu": "C-12", "Kamis": "C-11", "Jumat": "B-16", "Sabtu": "B-15" },
+        3: { "Senin": "B-14", "Selasa": "B-13", "Rabu": "A-18", "Kamis": "A-17", "Jumat": "A-16", "Sabtu": "A-15" },
+        4: { "Senin": "B-12", "Selasa": "B-11", "Rabu": "A-14", "Kamis": "A-13", "Jumat": "A-12", "Sabtu": "A-11" },
+        5: {}, // Selesai dipupuk semua
+        6: {}
+      };
+
+      function generateAllRotations() {
+        const blocksData = {};
+        BLOCKS.forEach(b => {
+          blocksData[b] = { cursor: 0, state: blankBlockState(), hasPupuk: false };
+        });
+
+        const snapshots = {};
+
+        [1, 2, 3, 4, 5, 6].forEach(rotNum => {
+          snapshots[rotNum] = { days: {}, end: null };
+
+          DAYS.forEach(day => {
+            const pupukBlockForDay = PUPUK_BLOCK_SCHEDULE[rotNum] ? PUPUK_BLOCK_SCHEDULE[rotNum][day.label] : null;
+
+            // 1. Panen (di semua 4 blok hari ini)
+            day.blocks.forEach((blockName, pos) => {
+              const bData = blocksData[blockName];
+              addPanenZone(bData);
+            });
+
+            // 2. Pupuk (di blok jadwal hari ini)
+            if (pupukBlockForDay) {
+              const pData = blocksData[pupukBlockForDay];
+              addPupukZone(pData);
+              pData.hasPupuk = true;
+            }
+
+            // 3. Checklist (8 PP disebar secara berurutan, tumpah ke blok berikutnya jika penuh)
+            let checklistsRemaining = 8;
+            for (let pos = 0; pos < day.blocks.length; pos++) {
+              const blockName = day.blocks[pos];
+              const bData = blocksData[blockName];
+
+              while (checklistsRemaining > 0) {
+                const success = addSingleChecklist(bData);
+                if (!success) {
+                  break; // Blok ini penuh, lanjut ke blok berikutnya (pos++)
+                }
+                checklistsRemaining--;
+              }
+              if (checklistsRemaining === 0) break; // Kuota harian selesai
+            }
+
+            const daySnapshot = {};
+            BLOCKS.forEach(b => {
+              daySnapshot[b] = {
+                state: cloneState(blocksData[b].state),
+                hasPupuk: blocksData[b].hasPupuk
+              };
+            });
+            snapshots[rotNum].days[day.label] = daySnapshot;
+          });
+
+          snapshots[rotNum].end = snapshots[rotNum].days["Sabtu"];
+        });
+
+        return snapshots;
+      }
+
+      const ROTATIONS = generateAllRotations();
+
+      // ---------- State ----------
+      let currentRotation = 1;
+      let currentDay = null;
+
+      // ---------- Build controls ----------
+      const rotationRow = document.getElementById("rotationRow");
+      [1, 2, 3, 4, 5, 6].forEach(r => {
+        const btn = document.createElement("button");
+        btn.className = "ctrl" + (r === currentRotation ? " active" : "");
+        btn.dataset.rot = r;
+        btn.textContent = "Rotasi " + r;
+        btn.addEventListener("click", () => {
+          currentRotation = r;
+          updateUIControls();
+          renderBlocks();
+        });
+        rotationRow.appendChild(btn);
+      });
+
+      const dayRow = document.getElementById("dayRow");
+      const dayHint = document.getElementById("dayHint");
+      DAYS.forEach(day => {
+        const btn = document.createElement("button");
+        btn.className = "ctrl";
+        btn.dataset.day = day.label;
+        btn.textContent = day.label;
+        btn.addEventListener("click", () => {
+          if (currentDay === day.label) {
+            currentDay = null;
+          } else {
+            currentDay = day.label;
+          }
+          updateUIControls();
+          renderBlocks();
+        });
+        dayRow.appendChild(btn);
+      });
+
+      function updateUIControls() {
+        document.querySelectorAll("#rotationRow .ctrl").forEach(b => {
+          b.classList.toggle("active", parseInt(b.dataset.rot) === currentRotation);
+        });
+        document.querySelectorAll("#dayRow .ctrl").forEach(b => {
+          b.classList.toggle("active", b.dataset.day === currentDay);
+        });
+
+        if (currentDay) {
+          const pupukBlock = PUPUK_BLOCK_SCHEDULE[currentRotation][currentDay];
+          const dayData = DAYS.find(d => d.label === currentDay);
+          const pupukText = pupukBlock ? `& Pupuk: ${pupukBlock}` : "(Pupuk Selesai)";
+          dayHint.innerHTML = `<strong>${currentDay}</strong>:<br>${dayData.blocks.join(", ")}<br>${pupukText}`;
+        } else {
+          dayHint.innerHTML = `Rotasi ${currentRotation} (Selesai).<br>Pilih hari untuk melihat progres.`;
+        }
+      }
+
+      // Auto-Play
+      let playInterval = null;
+      const playBtn = document.getElementById("playBtn");
+
+      playBtn.addEventListener("click", () => {
+        if (playInterval) {
+          clearInterval(playInterval);
+          playInterval = null;
+          playBtn.textContent = "▶ Auto-Play";
+        } else {
+          if (!currentDay) currentDay = "Senin";
+          playBtn.textContent = "⏸ Pause";
+          updateUIControls();
+          renderBlocks();
+
+          playInterval = setInterval(() => {
+            let dayIdx = DAYS.findIndex(d => d.label === currentDay);
+            dayIdx++;
+            if (dayIdx >= DAYS.length) {
+              dayIdx = 0;
+              currentRotation++;
+              if (currentRotation > 6) {
+                currentRotation = 1; // loop back or stop? Let's loop back
+              }
+            }
+            currentDay = DAYS[dayIdx].label;
+            updateUIControls();
+            renderBlocks();
+          }, 800);
+        }
+      });
+
+
+      // ---------- Tooltip ----------
+      const tooltip = document.getElementById("tooltip");
+      function showTooltip(evt, blockName, ppIndex, pp) {
+        let activity = "Outstanding";
+        let status = "Outstanding";
+        if (pp.asset) { activity = "Assessed (tercakup zona lain)"; status = "Covered"; }
+        else if (pp.panen) { activity = "Inspeksi Panen"; status = pp.panen === "inspected" ? "Inspected" : "Covered"; }
+        else if (pp.checklist) { activity = "Blok Checklist"; status = pp.checklist === "inspected" ? "Inspected" : "Covered"; }
+        else if (pp.pupuk) { activity = "Inspeksi Pupuk"; status = pp.pupuk === "inspected" ? "Inspected" : "Covered"; }
+
+        const ppNum = String(ppIndex + 1).padStart(2, "0");
+        tooltip.innerHTML =
+          '<div class="tt-title">' + blockName + ' &middot; PP' + ppNum + '</div>' +
+          'Activity: ' + activity + '<br>' +
+          'Status: ' + status;
+        tooltip.style.display = "block";
+        positionTooltip(evt);
+      }
+      function positionTooltip(evt) {
+        const offset = 14;
+        let x = evt.clientX + offset;
+        let y = evt.clientY + offset;
+        const rect = tooltip.getBoundingClientRect();
+        if (x + rect.width > window.innerWidth) x = evt.clientX - rect.width - offset;
+        if (y + rect.height > window.innerHeight) y = evt.clientY - rect.height - offset;
+        tooltip.style.left = x + "px";
+        tooltip.style.top = y + "px";
+      }
+      function hideTooltip() { tooltip.style.display = "none"; }
+
+      // ---------- Rendering ----------
+      function colorFor(pp) {
+        if (pp.asset) return { color: "var(--asset)", op: 1 };
+        if (pp.panen) return { color: "var(--panen)", op: pp.panen === "inspected" ? 1 : "var(--covered-op)" };
+        if (pp.checklist) return { color: "var(--checklist)", op: pp.checklist === "inspected" ? 1 : "var(--covered-op)" };
+        if (pp.pupuk) return { color: "var(--pupuk)", op: pp.pupuk === "inspected" ? 1 : "var(--covered-op)" };
+        return { color: "var(--line-outstanding)", op: "var(--line-outstanding-op)" };
+      }
+
+      const blockGrid = document.getElementById("blockGrid");
+
+      function getPreviousDayState(rot, dayLabel) {
+        if (!dayLabel) return null;
+        const dayIdx = DAYS.findIndex(d => d.label === dayLabel);
+        if (dayIdx === 0) {
+          if (rot === 1) return null;
+          return ROTATIONS[rot - 1].end;
+        } else {
+          return ROTATIONS[rot].days[DAYS[dayIdx - 1].label];
+        }
+      }
+
+      function renderBlocks() {
+        blockGrid.innerHTML = "";
+        const rotData = ROTATIONS[currentRotation];
+        const data = currentDay ? rotData.days[currentDay] : rotData.end;
+        const prevData = getPreviousDayState(currentRotation, currentDay);
+
+        BLOCKS.forEach(blockName => {
+          const blockData = data[blockName];
+          const state = blockData.state;
+
+          const blockEl = document.createElement("div");
+          blockEl.className = "block";
+          blockEl.dataset.block = blockName;
+
+          const badge = document.createElement("div");
+          badge.className = "pupuk-badge" + (blockData.hasPupuk ? " active" : "");
+          badge.title = "Telah Dipupuk";
+          blockEl.appendChild(badge);
+
+          const head = document.createElement("div");
+          head.className = "block-head";
+          head.innerHTML =
+            '<span class="name">' + blockName + '</span>' +
+            '<span class="dim-text">3x10</span>';
+          blockEl.appendChild(head);
+
+          const ppContainer = document.createElement("div");
+          ppContainer.className = "pp-container";
+
+          for (let i = 0; i < PP_COUNT; i++) {
+            const row = i + 1;
+
+            const labelEl = document.createElement("div");
+            labelEl.className = "pp-label";
+            labelEl.style.gridRow = row;
+            labelEl.style.gridColumn = 1;
+            if (PP_LABEL_STEPS.includes(row)) {
+              labelEl.textContent = row;
+            }
+            ppContainer.appendChild(labelEl);
+
+            const cell = document.createElement("div");
+            cell.className = "pp-line-cell";
+            cell.style.gridRow = row;
+            cell.style.gridColumn = 2;
+
+            const pp = state[i];
+            const { color, op } = colorFor(pp);
+
+            let isNew = false;
+            if (prevData) {
+              const prevPp = prevData[blockName].state[i];
+              if (pp.panen !== prevPp.panen || pp.checklist !== prevPp.checklist || pp.pupuk !== prevPp.pupuk || pp.asset !== prevPp.asset) {
+                isNew = true;
+              }
+            } else if (currentRotation === 1 && currentDay === "Senin") {
+              if (pp.panen || pp.checklist || pp.pupuk || pp.asset) {
+                isNew = true;
+              }
+            }
+
+            const line = document.createElement("div");
+            line.className = "pp-line" + (isNew ? " animated" : "");
+            line.style.background = color;
+            line.style.opacity = op;
+            if (isNew) {
+              line.style.setProperty('--row', row);
+            }
+
+            cell.appendChild(line);
+            cell.addEventListener("mouseenter", evt => showTooltip(evt, blockName, i, pp));
+            cell.addEventListener("mousemove", positionTooltip);
+            cell.addEventListener("mouseleave", hideTooltip);
+
+            ppContainer.appendChild(cell);
+          }
+
+          blockEl.appendChild(ppContainer);
+          blockGrid.appendChild(blockEl);
+        });
+
+        applyDayDimming();
+      }
+
+      function applyDayDimming() {
+        const activeSet = currentDay
+          ? new Set([
+            ...DAYS.find(d => d.label === currentDay).blocks,
+            ...(PUPUK_BLOCK_SCHEDULE[currentRotation][currentDay] ? [PUPUK_BLOCK_SCHEDULE[currentRotation][currentDay]] : [])
+          ])
+          : null;
+
+        document.querySelectorAll(".block").forEach(el => {
+          if (!activeSet) {
+            el.classList.remove("dim");
+          } else if (activeSet.has(el.dataset.block)) {
+            el.classList.remove("dim");
+          } else {
+            el.classList.add("dim");
+          }
+        });
+      }
+
+      updateUIControls();
+      renderBlocks();
+    })();
+  </script>
+
+</body>
+
+</html>

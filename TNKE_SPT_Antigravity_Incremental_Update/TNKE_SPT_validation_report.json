@@ -1,0 +1,54 @@
+{
+  "dataset_file": "tnke_problem_tags.geojson",
+  "tagging_total": 424,
+  "curated_F59_preserved": 22,
+  "qgis_additional": 402,
+  "category_count": 16,
+  "source_property_fields": [
+    "id",
+    "problem",
+    "ringan",
+    "sedang",
+    "berat",
+    "blok",
+    "tanggal",
+    "bulan",
+    "tag_id",
+    "problem_normalized",
+    "date",
+    "year_assumed",
+    "is_simulation"
+  ],
+  "original_schema_matched": true,
+  "extra_zone_scenario_fields": 0,
+  "missing_status_records": 0,
+  "sample_test": {
+    "filter": "TNKE / DIVISI 2 / September 2026 / Underpruning",
+    "F59_pokok": 102,
+    "total_pokok": 846,
+    "share_percent_rounded_one_decimal": 12.1
+  },
+  "categories": {
+    "pasar pikul semak": 53,
+    "underpruning": 87,
+    "gawangan semak": 38,
+    "pokok abnormal": 26,
+    "defisiensi hara": 51,
+    "piringan semak": 52,
+    "areal banjir": 5,
+    "tph bermasalah": 9,
+    "hpt": 34,
+    "titik kosong": 28,
+    "konektiviti teras / pasar pikul": 9,
+    "jembatan / box culvert": 4,
+    "semak di gawangan (bambu)": 8,
+    "gorong-gorong": 5,
+    "titi panen kurang / rusak": 8,
+    "semak di gawangan (pisang)": 7
+  },
+  "action_plan_mockup_status_counts": {
+    "closed": 179,
+    "belum_ada_action_plan": 77,
+    "on_progress": 168
+  }
+}

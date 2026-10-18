@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Smart Problem Tagging — Mobile Application</title>
+  
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="../leaflet.css" />
+
+  <!-- Mobile Application Styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- DESKTOP PREVIEW WRAPPER -->
+  <div id="desktopPreviewWrapper">
+    <!-- Floating Banner for Desktop Users -->
+    <div class="desktop-preview-banner">
+      <span class="badge-dot"></span>
+      <span>Preview Mobile (390×844)</span>
+      <a href="../index.html" title="Buka Dashboard Desktop Control Room">Kembali ke Dashboard Desktop ↗</a>
+    </div>
+
+    <!-- PHONE FRAME -->
+    <div class="mobile-phone-frame">
+      <!-- Phone Top Notch Mock -->
+      <div class="phone-notch-mock">
+        <div class="notch-speaker"></div>
+        <div class="notch-lens"></div>
+      </div>
+
+      <!-- Phone Status Bar Mock -->
+      <div class="phone-status-bar">
+        <span>09:41</span>
+        <div style="display: flex; gap: 4px; align-items: center;">
+          <span>5G</span>
+          <span>100%</span>
+        </div>
+      </div>
+
+      <!-- TOP APP BAR -->
+      <header class="mobile-top-bar" id="appTopBar">
+        <div class="top-bar-left">
+          <div style="width: 28px; height: 28px; background: var(--primary); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: 800; font-size: 13px; flex-shrink: 0;">
+            SPT
+          </div>
+          <div class="top-bar-title-group">
+            <span class="top-bar-title">Smart Problem Tagging</span>
+            <span class="top-bar-subtitle">Operasional Lapangan & Verifikasi</span>
+          </div>
+        </div>
+
+        <div class="top-bar-right">
+          <button class="persona-pill-btn account-pill-btn" id="topBarPersonaBtn" onclick="location.hash='#/account'" title="Ganti Account">
+            <span class="persona-avatar-dot account-avatar-dot">A</span>
+            <span>Asisten</span>
+          </button>
+          <button class="icon-btn" onclick="location.hash='#/notifikasi'" title="Pemberitahuan">
+            🔔
+            <span class="badge-count" id="topBarNotifBadge" style="display: none;">0</span>
+          </button>
+          <button class="icon-btn" onclick="location.hash='#/profil'" title="Profil Akun">
+            ⚙
+          </button>
+        </div>
+      </header>
+
+      <!-- MAIN CONTENT SCROLLER (Dynamic Route Content) -->
+      <main class="mobile-content-container" id="appContentContainer">
+        <!-- Route views injected here -->
+      </main>
+
+      <!-- BOTTOM NAVIGATION BAR (5 TABS) -->
+      <nav class="mobile-bottom-nav" id="appBottomNav">
+        <a class="nav-item active" data-tab="beranda" href="#/beranda">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </a>
+        <a class="nav-item" data-tab="inspection" href="#/inspection">
+          <span class="nav-icon">🔍</span>
+          <span class="nav-label">Inspection</span>
+        </a>
+        <a class="nav-item" data-tab="temuan" href="#/temuan">
+          <span class="nav-icon">⚠️</span>
+          <span class="nav-label">Tagging</span>
+        </a>
+        <a class="nav-item" data-tab="action" href="#/action">
+          <span class="nav-icon">📋</span>
+          <span class="nav-label">Action</span>
+        </a>
+        <a class="nav-item" data-tab="account" href="#/profil">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Account</span>
+        </a>
+      </nav>
+
+      <!-- TOAST CONTAINER -->
+      <div class="toast-container" id="appToastContainer"></div>
+    </div>
+  </div>
+
+  <!-- Leaflet Map JS -->
+  <script src="../leaflet.js"></script>
+
+  <!-- Modular Scripts -->
+  <script src="../tnke_geojson.js"></script>
+  <script src="../tnke_master.js"></script>
+  <script src="../tnke_store.js"></script>
+  <script src="master.js"></script>
+  <script src="geo.js"></script>
+  <script src="store.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
