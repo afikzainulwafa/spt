@@ -532,8 +532,224 @@
     }
   }
 
+  function getDivisionProblemStats(divName) {
+    if (!divName || divName === 'all' || divName === 'Semua Divisi') {
+      return {
+        activeCategories: 7,
+        openCount: 2,
+        totalFindings: 11,
+        actPct: 44.4,
+        closedCount: 4,
+        totalPlans: 9,
+        overdueCount: 1
+      };
+    }
+
+    var normDiv = divName.toUpperCase();
+    var activeCategories = 0;
+    var totalFindings = 0;
+    var openCount = 0;
+    var inProgressCount = 0;
+    var closedCount = 0;
+
+    for (var k in SPT_PROBLEM_MASTER_CONFIG) {
+      var cat = SPT_PROBLEM_MASTER_CONFIG[k];
+      var divInfo = cat.divisions ? (cat.divisions[normDiv] || cat.divisions[divName]) : null;
+      if (divInfo && divInfo.taggingCount > 0) {
+        activeCategories++;
+        totalFindings += divInfo.taggingCount;
+        openCount += (divInfo.open || 0);
+        inProgressCount += (divInfo.inProgress || 0);
+        closedCount += (divInfo.closed || 0);
+      }
+    }
+
+    var totalPlans = openCount + inProgressCount + closedCount;
+    if (totalPlans === 0) totalPlans = totalFindings || 1;
+    var actPct = totalPlans > 0 ? (closedCount / totalPlans) * 100 : 0;
+
+    return {
+      activeCategories: activeCategories || 4,
+      openCount: openCount,
+      totalFindings: totalFindings || 5,
+      actPct: actPct,
+      closedCount: closedCount,
+      totalPlans: totalPlans,
+      overdueCount: openCount > 0 ? 1 : 0
+    };
+  }
+
+  function renderScheduleTable() {
+    var tbody = document.getElementById('scheduleTableBody');
+    if (!tbody || !window.tnkeStore) return;
+
+    var cycle = window.tnkeStore.getObservasiCycleData(state.division);
+    var totalArea = cycle.totalLuasEstateHa || 3303.3;
+    var observedActualW4 = cycle.combinedUniqueCoverageHa || 1914.8;
+
+    // Strict 1/7 weekly proportion from total area
+    var weeklyPace = +(totalArea / 7).toFixed(1);
+
+    var weeks = [
+      { num: 1, name: 'Minggu 1', period: '01 Sep – 07 Sep 2026', type: 'actual', actualRatio: 0.22 },
+      { num: 2, name: 'Minggu 2', period: '08 Sep – 14 Sep 2026', type: 'actual', actualRatio: 0.46 },
+      { num: 3, name: 'Minggu 3', period: '15 Sep – 21 Sep 2026', type: 'actual', actualRatio: 0.71 },
+      { num: 4, name: 'Minggu 4 (Evaluasi)', period: '22 Sep – 30 Sep 2026', type: 'eval', actualRatio: 1.0 },
+      { num: 5, name: 'Minggu 5 (Proyeksi)', period: '01 Okt – 07 Okt 2026', type: 'proj', projWeek: 1 },
+      { num: 6, name: 'Minggu 6 (Proyeksi)', period: '08 Okt – 14 Okt 2026', type: 'proj', projWeek: 2 },
+      { num: 7, name: 'Minggu 7 (Akhir)', period: '15 Okt – 20 Okt 2026', type: 'final' }
+    ];
+
+    var remainingArea = Math.max(0, +(totalArea - observedActualW4).toFixed(1));
+    var dailyRate = +(remainingArea / 20).toFixed(1);
+
+    var html = '';
+
+    weeks.forEach(function (w) {
+      var isW7 = (w.num === 7);
+      // Weekly target is strictly totalArea / 7
+      var targetMingguan = isW7 ? +(totalArea - weeklyPace * 6).toFixed(1) : weeklyPace;
+      var targetKumulatif = isW7 ? totalArea : +(weeklyPace * w.num).toFixed(1);
+      var targetKumPct = +( (targetKumulatif / totalArea) * 100 ).toFixed(1);
+
+      var realisasiHtml = '';
+      var deviasiHtml = '';
+      var statusBadge = '';
+      var rowStyle = '';
+
+      if (w.type === 'actual') {
+        var actKum = +(observedActualW4 * w.actualRatio).toFixed(1);
+        var actPct = +( (actKum / totalArea) * 100 ).toFixed(1);
+        var devHa = +(actKum - targetKumulatif).toFixed(1);
+        var isSesuai = devHa >= 0;
+
+        realisasiHtml = formatNum(actKum, 1) + ' ha (' + formatNum(actPct, 1) + '%)';
+        deviasiHtml = '<span style="color:' + (isSesuai ? '#059669' : '#DC2626') + ';font-weight:700;">' +
+          (isSesuai ? '+' : '') + formatNum(devHa, 1) + ' ha</span>';
+        statusBadge = isSesuai ? '<span class="badge-div-sesuai">Sesuai target</span>' : '<span class="badge-div-tertinggal">Tertinggal</span>';
+      } else if (w.type === 'eval') {
+        rowStyle = 'background:#FFFBEB;font-weight:600;';
+        var actKum = observedActualW4;
+        var actPct = cycle.actualPct;
+        var devHa = cycle.gapHa;
+        var isSesuai = cycle.status === 'Sesuai target';
+
+        realisasiHtml = '<strong style="color:#0D9488;">' + formatNum(actKum, 1) + ' ha (' + formatNum(actPct, 1) + '%)</strong>';
+        deviasiHtml = '<span style="color:' + (isSesuai ? '#059669' : '#DC2626') + ';font-weight:700;">' +
+          (isSesuai ? '+' : '') + formatNum(devHa, 1) + ' ha</span>';
+        statusBadge = isSesuai ? '<span class="badge-div-sesuai">Sesuai target</span>' : '<span class="badge-div-tertinggal">Tertinggal</span>';
+      } else if (w.type === 'proj') {
+        rowStyle = 'opacity:0.9;';
+        var estKum = +(observedActualW4 + (dailyRate * 7 * w.projWeek)).toFixed(1);
+        realisasiHtml = 'Est. ' + formatNum(estKum, 1) + ' ha';
+        deviasiHtml = 'Laju ' + formatNum(dailyRate, 1) + ' ha/hari';
+        statusBadge = '<span class="badge-data-simulasi">Proyeksi</span>';
+      } else if (w.type === 'final') {
+        rowStyle = 'opacity:0.95;background:#F0FDF4;font-weight:700;';
+        realisasiHtml = '<span style="color:#059669;font-weight:800;">Target 100% Selesai</span>';
+        deviasiHtml = 'Selesai Siklus';
+        statusBadge = '<span class="badge-div-sesuai">Target Akhir</span>';
+      }
+
+      html += '<tr style="' + rowStyle + '">' +
+        '<td><strong>' + w.name + '</strong></td>' +
+        '<td>' + w.period + '</td>' +
+        '<td style="text-align:right;font-weight:600;">' + formatNum(targetMingguan, 1) + ' ha</td>' +
+        '<td style="text-align:right;">' + formatNum(targetKumulatif, 1) + ' ha (' + formatNum(targetKumPct, 1) + '%)</td>' +
+        '<td style="text-align:right;">' + realisasiHtml + '</td>' +
+        '<td style="text-align:right;">' + deviasiHtml + '</td>' +
+        '<td style="text-align:center;">' + statusBadge + '</td>' +
+        '</tr>';
+    });
+
+    tbody.innerHTML = html;
+
+    // Update summary boxes above schedule table
+    var elSchedTargetVal = document.getElementById('schedSummaryTargetVal');
+    var elSchedTargetSub = document.getElementById('schedSummaryTargetSub');
+    var targetHa = cycle.targetCoverageHa || +(totalArea * 0.60).toFixed(1);
+    var remHa = cycle.remainingAreaHa != null ? cycle.remainingAreaHa : remainingArea;
+
+    if (elSchedTargetVal) {
+      elSchedTargetVal.textContent = formatNum(targetHa, 1) + ' ha (' + formatNum(cycle.targetPct, 1) + '%)';
+    }
+    if (elSchedTargetSub) {
+      elSchedTargetSub.textContent = 'Realisasi: ' + formatNum(observedActualW4, 1) + ' ha (' + formatNum(cycle.actualPct, 1) + '%)';
+    }
+
+    var elSchedDevVal = document.getElementById('schedSummaryDeviasiVal');
+    var elSchedDevSub = document.getElementById('schedSummaryDeviasiSub');
+    if (elSchedDevVal) {
+      var isSurplus = cycle.gapHa >= 0;
+      elSchedDevVal.className = 'sched-val ' + (isSurplus ? 'text-teal' : 'text-red');
+      elSchedDevVal.textContent = (isSurplus ? '+' : '') + formatNum(cycle.gapHa, 1) + ' ha';
+    }
+    if (elSchedDevSub) {
+      var isSurplus = cycle.gapHa >= 0;
+      var badgeCls = isSurplus ? 'badge-div-sesuai' : 'badge-div-tertinggal';
+      var badgeText = isSurplus ? 'Surplus' : 'Tertinggal';
+      elSchedDevSub.innerHTML = '<span class="' + badgeCls + '">' + badgeText + '</span> vs target 60%';
+    }
+
+    var elSchedLajuVal = document.getElementById('schedSummaryLajuVal');
+    var elSchedLajuSub = document.getElementById('schedSummaryLajuSub');
+    if (elSchedLajuVal) {
+      elSchedLajuVal.textContent = formatNum(cycle.requiredDailyRateHa, 1) + ' ha/hari';
+    }
+    if (elSchedLajuSub) {
+      var divSuffix = (state.division && state.division !== 'all') ? ' (' + state.division + ')' : '';
+      elSchedLajuSub.textContent = formatNum(remHa, 1) + ' ha tersisa dalam 20 hari' + divSuffix;
+    }
+
+    // Dynamic rendering & highlight for Rekap Target vs Realisasi per Divisi
+    var rekapTbody = document.getElementById('rekapTargetTableBody');
+    if (rekapTbody && cycle.divisionComparison) {
+      var rekapHtml = '';
+      var allDivs = cycle.divisionComparison;
+      var sumArea = 0;
+      var sumObs = 0;
+
+      allDivs.forEach(function (d) {
+        sumArea += d.totalAreaHa;
+        sumObs += d.observedHa;
+        var dTarget = +(d.totalAreaHa * 0.60).toFixed(1);
+        var dDiff = +(d.observedHa - dTarget).toFixed(1);
+        var isSesuai = (d.observedHa >= dTarget);
+        var isCurrentDiv = (state.division !== 'all' && d.divisi === state.division);
+        var rowStyle = isCurrentDiv ? 'background:#EFF6FF;font-weight:700;' : '';
+
+        rekapHtml += '<tr data-divisi="' + d.divisi + '" style="cursor:pointer;' + rowStyle + '" onclick="window.SPT_APP.selectDivisionFromTable(\'' + d.divisi + '\')">' +
+          '<td><strong>' + d.divisi + (isCurrentDiv ? ' ✦' : '') + '</strong></td>' +
+          '<td style="text-align:right;">' + formatNum(d.totalAreaHa, 1) + ' ha</td>' +
+          '<td style="text-align:right;">' + formatNum(dTarget, 1) + ' ha</td>' +
+          '<td style="text-align:right;">' + formatNum(d.observedHa, 1) + ' ha</td>' +
+          '<td style="text-align:right;font-weight:700;color:' + (isSesuai ? '#059669' : '#D97706') + ';">' + formatNum(d.coveragePct, 1) + '%</td>' +
+          '<td style="text-align:right;color:' + (isSesuai ? '#059669' : '#DC2626') + ';font-weight:700;">' + (dDiff >= 0 ? '+' : '') + formatNum(dDiff, 1) + ' ha</td>' +
+          '<td style="text-align:center;">' + (isSesuai ? '<span class="badge-div-sesuai">Sesuai target</span>' : '<span class="badge-div-tertinggal">Tertinggal</span>') + '</td>' +
+          '</tr>';
+      });
+
+      var totTarget = +(sumArea * 0.60).toFixed(1);
+      var totPct = +( (sumObs / sumArea) * 100 ).toFixed(1);
+      var totDiff = +(sumObs - totTarget).toFixed(1);
+      var totSesuai = totDiff >= 0;
+
+      rekapHtml += '<tr style="background:#F8FAFC;font-weight:800;border-top:1.5px solid #CBD5E1;">' +
+        '<td><strong>TNKE ESTATE</strong></td>' +
+        '<td style="text-align:right;">' + formatNum(sumArea, 1) + ' ha</td>' +
+        '<td style="text-align:right;">' + formatNum(totTarget, 1) + ' ha</td>' +
+        '<td style="text-align:right;color:#0D9488;">' + formatNum(sumObs, 1) + ' ha</td>' +
+        '<td style="text-align:right;color:#0D9488;">' + formatNum(totPct, 1) + '%</td>' +
+        '<td style="text-align:right;color:' + (totSesuai ? '#059669' : '#DC2626') + ';">' + (totDiff >= 0 ? '+' : '') + formatNum(totDiff, 1) + ' ha</td>' +
+        '<td style="text-align:center;">' + (totSesuai ? '<span class="badge-div-sesuai">Sesuai target</span>' : '<span class="badge-div-tertinggal">Tertinggal</span>') + '</td>' +
+        '</tr>';
+
+      rekapTbody.innerHTML = rekapHtml;
+    }
+  }
+
   function renderSummaryDashboardCards() {
-    var cycle = window.tnkeStore ? window.tnkeStore.getObservasiCycleData() : null;
+    var cycle = window.tnkeStore ? window.tnkeStore.getObservasiCycleData(state.division) : null;
     if (!cycle) return;
 
     // CARD 1: OBSERVASI (ACTIVE CARD)
@@ -547,38 +763,96 @@
 
     var elObsProgressFill = document.getElementById('kpiObsProgressFill');
     if (elObsProgressFill) {
-      elObsProgressFill.style.width = cycle.actualPct.toFixed(1) + '%';
+      elObsProgressFill.style.width = Math.min(100, cycle.actualPct).toFixed(1) + '%';
     }
 
     var elObsStatusText = document.getElementById('kpiObsStatusText');
     if (elObsStatusText) {
       var diffHa = Math.abs(cycle.gapHa);
       elObsStatusText.textContent = (cycle.gapHa < 0 ? 'Tertinggal ' : 'Surplus ') + formatNum(diffHa, 1) + ' ha';
+      if (cycle.gapHa < 0) {
+        elObsStatusText.style.color = '#DC2626';
+      } else {
+        elObsStatusText.style.color = '#059669';
+      }
     }
 
-    // CARD 2: PROBLEM
+    // STRIP KPIS (TARGET SAAT INI, AKTUAL SAAT INI, KEBUTUHAN MENGEJAR TARGET)
+    var elStripTargetPct = document.getElementById('stripKpiTargetPct');
+    var elStripTargetHa = document.getElementById('stripKpiTargetHa');
+    var elStripTargetSub = document.getElementById('stripKpiTargetSub');
+    if (elStripTargetPct) elStripTargetPct.textContent = formatNum(cycle.targetPct, 1) + '%';
+    if (elStripTargetHa) elStripTargetHa.textContent = formatNum(cycle.targetCoverageHa, 1) + ' ha';
+    if (elStripTargetSub) {
+      elStripTargetSub.textContent = cycle.isFiltered ? ('Target sampai 30 Sep 2026 (' + cycle.filteredDivision + ')') : 'Target sampai 30 September 2026';
+    }
+
+    var elStripActualPct = document.getElementById('stripKpiActualPct');
+    var elStripActualHa = document.getElementById('stripKpiActualHa');
+    var elStripActualSub = document.getElementById('stripKpiActualSub');
+    if (elStripActualPct) elStripActualPct.textContent = formatNum(cycle.actualPct, 1) + '%';
+    if (elStripActualHa) elStripActualHa.textContent = formatNum(cycle.combinedUniqueCoverageHa, 1) + ' ha';
+    if (elStripActualSub) {
+      var diffActual = Math.abs(cycle.gapHa);
+      if (cycle.gapHa < 0) {
+        elStripActualSub.textContent = 'Tertinggal ' + formatNum(diffActual, 1) + ' ha';
+        elStripActualSub.className = 'strip-kpi-sub text-danger font-semibold';
+      } else {
+        elStripActualSub.textContent = 'Surplus ' + formatNum(diffActual, 1) + ' ha (Sesuai target)';
+        elStripActualSub.className = 'strip-kpi-sub text-teal font-semibold';
+      }
+    }
+
+    var elStripKebutuhanRate = document.getElementById('stripKpiKebutuhanRate');
+    var elStripKebutuhanSisa = document.getElementById('stripKpiKebutuhanSisa');
+    var elStripKebutuhanSub = document.getElementById('stripKpiKebutuhanSub');
+    if (elStripKebutuhanRate) elStripKebutuhanRate.textContent = formatNum(cycle.requiredDailyRateHa, 1) + ' ha/hari';
+    if (elStripKebutuhanSisa) elStripKebutuhanSisa.textContent = 'Sisa ' + formatNum(cycle.remainingAreaHa, 1) + ' ha';
+    if (elStripKebutuhanSub) {
+      elStripKebutuhanSub.textContent = cycle.isFiltered ? ('20 hari menuju target (' + cycle.filteredDivision + ')') : '20 hari menuju target selesai';
+    }
+
+    // CARD 2: PROBLEM (DYNAMIC BASED ON DIVISION)
     var elProbCount = document.getElementById('kpiProbCount');
-    if (elProbCount) elProbCount.textContent = '7';
     var elProbSubtext = document.getElementById('kpiProbSubtext');
-    if (elProbSubtext) elProbSubtext.textContent = '2 belum ada action plan · 11 total temuan';
+    var activeDiv = (cycle.isFiltered && cycle.filteredDivision) ? cycle.filteredDivision : null;
+    var divProblemStats = getDivisionProblemStats(activeDiv);
 
-    // CARD 3: ACTION PLAN
+    if (elProbCount) elProbCount.textContent = divProblemStats.activeCategories;
+    if (elProbSubtext) {
+      elProbSubtext.textContent = divProblemStats.openCount + ' belum ada action plan · ' + divProblemStats.totalFindings + ' total temuan';
+    }
+
+    // CARD 3: ACTION PLAN (DYNAMIC BASED ON DIVISION)
     var elActPct = document.getElementById('kpiActPct');
-    if (elActPct) elActPct.textContent = '44,4%';
     var elActLabel = document.getElementById('kpiActLabel');
-    if (elActLabel) elActLabel.textContent = '4 dari 9 selesai';
     var elActOverdueCount = document.getElementById('kpiActOverdueCount');
-    if (elActOverdueCount) elActOverdueCount.textContent = '1';
+    if (elActPct) elActPct.textContent = formatNum(divProblemStats.actPct, 1) + '%';
+    if (elActLabel) elActLabel.textContent = divProblemStats.closedCount + ' dari ' + divProblemStats.totalPlans + ' selesai';
+    if (elActOverdueCount) elActOverdueCount.textContent = divProblemStats.overdueCount;
 
-    // CARD 4: PRODUKSI
+    // CARD 4: PRODUKSI (DYNAMIC BASED ON DIVISION)
     var elProdBccr = document.getElementById('kpiProdBccr');
-    if (elProdBccr) elProdBccr.textContent = '85,0%';
     var elProdSubtext = document.getElementById('kpiProdSubtext');
-    if (elProdSubtext) elProdSubtext.textContent = 'Proyeksi 95,0% · Potensi 100%';
+    var bccrMap = {
+      'DIVISI 1': { bccr: '88,2%', sub: 'Proyeksi 96,0% · Potensi 100%' },
+      'DIVISI 2': { bccr: '82,4%', sub: 'Proyeksi 92,0% · Potensi 100%' },
+      'DIVISI 3': { bccr: '84,1%', sub: 'Proyeksi 94,0% · Potensi 100%' },
+      'DIVISI 5': { bccr: '89,5%', sub: 'Proyeksi 97,0% · Potensi 100%' },
+      'DIVISI 6': { bccr: '79,8%', sub: 'Proyeksi 88,0% · Potensi 100%' },
+      'all': { bccr: '85,0%', sub: 'Proyeksi 95,0% · Potensi 100%' }
+    };
+    var bccrInfo = (activeDiv && bccrMap[activeDiv]) ? bccrMap[activeDiv] : bccrMap.all;
+    if (elProdBccr) elProdBccr.textContent = bccrInfo.bccr;
+    if (elProdSubtext) elProdSubtext.textContent = bccrInfo.sub;
 
-    // RENDER TAB 1: DONUT & DIVISION COMPARISON
+    // RENDER TAB 1: DONUT & DIVISION COMPARISON & SCHEDULE TABLE
     renderActivityDonut();
     renderDivisionComparisonTable();
+    renderScheduleTable();
+    if (state.activeDashCard === 'problem') {
+      renderProblemDashboardDetail();
+    }
   }
 
   function renderActivityDonut() {
@@ -586,7 +860,7 @@
     var legendTbody = document.getElementById('donutLegendTableBody');
     if (!svg || !window.tnkeStore) return;
 
-    var cycle = window.tnkeStore.getObservasiCycleData();
+    var cycle = window.tnkeStore.getObservasiCycleData(state.division);
     var acts = cycle.activityCoverage || [];
     var totalHa = cycle.totalActivityCoverageHa || 2738.0;
 
@@ -594,7 +868,9 @@
     var elCenterHa = document.getElementById('donutCenterHa');
     if (elCenterHa) elCenterHa.textContent = formatNum(totalHa, 1) + ' ha';
     var elCenterLbl = document.getElementById('donutCenterLbl');
-    if (elCenterLbl) elCenterLbl.textContent = 'Total cakupan kegiatan';
+    if (elCenterLbl) {
+      elCenterLbl.textContent = cycle.isFiltered ? ('Total kegiatan ' + cycle.filteredDivision) : 'Total cakupan kegiatan';
+    }
 
     // Build SVG Arcs for 160x160 viewBox (Compact 145-155px)
     var cx = 80;
@@ -672,7 +948,7 @@
   function showDonutTooltip(evt, actId) {
     var tooltip = document.getElementById('donutTooltip');
     if (!tooltip || !window.tnkeStore) return;
-    var cycle = window.tnkeStore.getObservasiCycleData();
+    var cycle = window.tnkeStore.getObservasiCycleData(state.division);
     var act = (cycle.activityCoverage || []).find(function (a) { return a.id === actId; });
     if (!act) return;
 
@@ -751,7 +1027,7 @@
     var tbody = document.getElementById('divCompTableBody');
     if (!tbody || !window.tnkeStore) return;
 
-    var cycle = window.tnkeStore.getObservasiCycleData();
+    var cycle = window.tnkeStore.getObservasiCycleData(state.division);
     var isAll = (state.selectedDonutActivity === 'all');
     var actKey = state.selectedDonutActivity;
     var unit = state.divTableUnit || 'pct';
@@ -759,9 +1035,15 @@
     var rows = cycle.divisionComparison || [];
     var actBreakdown = cycle.activityDivisionBreakdown ? cycle.activityDivisionBreakdown[actKey] : null;
 
+    // Sync divCompDivisionSelect
+    var dTableSel = document.getElementById('divCompDivisionSelect');
+    if (dTableSel && dTableSel.value !== state.division) {
+      dTableSel.value = state.division;
+    }
+
     var html = '';
     var totalObsHa = 0;
-    var totalAreaHa = 3303.3;
+    var totalAreaHa = cycle.totalLuasEstateHa || 3303.3;
 
     rows.forEach(function (d) {
       var dObsHa = d.observedHa;
@@ -791,8 +1073,11 @@
       var progLabel = (unit === 'pct') ? (formatNum(dPct, 1) + '%') : (formatNum(dObsHa, 1) + ' ha');
       var targetTickHtml = isAll ? '<div class="div-target-tick" style="left: 60.0%;" title="Target Evaluasi 60,0%"></div>' : '';
 
-      html += '<tr data-divisi="' + d.divisi + '" style="cursor:pointer;" onclick="window.SPT_APP.selectDivisionFromTable(\'' + d.divisi + '\')">' +
-        '<td style="text-align:left;"><strong>' + d.divisi + '</strong></td>' +
+      var isCurrentDiv = (state.division !== 'all' && d.divisi === state.division);
+      var rowHighlightStyle = isCurrentDiv ? 'background:#EFF6FF;font-weight:700;' : '';
+
+      html += '<tr data-divisi="' + d.divisi + '" style="cursor:pointer;' + rowHighlightStyle + '" onclick="window.SPT_APP.selectDivisionFromTable(\'' + d.divisi + '\')">' +
+        '<td style="text-align:left;"><strong>' + d.divisi + (isCurrentDiv ? ' ✦' : '') + '</strong></td>' +
         '<td style="text-align:right;color:#475569;">' + formatNum(d.totalAreaHa, 1) + ' ha</td>' +
         '<td style="text-align:right;font-weight:600;color:#0F172A;">' + formatNum(dObsHa, 1) + ' ha</td>' +
         '<td style="text-align:left;">' +
@@ -808,26 +1093,31 @@
         '</tr>';
     });
 
-    // FOOTER ROW: TOTAL
-    var totalPct = isAll ? cycle.actualPct : (totalObsHa / totalAreaHa * 100);
-    var totalProgLabel = (unit === 'pct') ? (formatNum(totalPct, 1) + '%') : (formatNum(isAll ? cycle.combinedUniqueCoverageHa : totalObsHa, 1) + ' ha');
-    var totalTargetTick = isAll ? '<div class="div-target-tick" style="left: 60.0%;" title="Target Evaluasi 60,0%"></div>' : '';
-    var totalStatusHtml = isAll ? '<span class="badge-div-tertinggal">Tertinggal</span>' : '<span style="color:#64748B;">-</span>';
+    // FOOTER ROW: TOTAL (TALLIES DYNAMICALLY)
+    var footerAreaHa = cycle.totalLuasEstateHa;
+    var footerObsHa = isAll ? cycle.combinedUniqueCoverageHa : totalObsHa;
+    var footerPct = isAll ? cycle.actualPct : (totalObsHa / footerAreaHa * 100);
+    var footerLabel = cycle.isFiltered ? ('Total ' + cycle.filteredDivision) : 'Total Estate TNKE';
+    var footerProgLabel = (unit === 'pct') ? (formatNum(footerPct, 1) + '%') : (formatNum(footerObsHa, 1) + ' ha');
+    var footerTargetTick = isAll ? '<div class="div-target-tick" style="left: 60.0%;" title="Target Evaluasi 60,0%"></div>' : '';
+    var footerStatusHtml = isAll ?
+      ((cycle.gapHa >= 0) ? '<span class="badge-div-sesuai">Sesuai target</span>' : '<span class="badge-div-tertinggal">Tertinggal</span>') :
+      '<span style="color:#64748B;">-</span>';
 
     html += '<tr class="div-table-tnke-row div-row-total" style="background:#F8FAFC;font-weight:700;border-top:1.5px solid #CBD5E1;">' +
-      '<td style="text-align:left;"><strong>Total</strong></td>' +
-      '<td style="text-align:right;"><strong>' + formatNum(totalAreaHa, 1) + ' ha</strong></td>' +
-      '<td style="text-align:right;color:#0D9488;"><strong>' + formatNum(isAll ? cycle.combinedUniqueCoverageHa : totalObsHa, 1) + ' ha</strong></td>' +
+      '<td style="text-align:left;"><strong>' + footerLabel + '</strong></td>' +
+      '<td style="text-align:right;"><strong>' + formatNum(footerAreaHa, 1) + ' ha</strong></td>' +
+      '<td style="text-align:right;color:#0D9488;"><strong>' + formatNum(footerObsHa, 1) + ' ha</strong></td>' +
       '<td style="text-align:left;">' +
         '<div class="div-progress-wrapper">' +
           '<div class="div-progress-track">' +
-            '<div class="div-progress-fill bg-teal" style="width:' + totalPct.toFixed(1) + '%;"></div>' +
-            totalTargetTick +
+            '<div class="div-progress-fill bg-teal" style="width:' + Math.min(100, footerPct).toFixed(1) + '%;"></div>' +
+            footerTargetTick +
           '</div>' +
-          '<span class="div-progress-val" style="font-weight:800;color:#0D9488;">' + totalProgLabel + '</span>' +
+          '<span class="div-progress-val" style="font-weight:800;color:#0D9488;">' + footerProgLabel + '</span>' +
         '</div>' +
       '</td>' +
-      '<td style="text-align:center;">' + totalStatusHtml + '</td>' +
+      '<td style="text-align:center;">' + footerStatusHtml + '</td>' +
       '</tr>';
 
     tbody.innerHTML = html;
@@ -856,32 +1146,14 @@
     if (dSelect) dSelect.value = divName;
     var dTableSel = document.getElementById('divCompDivisionSelect');
     if (dTableSel) dTableSel.value = divName;
-    switchObsTab('petaCakupan');
-    if (state.geoJsonData) {
-      renderGeoJsonLayers(state.geoJsonData);
-    }
+    onFilterChanged();
   }
 
   function onDivCompDivisionSelect(divVal) {
     state.division = divVal;
     var dSelect = document.getElementById('divisionFilter');
     if (dSelect) dSelect.value = divVal;
-
-    var rows = document.querySelectorAll('.div-comp-table tbody tr');
-    rows.forEach(function (r) {
-      var dName = r.getAttribute('data-divisi');
-      if (!dName) return; // total row
-      if (divVal === 'all' || dName === divVal) {
-        r.style.display = '';
-        if (dName === divVal) {
-          r.classList.add('selected-act');
-        } else {
-          r.classList.remove('selected-act');
-        }
-      } else {
-        r.style.display = 'none';
-      }
-    });
+    onFilterChanged();
   }
 
   function handleOpsSummaryClick(action) {
@@ -1346,12 +1618,12 @@
   }
 
   function switchProbTab(tabName) {
+    if (tabName === 'prioritas') tabName = 'kategoriDivisi';
     state.activeProbTab = tabName;
-    var tabs = ['kategoriDivisi', 'trenTemuan', 'prioritas'];
+    var tabs = ['kategoriDivisi', 'trenTemuan'];
     var tabMap = {
       kategoriDivisi: { btn: 'tabProbKategoriDivisi', panel: 'probTabKategoriDivisi' },
-      trenTemuan: { btn: 'tabProbTrenTemuan', panel: 'probTabTrenTemuan' },
-      prioritas: { btn: 'tabProbPrioritas', panel: 'probTabPrioritas' }
+      trenTemuan: { btn: 'tabProbTrenTemuan', panel: 'probTabTrenTemuan' }
     };
     tabs.forEach(function (t) {
       var btn = document.getElementById(tabMap[t].btn);
@@ -1367,8 +1639,6 @@
 
     if (tabName === 'trenTemuan') {
       renderProblemTrendView();
-    } else if (tabName === 'prioritas') {
-      renderProblemPriorityFullTable();
     } else {
       renderProblemDashboardDetail();
     }
@@ -1405,6 +1675,13 @@
     return result;
   }
 
+  function parseVolNum(volStr) {
+    if (!volStr || typeof volStr !== 'string') return 0;
+    var cleaned = volStr.replace(/\./g, '').replace(',', '.').replace(/[^0-9.]/g, '');
+    var val = parseFloat(cleaned);
+    return isNaN(val) ? 0 : val;
+  }
+
   function renderProblemRankingBars() {
     var container = document.getElementById('probBarsContainer');
     var titleEl = document.getElementById('probRankingTitle');
@@ -1416,68 +1693,71 @@
     var cats = getProblemCategoriesByBasis(basis);
 
     var titles = {
-      luas: 'Exposure kategori berbasis luas',
-      panjang: 'Exposure kategori berbasis panjang',
-      pokok: 'Exposure kategori berbasis populasi pokok',
-      infrastruktur: 'Exposure kategori berbasis unit infrastruktur'
+      luas: 'Proporsi masalah berbasis luas (% dari total luas)',
+      panjang: 'Proporsi masalah berbasis panjang (% dari total panjang)',
+      pokok: 'Proporsi masalah berbasis populasi pokok (% dari total pokok)',
+      infrastruktur: 'Proporsi masalah berbasis unit infrastruktur (% dari total unit)'
     };
-    var scales = {
-      luas: { label: 'Skala 0-5%', max: 5.0 },
-      panjang: { label: 'Skala 0-12%', max: 12.0 },
-      pokok: { label: 'Skala 0-5%', max: 5.0 },
-      infrastruktur: { label: 'Skala 0-15%', max: 15.0 }
+    var unitLabels = {
+      luas: 'ha',
+      panjang: 'm / km',
+      pokok: 'pokok',
+      infrastruktur: 'unit'
     };
-    var notes = {
-      luas: 'Volume unik menggunakan union polygon; tagging overlap tidak dihitung dua kali.',
-      panjang: 'Volume unik menggunakan union segment line; overlap tidak dihitung dua kali.',
-      pokok: 'Volume unik berbasis unique tree ID; tagging berulang pada pokok yang sama tidak menambah volume.',
-      infrastruktur: 'Volume unik berbasis unique asset ID; multi-laporan atas aset yang sama dihitung 1 aset terdampak.'
-    };
+
+    // Calculate total problem volume for this measurement basis
+    var totalBasisVol = 0;
+    cats.forEach(function (c) {
+      totalBasisVol += parseVolNum(c.totalEstate.uniqueVol);
+    });
+    totalBasisVol = +totalBasisVol.toFixed(1);
 
     if (titleEl) titleEl.textContent = titles[basis] || titles.luas;
-    if (scaleEl) scaleEl.textContent = scales[basis] ? scales[basis].label : 'Skala 0-5%';
-    if (noteEl) noteEl.textContent = notes[basis] || notes.luas;
-
-    var maxScale = scales[basis] ? scales[basis].max : 5.0;
+    if (scaleEl) scaleEl.textContent = 'Total: ' + formatNum(totalBasisVol, 1) + ' ' + (unitLabels[basis] || '') + ' (100%)';
+    if (noteEl) {
+      noteEl.textContent = 'Persentase dihitung terhadap total akumulasi volume masalah pada satuan yang sama (total: ' +
+        formatNum(totalBasisVol, 1) + ' ' + (unitLabels[basis] || '') + ').';
+    }
 
     var html = '';
     cats.forEach(function (cat) {
-      var pct = cat.totalEstate.exposurePct;
-      var fillW = Math.min(100, Math.max(8, (pct / maxScale) * 100));
+      var catVol = parseVolNum(cat.totalEstate.uniqueVol);
+      var sharePct = totalBasisVol > 0 ? +((catVol / totalBasisVol) * 100).toFixed(1) : 0;
+      var fillW = Math.min(100, Math.max(6, sharePct));
 
       // Bar color sequential red
       var barBg = '#B91C1C';
-      if (pct < 1.0) barBg = '#FECACA';
-      else if (pct < 1.5) barBg = '#FCA5A5';
-      else if (pct < 2.5) barBg = '#EF4444';
+      if (sharePct < 15.0) barBg = '#FECACA';
+      else if (sharePct < 25.0) barBg = '#FCA5A5';
+      else if (sharePct < 35.0) barBg = '#EF4444';
 
-      var barTextColor = (pct >= 1.5) ? '#FFFFFF' : '#991B1B';
+      var barTextColor = (sharePct >= 20.0) ? '#FFFFFF' : '#991B1B';
 
       html += '<div class="prob-bar-row" onclick="window.SPT_APP.goToProblemTaggingWithFilters({ category: \'' + cat.problemCategory + '\' })" title="Klik untuk drill-down ke Problem Tagging">';
       html += '  <span class="prob-bar-cat-name">' + cat.problemCategory + '</span>';
       html += '  <div class="prob-bar-track">';
       html += '    <div class="prob-bar-fill" style="width:' + fillW.toFixed(1) + '%;background:' + barBg + ';color:' + barTextColor + ';">';
-      html += '      <span>' + formatNum(pct, 1) + '%</span>';
+      html += '      <span>' + formatNum(sharePct, 1) + '%</span>';
       html += '    </div>';
       html += '  </div>';
-      html += '  <span class="prob-bar-vol-lbl">' + cat.totalEstate.uniqueVol + ' unik</span>';
+      html += '  <span class="prob-bar-vol-lbl">' + cat.totalEstate.uniqueVol + '</span>';
       html += '</div>';
     });
 
     container.innerHTML = html;
   }
 
-  function getHeatmapBgColor(pct) {
+  function getDivisionShareHeatmapBg(pct) {
     if (pct === 0) return '#F8FAFC';
-    if (pct < 0.8) return '#FEE2E2';
-    if (pct < 1.5) return '#FECACA';
-    if (pct < 2.3) return '#FCA5A5';
-    if (pct < 3.0) return '#F87171';
-    return '#B91C1C';
+    if (pct < 12.0) return '#FEF2F2';
+    if (pct < 20.0) return '#FEE2E2';
+    if (pct < 30.0) return '#FCA5A5';
+    if (pct < 40.0) return '#F87171';
+    return '#DC2626';
   }
 
-  function getHeatmapTextColor(pct) {
-    if (pct >= 2.5) return '#FFFFFF';
+  function getDivisionShareHeatmapTextColor(pct) {
+    if (pct >= 30.0) return '#FFFFFF';
     return '#0F172A';
   }
 
@@ -1489,34 +1769,43 @@
     var basis = state.problemMeasurementBasis || 'luas';
     var cats = getProblemCategoriesByBasis(basis);
 
-    var unitNotes = {
-      luas: 'Luas unik · ha dan % area',
-      panjang: 'Panjang unik · m/km dan % panjang',
-      pokok: 'Pokok unik dan % populasi',
-      infrastruktur: 'Unit aset unik dan % terhadap total aset sejenis'
-    };
-    if (unitNote) unitNote.textContent = unitNotes[basis] || unitNotes.luas;
+    if (unitNote) {
+      unitNote.textContent = '% kontribusi divisi terhadap total se-estate';
+    }
 
     var divisions = ['DIVISI 1', 'DIVISI 2', 'DIVISI 3', 'DIVISI 5', 'DIVISI 6'];
     var html = '';
 
     cats.forEach(function (cat) {
+      // Sum division volumes for this category
+      var totalCatVol = 0;
+      divisions.forEach(function (divName) {
+        var dInfo = cat.divisions[divName];
+        if (dInfo && dInfo.uniqueVol) {
+          totalCatVol += parseVolNum(dInfo.uniqueVol);
+        }
+      });
+      totalCatVol = +totalCatVol.toFixed(1);
+
       html += '<tr>';
       html += '  <td class="cell-cat-name" onclick="window.SPT_APP.goToProblemTaggingWithFilters({ category: \'' + cat.problemCategory + '\' })" title="Filter seluruh ' + cat.problemCategory + '">' + cat.problemCategory + '</td>';
 
       divisions.forEach(function (divName) {
         var dInfo = cat.divisions[divName] || { uniqueVol: '0', exposurePct: 0.0, taggingCount: 0, open: 0, inProgress: 0, closed: 0 };
-        var bg = getHeatmapBgColor(dInfo.exposurePct);
-        var fg = getHeatmapTextColor(dInfo.exposurePct);
+        var divVol = parseVolNum(dInfo.uniqueVol);
+        var sharePct = totalCatVol > 0 ? +((divVol / totalCatVol) * 100).toFixed(1) : 0;
+
+        var bg = getDivisionShareHeatmapBg(sharePct);
+        var fg = getDivisionShareHeatmapTextColor(sharePct);
 
         html += '  <td style="background:' + bg + ';color:' + fg + ';" ' +
-          'onmouseenter="window.SPT_APP.showProblemHeatmapTooltip(event, \'' + cat.id + '\', \'' + divName + '\')" ' +
+          'onmouseenter="window.SPT_APP.showProblemHeatmapTooltip(event, \'' + cat.id + '\', \'' + divName + '\', ' + sharePct + ')" ' +
           'onmousemove="window.SPT_APP.moveProblemHeatmapTooltip(event)" ' +
           'onmouseleave="window.SPT_APP.hideProblemHeatmapTooltip()" ' +
           'onclick="window.SPT_APP.goToProblemTaggingWithFilters({ category: \'' + cat.problemCategory + '\', division: \'' + divName + '\' })" ' +
           'title="Klik untuk lihat temuan ' + cat.problemCategory + ' di ' + divName + '">';
         html += '    <strong class="hm-vol">' + dInfo.uniqueVol + '</strong>';
-        html += '    <span class="hm-pct">' + formatNum(dInfo.exposurePct, 1) + '%</span>';
+        html += '    <span class="hm-pct">' + formatNum(sharePct, 1) + '%</span>';
         html += '  </td>';
       });
 
@@ -1526,30 +1815,28 @@
     tbody.innerHTML = html;
   }
 
-  function showProblemHeatmapTooltip(e, catId, divName) {
+  function showProblemHeatmapTooltip(e, catId, divName, sharePct) {
     var tt = document.getElementById('probHeatmapTooltip');
     var cat = SPT_PROBLEM_MASTER_CONFIG[catId];
     if (!tt || !cat) return;
 
     var dInfo = cat.divisions[divName] || { uniqueVol: '0', exposurePct: 0.0, taggingCount: 0, open: 0, inProgress: 0, closed: 0 };
-    var denomObj = SPT_PROBLEM_DENOMINATORS[cat.denominatorType];
-    var denomVal = denomObj ? (denomObj[divName] || denomObj.all) : null;
-    var denomUnit = denomObj ? denomObj.unit : '';
-    var denomLabel = denomObj ? denomObj.label : 'Denominator';
+    if (typeof sharePct === 'undefined') {
+      var totalVol = 0;
+      for (var d in cat.divisions) {
+        totalVol += parseVolNum(cat.divisions[d].uniqueVol);
+      }
+      var dVol = parseVolNum(dInfo.uniqueVol);
+      sharePct = totalVol > 0 ? (dVol / totalVol) * 100 : 0;
+    }
 
     var html = '<div class="tt-title">' + cat.problemCategory + '</div>';
     html += '<div class="tt-div">' + divName + ' · TNKE ESTATE</div>';
-    html += '<div class="tt-row"><span class="tt-lbl">Unique affected volume:</span><span class="tt-val">' + dInfo.uniqueVol + '</span></div>';
-
-    if (denomVal) {
-      html += '<div class="tt-row"><span class="tt-lbl">' + denomLabel + ':</span><span class="tt-val">' + formatNum(denomVal, 1) + ' ' + denomUnit + '</span></div>';
-      html += '<div class="tt-row"><span class="tt-lbl">Exposure rate:</span><span class="tt-val" style="color:#F87171;">' + formatNum(dInfo.exposurePct, 1) + '%</span></div>';
-    } else {
-      html += '<div class="tt-row" style="color:#FBBF24;"><span>Exposure belum dapat dihitung — master denominator belum tersedia</span></div>';
-    }
-
+    html += '<div class="tt-row"><span class="tt-lbl">Volume divisi:</span><span class="tt-val" style="font-weight:700;">' + dInfo.uniqueVol + '</span></div>';
+    html += '<div class="tt-row"><span class="tt-lbl">Total se-estate:</span><span class="tt-val">' + cat.totalEstate.uniqueVol + '</span></div>';
+    html += '<div class="tt-row"><span class="tt-lbl">Kontribusi divisi:</span><span class="tt-val" style="color:#DC2626;font-weight:700;">' + formatNum(sharePct, 1) + '%</span></div>';
     html += '<div class="tt-row"><span class="tt-lbl">Jumlah tagging laporan:</span><span class="tt-val">' + dInfo.taggingCount + ' titik</span></div>';
-    html += '<div class="tt-row"><span class="tt-lbl">Status workflow:</span><span class="tt-val">' + dInfo.open + ' Open · ' + dInfo.inProgress + ' In Progress</span></div>';
+    html += '<div class="tt-row"><span class="tt-lbl">Status workflow:</span><span class="tt-val">' + dInfo.open + ' Open · ' + dInfo.inProgress + ' In Progress · ' + dInfo.closed + ' Selesai</span></div>';
 
     tt.innerHTML = html;
     tt.style.display = 'block';
@@ -6845,6 +7132,7 @@
     closeCycleModal: closeCycleModal,
     saveCycleSetup: saveCycleSetup,
     renderSummaryDashboardCards: renderSummaryDashboardCards,
+    renderScheduleTable: renderScheduleTable,
     renderProductionTrendLineChart: renderProductionTrendLineChart,
     fitMapToScope: fitMapToScope,
     switchView: switchView,

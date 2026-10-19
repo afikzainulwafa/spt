@@ -1000,8 +1000,140 @@
   };
 
   // Observasi Cycle Data Model (Standard SPT Deterministic Model)
-  TNKEStore.prototype.getObservasiCycleData = function () {
+  // Observasi Cycle Data Model (Standard SPT Deterministic Model)
+  TNKEStore.prototype.getObservasiCycleData = function (divisionFilter) {
+    var allDivisions = [
+      { divisi: 'DIVISI 1', totalAreaHa: 799.5, observedHa: 495.7, coveragePct: 62.0, status: 'Sesuai target' },
+      { divisi: 'DIVISI 2', totalAreaHa: 854.0, observedHa: 449.7, coveragePct: 52.7, status: 'Tertinggal' },
+      { divisi: 'DIVISI 3', totalAreaHa: 797.9, observedHa: 462.8, coveragePct: 58.0, status: 'Tertinggal' },
+      { divisi: 'DIVISI 5', totalAreaHa: 478.3, observedHa: 334.8, coveragePct: 70.0, status: 'Sesuai target' },
+      { divisi: 'DIVISI 6', totalAreaHa: 373.6, observedHa: 171.8, coveragePct: 46.0, status: 'Tertinggal' }
+    ];
+
+    var activityDivisionBreakdown = {
+      ipd_panen: {
+        'DIVISI 1': { observedHa: 163.9, coveragePct: 20.5 },
+        'DIVISI 2': { observedHa: 234.8, coveragePct: 27.5 },
+        'DIVISI 3': { observedHa: 219.4, coveragePct: 27.5 },
+        'DIVISI 5': { observedHa: 185.5, coveragePct: 38.8 },
+        'DIVISI 6': { observedHa: 101.8, coveragePct: 27.2 }
+      },
+      pengancakan: {
+        'DIVISI 1': { observedHa: 147.9, coveragePct: 18.5 },
+        'DIVISI 2': { observedHa: 153.7, coveragePct: 18.0 },
+        'DIVISI 3': { observedHa: 143.6, coveragePct: 18.0 },
+        'DIVISI 5': { observedHa: 100.4, coveragePct: 21.0 },
+        'DIVISI 6': { observedHa: 67.2, coveragePct: 18.0 }
+      },
+      blok_checklist: {
+        'DIVISI 1': { observedHa: 127.9, coveragePct: 16.0 },
+        'DIVISI 2': { observedHa: 136.6, coveragePct: 16.0 },
+        'DIVISI 3': { observedHa: 135.6, coveragePct: 17.0 },
+        'DIVISI 5': { observedHa: 76.5, coveragePct: 16.0 },
+        'DIVISI 6': { observedHa: 58.4, coveragePct: 15.6 }
+      },
+      inspeksi_upkeep: {
+        'DIVISI 1': { observedHa: 95.9, coveragePct: 12.0 },
+        'DIVISI 2': { observedHa: 102.5, coveragePct: 12.0 },
+        'DIVISI 3': { observedHa: 99.7, coveragePct: 12.5 },
+        'DIVISI 5': { observedHa: 60.3, coveragePct: 12.6 },
+        'DIVISI 6': { observedHa: 45.2, coveragePct: 12.1 }
+      },
+      inspeksi_pupuk: {
+        'DIVISI 1': { observedHa: 67.2, coveragePct: 8.4 },
+        'DIVISI 2': { observedHa: 70.0, coveragePct: 8.2 },
+        'DIVISI 3': { observedHa: 68.6, coveragePct: 8.6 },
+        'DIVISI 5': { observedHa: 43.0, coveragePct: 9.0 },
+        'DIVISI 6': { observedHa: 32.4, coveragePct: 8.7 }
+      }
+    };
+
+    var baseActs = [
+      { id: 'ipd_panen', name: 'IPD Panen', activityId: 2, color: '#8B5CF6' },
+      { id: 'pengancakan', name: 'Pengancakan', activityId: 3, color: '#2563EB' },
+      { id: 'blok_checklist', name: 'Blok Checklist', activityId: 1, color: '#795548' },
+      { id: 'inspeksi_upkeep', name: 'Inspeksi Upkeep', activityId: 4, color: '#0D9488' },
+      { id: 'inspeksi_pupuk', name: 'Inspeksi Pemupukan', activityId: 5, color: '#EA580C' }
+    ];
+
+    var isFiltered = false;
+    var matchedDiv = null;
+    if (divisionFilter && typeof divisionFilter === 'string' && divisionFilter !== 'all' && divisionFilter !== 'All' && divisionFilter !== 'Semua Divisi') {
+      var normDiv = divisionFilter.trim().toUpperCase();
+      matchedDiv = allDivisions.find(function (d) {
+        return d.divisi.toUpperCase() === normDiv || d.divisi.replace('DIVISI ', 'DIV ').toUpperCase() === normDiv;
+      });
+      if (matchedDiv) isFiltered = true;
+    }
+
+    if (isFiltered && matchedDiv) {
+      var divName = matchedDiv.divisi;
+      var totalDivHa = matchedDiv.totalAreaHa;
+      var obsDivHa = matchedDiv.observedHa;
+      var actDivPct = matchedDiv.coveragePct;
+      var targetDivHa = +(totalDivHa * 0.60).toFixed(1);
+      var gapDivHa = +(obsDivHa - targetDivHa).toFixed(1);
+      var remDivHa = +(totalDivHa - obsDivHa).toFixed(1);
+      var remDivPct = +(100.0 - actDivPct).toFixed(1);
+      var dailyDivHa = +(remDivHa / 20).toFixed(1);
+
+      var divActCoverage = [];
+      var divTotalActHa = 0;
+      baseActs.forEach(function (act) {
+        var ha = (activityDivisionBreakdown[act.id] && activityDivisionBreakdown[act.id][divName]) ?
+          activityDivisionBreakdown[act.id][divName].observedHa : 0;
+        divTotalActHa += ha;
+      });
+      divTotalActHa = +divTotalActHa.toFixed(1);
+
+      baseActs.forEach(function (act) {
+        var ha = (activityDivisionBreakdown[act.id] && activityDivisionBreakdown[act.id][divName]) ?
+          activityDivisionBreakdown[act.id][divName].observedHa : 0;
+        var share = divTotalActHa > 0 ? +((ha / divTotalActHa) * 100).toFixed(1) : 0;
+        divActCoverage.push({
+          id: act.id,
+          name: act.name,
+          activityId: act.activityId,
+          coverageHa: ha,
+          sharePct: share,
+          color: act.color
+        });
+      });
+
+      return {
+        isFiltered: true,
+        filteredDivision: divName,
+        cycleName: 'Siklus Observasi Rutin 2 - 2026 (' + divName + ')',
+        startDate: '2026-09-01',
+        endDate: '2026-10-20',
+        evalDate: '2026-09-30',
+        estate: 'TNKE',
+        divisionsInScope: [divName],
+        totalLuasEstateHa: totalDivHa,
+        combinedUniqueCoverageHa: obsDivHa,
+        actualPct: actDivPct,
+        targetCoverageHa: targetDivHa,
+        targetPct: 60.0,
+        gapHa: gapDivHa,
+        status: matchedDiv.status,
+        remainingAreaHa: remDivHa,
+        remainingPct: remDivPct,
+        remainingDays: 20,
+        requiredDailyRateHa: dailyDivHa,
+        attentionDivisionsCount: matchedDiv.status === 'Tertinggal' ? 1 : 0,
+        totalDivisionsCount: 1,
+        attentionDivisionsList: matchedDiv.status === 'Tertinggal' ? [divName] : [],
+        totalActivityCoverageHa: divTotalActHa,
+        activityCoverage: divActCoverage,
+        divisionComparison: allDivisions,
+        activityDivisionBreakdown: activityDivisionBreakdown
+      };
+    }
+
+    // Default: Estate-wide totals
     return {
+      isFiltered: false,
+      filteredDivision: 'all',
       cycleName: 'Siklus Observasi Rutin 2 - 2026',
       startDate: '2026-09-01',
       endDate: '2026-10-20',
@@ -1030,51 +1162,8 @@
         { id: 'inspeksi_upkeep', name: 'Inspeksi Upkeep', activityId: 4, coverageHa: 403.6, sharePct: 14.7, color: '#0D9488' },
         { id: 'inspeksi_pupuk', name: 'Inspeksi Pemupukan', activityId: 5, coverageHa: 281.2, sharePct: 10.3, color: '#EA580C' }
       ],
-      divisionComparison: [
-        { divisi: 'DIVISI 1', totalAreaHa: 799.5, observedHa: 495.7, coveragePct: 62.0, status: 'Sesuai target' },
-        { divisi: 'DIVISI 2', totalAreaHa: 854.0, observedHa: 449.7, coveragePct: 52.7, status: 'Tertinggal' },
-        { divisi: 'DIVISI 3', totalAreaHa: 797.9, observedHa: 462.8, coveragePct: 58.0, status: 'Tertinggal' },
-        { divisi: 'DIVISI 5', totalAreaHa: 478.3, observedHa: 334.8, coveragePct: 70.0, status: 'Sesuai target' },
-        { divisi: 'DIVISI 6', totalAreaHa: 373.6, observedHa: 171.8, coveragePct: 46.0, status: 'Tertinggal' }
-      ],
-      // Per-activity division distributions
-      activityDivisionBreakdown: {
-        ipd_panen: {
-          'DIVISI 1': { observedHa: 163.9, coveragePct: 20.5 },
-          'DIVISI 2': { observedHa: 234.8, coveragePct: 27.5 },
-          'DIVISI 3': { observedHa: 219.4, coveragePct: 27.5 },
-          'DIVISI 5': { observedHa: 185.5, coveragePct: 38.8 },
-          'DIVISI 6': { observedHa: 101.8, coveragePct: 27.2 }
-        },
-        pengancakan: {
-          'DIVISI 1': { observedHa: 147.9, coveragePct: 18.5 },
-          'DIVISI 2': { observedHa: 153.7, coveragePct: 18.0 },
-          'DIVISI 3': { observedHa: 143.6, coveragePct: 18.0 },
-          'DIVISI 5': { observedHa: 100.4, coveragePct: 21.0 },
-          'DIVISI 6': { observedHa: 67.2, coveragePct: 18.0 }
-        },
-        blok_checklist: {
-          'DIVISI 1': { observedHa: 127.9, coveragePct: 16.0 },
-          'DIVISI 2': { observedHa: 136.6, coveragePct: 16.0 },
-          'DIVISI 3': { observedHa: 135.6, coveragePct: 17.0 },
-          'DIVISI 5': { observedHa: 76.5, coveragePct: 16.0 },
-          'DIVISI 6': { observedHa: 58.4, coveragePct: 15.6 }
-        },
-        inspeksi_upkeep: {
-          'DIVISI 1': { observedHa: 95.9, coveragePct: 12.0 },
-          'DIVISI 2': { observedHa: 102.5, coveragePct: 12.0 },
-          'DIVISI 3': { observedHa: 99.7, coveragePct: 12.5 },
-          'DIVISI 5': { observedHa: 60.3, coveragePct: 12.6 },
-          'DIVISI 6': { observedHa: 45.2, coveragePct: 12.1 }
-        },
-        inspeksi_pupuk: {
-          'DIVISI 1': { observedHa: 67.2, coveragePct: 8.4 },
-          'DIVISI 2': { observedHa: 70.0, coveragePct: 8.2 },
-          'DIVISI 3': { observedHa: 68.6, coveragePct: 8.6 },
-          'DIVISI 5': { observedHa: 43.0, coveragePct: 9.0 },
-          'DIVISI 6': { observedHa: 32.4, coveragePct: 8.7 }
-        }
-      }
+      divisionComparison: allDivisions,
+      activityDivisionBreakdown: activityDivisionBreakdown
     };
   };
 

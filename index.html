@@ -431,10 +431,10 @@
                   <div class="strip-kpi-content">
                     <span class="strip-kpi-label">Target Saat Ini</span>
                     <div class="strip-kpi-val-row">
-                      <strong class="strip-kpi-val-main text-blue">60,0%</strong>
-                      <span class="strip-kpi-val-sec">1.982,0 ha</span>
+                      <strong class="strip-kpi-val-main text-blue" id="stripKpiTargetPct">60,0%</strong>
+                      <span class="strip-kpi-val-sec" id="stripKpiTargetHa">1.982,0 ha</span>
                     </div>
-                    <span class="strip-kpi-sub">Target sampai 30 September 2026</span>
+                    <span class="strip-kpi-sub" id="stripKpiTargetSub">Target sampai 30 September 2026</span>
                   </div>
                 </div>
 
@@ -452,10 +452,10 @@
                   <div class="strip-kpi-content">
                     <span class="strip-kpi-label">Aktual Saat Ini</span>
                     <div class="strip-kpi-val-row">
-                      <strong class="strip-kpi-val-main text-teal">58,0%</strong>
-                      <span class="strip-kpi-val-sec">1.914,8 ha</span>
+                      <strong class="strip-kpi-val-main text-teal" id="stripKpiActualPct">58,0%</strong>
+                      <span class="strip-kpi-val-sec" id="stripKpiActualHa">1.914,8 ha</span>
                     </div>
-                    <span class="strip-kpi-sub text-danger font-semibold">Tertinggal 67,2 ha</span>
+                    <span class="strip-kpi-sub text-danger font-semibold" id="stripKpiActualSub">Tertinggal 67,2 ha</span>
                   </div>
                 </div>
 
@@ -473,10 +473,10 @@
                   <div class="strip-kpi-content">
                     <span class="strip-kpi-label">Kebutuhan Mengejar Target</span>
                     <div class="strip-kpi-val-row">
-                      <strong class="strip-kpi-val-main text-primary-dark">69,4 ha/hari</strong>
-                      <span class="strip-kpi-val-sec">Sisa 1.388,5 ha</span>
+                      <strong class="strip-kpi-val-main text-primary-dark" id="stripKpiKebutuhanRate">69,4 ha/hari</strong>
+                      <span class="strip-kpi-val-sec" id="stripKpiKebutuhanSisa">Sisa 1.388,5 ha</span>
                     </div>
-                    <span class="strip-kpi-sub">20 hari menuju target selesai</span>
+                    <span class="strip-kpi-sub" id="stripKpiKebutuhanSub">20 hari menuju target selesai</span>
                   </div>
                 </div>
               </div>
@@ -595,18 +595,18 @@
               <div class="schedule-summary-grid">
                 <div class="sched-box">
                   <span class="sched-lbl">Target Evaluasi (30 Sep 2026)</span>
-                  <strong class="sched-val text-blue">1.982,0 ha (60,0%)</strong>
-                  <span class="sched-sub">Realisasi: 1.914,8 ha (58,0%)</span>
+                  <strong class="sched-val text-blue" id="schedSummaryTargetVal">1.982,0 ha (60,0%)</strong>
+                  <span class="sched-sub" id="schedSummaryTargetSub">Realisasi: 1.914,8 ha (58,0%)</span>
                 </div>
                 <div class="sched-box">
                   <span class="sched-lbl">Deviasi Evaluasi Saat Ini</span>
-                  <strong class="sched-val text-red">-67,2 ha</strong>
-                  <span class="sched-sub"><span class="badge-div-tertinggal">Tertinggal</span> vs target 60%</span>
+                  <strong class="sched-val text-red" id="schedSummaryDeviasiVal">-67,2 ha</strong>
+                  <span class="sched-sub" id="schedSummaryDeviasiSub"><span class="badge-div-tertinggal">Tertinggal</span> vs target 60%</span>
                 </div>
                 <div class="sched-box">
                   <span class="sched-lbl">Kebutuhan Laju Penyelesaian</span>
-                  <strong class="sched-val text-teal">69,4 ha/hari</strong>
-                  <span class="sched-sub">1.388,5 ha tersisa dalam 20 hari (s/d 20 Okt)</span>
+                  <strong class="sched-val text-teal" id="schedSummaryLajuVal">69,4 ha/hari</strong>
+                  <span class="sched-sub" id="schedSummaryLajuSub">1.388,5 ha tersisa dalam 20 hari (s/d 20 Okt)</span>
                 </div>
               </div>
 
@@ -627,7 +627,7 @@
                         <th style="text-align:center;">Status</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="scheduleTableBody">
                       <tr>
                         <td><strong>Minggu 1</strong></td>
                         <td>01 Sep – 07 Sep 2026</td>
@@ -713,7 +713,7 @@
                         <th style="text-align:center;">Status</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="rekapTargetTableBody">
                       <tr>
                         <td><strong>DIVISI 1</strong></td>
                         <td style="text-align:right;">799,5 ha</td>
@@ -872,10 +872,6 @@
                     onclick="window.SPT_APP.switchProbTab('trenTemuan')">
                     Tren Temuan
                   </button>
-                  <button type="button" class="prob-tab-btn" id="tabProbPrioritas"
-                    onclick="window.SPT_APP.switchProbTab('prioritas')">
-                    Prioritas
-                  </button>
                 </div>
                 <button type="button" class="btn-prob-view-all"
                   onclick="window.SPT_APP.goToProblemTaggingWithFilters()">
@@ -971,7 +967,7 @@
                   </div>
                 </div>
                 <div class="prob-selector-right">
-                  <span class="prob-selector-hint">Warna heatmap = exposure rate terhadap denominator relevan</span>
+                  <span class="prob-selector-hint">Warna heatmap = % kontribusi divisi terhadap total masalah se-estate</span>
                 </div>
               </div>
 
@@ -980,22 +976,22 @@
                 <!-- LEFT PANEL: RANKING -->
                 <div class="prob-panel-card prob-panel-ranking">
                   <div class="prob-panel-hdr">
-                    <h3 class="prob-panel-title" id="probRankingTitle">Exposure kategori berbasis luas</h3>
-                    <span class="prob-panel-scale-note" id="probScaleNote">Skala 0-5%</span>
+                    <h3 class="prob-panel-title" id="probRankingTitle">Proporsi masalah berbasis luas</h3>
+                    <span class="prob-panel-scale-note" id="probScaleNote">Skala proporsi %</span>
                   </div>
                   <div class="prob-bars-container" id="probBarsContainer">
                     <!-- Populated dynamically by JS -->
                   </div>
                   <div class="prob-panel-note" id="probRankingNote">
-                    Volume unik menggunakan union polygon; tagging overlap tidak dihitung dua kali.
+                    Volume unik menggunakan union polygon; persentase terhadap total volume masalah sejenis.
                   </div>
                 </div>
 
                 <!-- RIGHT PANEL: HEATMAP PER DIVISI -->
                 <div class="prob-panel-card prob-panel-heatmap">
                   <div class="prob-panel-hdr">
-                    <h3 class="prob-panel-title">Perbandingan exposure per divisi</h3>
-                    <span class="prob-panel-scale-note" id="probHeatmapUnitNote">Luas unik · ha dan % area</span>
+                    <h3 class="prob-panel-title">Perbandingan per divisi</h3>
+                    <span class="prob-panel-scale-note" id="probHeatmapUnitNote">% kontribusi divisi terhadap total se-estate</span>
                   </div>
                   <div class="prob-heatmap-wrap">
                     <table class="prob-heatmap-table" id="probHeatmapTable">
@@ -1074,34 +1070,6 @@
                 </div>
                 <div class="prob-trend-chart-box" id="probTrendChartBox">
                   <!-- Rendered dynamically by JS -->
-                </div>
-              </div>
-            </div>
-
-            <!-- SUBTAB 3: PRIORITAS OPERASIONAL LENGKAP -->
-            <div class="prob-tab-content" id="probTabPrioritas" style="display:none;">
-              <div class="prob-priority-full-card">
-                <div class="prob-panel-hdr" style="margin-bottom:8px;">
-                  <h3 class="prob-panel-title">Matriks Prioritas Penanganan Masalah Lapangan (Rule-Based)</h3>
-                  <span class="badge-data-simulasi">Kaidah Operasional Agronomi</span>
-                </div>
-                <div class="table-scroll-wrapper" style="max-height:280px;overflow-y:auto;">
-                  <table class="dense-table" style="font-size:11.5px;">
-                    <thead>
-                      <tr>
-                        <th style="width:65px;">Tier</th>
-                        <th style="width:180px;">Kategori Masalah</th>
-                        <th>Kriteria Penentuan</th>
-                        <th style="width:90px;">SLA Maksimal</th>
-                        <th style="width:120px;">Volume Terdampak</th>
-                        <th>Rekomendasi Action Plan</th>
-                        <th style="text-align:center;width:90px;">Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody id="probPriorityFullTableBody">
-                      <!-- Rendered dynamically by JS -->
-                    </tbody>
-                  </table>
                 </div>
               </div>
             </div>
